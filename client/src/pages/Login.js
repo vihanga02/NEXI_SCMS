@@ -1,10 +1,12 @@
 import React from 'react';
 import '../Styles/Login.css';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   return (
     <div className="login-container">
       <div className="login-left">
+      <p className='text'>Welcome back! Please login to your account!!</p>
         <div className="logo-container">
           <img
             src="../../2.png" // Replace with your actual logo image path
@@ -19,17 +21,14 @@ const Login = () => {
           <input type="password" placeholder="Enter your Password" className="input-field" />
           <button type="submit" className="login-button">Login</button>
         </form>
+        <span>Don't you have an account?<Link to ='/register'>Register</Link></span>
       </div>
       <div className="login-right">
-        <div className="info-text">
+        
           <h3>Streamlining your distribution from railway to doorstep with seamless efficiency.</h3>
-          <p>Welcome back! Please login to your account.</p>
-        </div>
-        <img
-          src="../public/Login.webp" // Replace with your actual background image path
-          alt="Truck"
-          className="background-image"
-        />
+          
+        
+        
       </div>
     </div>
   );
