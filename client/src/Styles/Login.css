@@ -1,3 +1,9 @@
+@import url('Variables.css');
+
+* {
+  overflow: hidden;
+}
+
 /* Container for the whole login page */
 .login-container {
   display: flex;
@@ -12,36 +18,38 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color:rgb(240, 195, 195);
+  background-color : var(--white);
   padding: 20px;
-  
 }
+
 .text{
-  color: black;
-  margin-bottom: 100px;
+  color: var(--black);
+  margin-bottom: 20px;
+  margin-top: 70px;
+  font-size: 15px;
 }
 
 
 .logo-container {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 40px
 }
 
 .logo {
-  width: 100px; /* Adjust the size of your logo here */
+  width: 100px; 
   height: auto;
-  margin-bottom: 20px;
+  border-radius: 50%;
 }
 
 h2 {
-  margin: 0;
-  font-size: 28px;
+  margin: -25px;
+  font-size: 70px;
+  font-family: var(--heading);
 }
 
 p {
-  margin: 0;
-  font-size: 14px;
-  color: #555;
+  font-size: 18px;
+  color: var(--color1);
 }
 
 .login-form {
@@ -64,10 +72,9 @@ span{
 }
 
 .login-button {
-  background-color: #1E90FF;
-  color: white;
+  background-color: var(--color1);
+  color: var(--white);
   padding: 10px;
-  border: none;
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
@@ -87,7 +94,7 @@ span{
   justify-content: center;
   align-items: flex-start;
   padding: 50px;
-  background-image: url('../../public//Login.webp'); /* Background image */
+  background-image: url('../assets/Login.webp'); /* Background image */
   background-size: cover;
   background-position: center;
 }
@@ -95,24 +102,16 @@ span{
 .info-text {
   z-index: 2;
   max-width: 400px;
-
-  
 }
 
 h3 {
   font-size: 24px;
-  margin-bottom: 10px;
-  color: black;
-  font-family: 'Poppins', sans-serif;
-  font-style: italic;
-  font-weight: 500;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  color: var(--color4);
+  font-family: var(--monospace);
+  font-weight: bolder;
   width: 100%;
-  margin-bottom: 500px;
-  
-  
+  position: absolute;
+  top: 80%;
 }
 
  p {
