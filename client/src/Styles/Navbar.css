@@ -1,0 +1,63 @@
+@import url('Variables.css');
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--white);
+    color: var(--color1);
+    padding: 15px;
+  }
+
+  .navbar-left{
+    display: flex;
+    align-items: center;
+    column-gap: 30px;
+    width: 200px;
+  }
+  
+  .navbar-left .logo {
+    height: 35px;
+    width: auto;
+  }
+
+  .navbar-left h2 {
+    font-size: 40px;
+    font-weight: bolder;
+    color: var(--black);
+  }
+  
+  .navbar-center .nav-links {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    column-gap: 70px;
+    padding-right: 50px;
+  }
+  
+  .navbar-center .nav-links li:hover {
+    border-bottom: 2px solid var(--color1);
+  }
+  
+  .navbar-center .nav-links a {
+    color: var(--color1);
+    text-decoration: none;
+    font-family: var(--monospace);
+    font-weight: bold;
+  }
+  
+  .navbar-center .cart-icon,
+  .navbar-center .user-icon {
+    font-size: 22px;
+  }
+  
+  .navbar-center .cart-count {
+    color: var(--color4);
+    background-color: var(--color2);
+    border-radius: 50%;
+    padding: 3px 7px;
+    font-size: 0.8rem;
+    position: absolute;
+    top: 10px;
+    right: 140px;
+  }

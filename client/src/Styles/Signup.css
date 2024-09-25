@@ -1,8 +1,7 @@
 body {
     /* font-family: Arial, sans-serif; */
     /* background-color:transparent; */
-    padding: 20px;
-    background-image: url(Login.webp);
+    background-image: url('../assets/Login.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

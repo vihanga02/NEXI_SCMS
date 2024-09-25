@@ -42,7 +42,6 @@ const Login = () => {
       </div>
       <div className="login-right">
           <h3>Streamlining your distribution from railway to doorstep with seamless efficiency.</h3>
-
       </div>
     </div>
   );
