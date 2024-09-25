@@ -1,7 +1,8 @@
 import React from 'react'
-import './Signup.css'
+import '../../Styles/Signup.css';
+import { useState } from 'react';
 
-export const Signup = () => {
+const Signup = () => {
   
   const [action, setAction] = useState("Login");
   
@@ -80,3 +81,6 @@ export const Signup = () => {
     </div>
   )
 }
+
+
+export default Signup;

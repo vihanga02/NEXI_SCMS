@@ -109,14 +109,14 @@ h3 {
   color: var(--color4);
   font-family: var(--monospace);
   font-weight: bolder;
-  width: 100%;
+  width: 85%;
   position: absolute;
-  top: 80%;
+  top: 75%;
+  text-align: center;
 }
 
  p {
-  font-size: 18px;
-
+  font-size: 18px
 }
 
 .background-image {
