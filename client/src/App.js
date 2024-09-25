@@ -3,6 +3,7 @@ import './App.css';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Customer from './pages/Customer';
+import { SignUp } from './pages/SignUp';
 import {
   createBrowserRouter,
   Outlet,
@@ -12,8 +13,7 @@ import {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <customer/>,
-    
+    element: <customer/>,  
   },
   {
     path: "/register",
@@ -22,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <SignUp />,
   },
 ]);
 
