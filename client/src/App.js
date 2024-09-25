@@ -3,12 +3,14 @@ import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-route
 import Login from './pages/Login/Login.js';
 import Signup from './pages/Signup/Signup.jsx';
 import Navbar from './components/Navbar/Navbar.js';
+import Footer from './components/Footer/Footer.js';
 
 const App = () => {
   const location = useLocation();
 
   // Define paths where the Navbar should not appear
   const hideNavbar = ['/login', '/signup'].includes(location.pathname);
+  const hideFooter = ['/login', '/signup'].includes(location.pathname);
 
   return (
     <>
@@ -18,6 +20,7 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         {/* Add other routes here */}
       </Routes>
+      {!hideFooter && <Footer />} {/* Render Footer only if not on Login or Signup pages */}
     </>
   );
 };

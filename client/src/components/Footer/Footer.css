@@ -1,0 +1,29 @@
+@import url('../../Styles/Variables.css');
+
+.footer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 2vh;
+    align-items: center;
+    justify-content: center;
+    padding: 3vh;
+    position: absolute;
+    bottom: 0;
+}
+
+.footer-img {
+    display: flex;
+    column-gap: 0.5vw;
+}
+
+.footer .footer-img div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer .footer-img div h2 {
+    font-family: var(--heading);
+    font-size: 80px;
+}
