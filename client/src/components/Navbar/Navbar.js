@@ -1,6 +1,6 @@
 import React from 'react';
-import '../Styles/Navbar.css';
-import logo from '../assets/2.png';
+import './Navbar.css';
+import logo from '../../assets/2.png';
 import '@fortawesome/fontawesome-free/css/all.min.css'; // Font Awesome import
 
 const Navbar = () => {
@@ -20,7 +20,7 @@ const Navbar = () => {
             <a href="/login">Dashboard</a>
           </li>
           <li>
-            <a href="/login">Reports</a>
+            <a href="/login">Products</a>
           </li>
           <li>
             <a href="/login">About Us</a>

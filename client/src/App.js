@@ -1,75 +1,35 @@
-// import './App.css';
-// import Login from './pages/Login';
-// import Register from './pages/Register';
-// import Customer from './pages/Customer';
-// import {
-//   createBrowserRouter,
-//   RouterProvider,
-// } from "react-router-dom";
-
-// const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <Customer />,
-    
-//   },
-//   {
-//     path: "/register",
-//     element: <Register />,
-//   },
-//   {
-//     path: "/login",
-//     element: <Login />,
-//   },
-// ]);
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <div className='container'>
-//         <RouterProvider router={router} /> 
-//       </div>
-//     </div>
-    
-
-//   );
-// }
-
-// export default App;
-
-
-// // // Register.js
-// // import React from 'react';
-// // import Login from './pages/Login';
-
-// // export default function App() {
-// //   return (
-// //     <div>
-// //       <Login />
-// //     </div>
-// //   );
-// // }
-
-
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Login from './pages/Login';
-
-import Signup from './pages/Login-Signup/Signup.jsx'
-import Customer from './pages/Customer';
-import Navbar from './pages/Navbar';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import Login from './pages/Login/Login.js';
+import Signup from './pages/Signup/Signup.jsx';
+import Navbar from './components/Navbar/Navbar.js';
+import Footer from './components/Footer/Footer.js';
 
 const App = () => {
+  const location = useLocation();
+
+  // Define paths where the Navbar should not appear
+  const hideNavbar = ['/login', '/signup'].includes(location.pathname);
+  const hideFooter = ['/login', '/signup'].includes(location.pathname);
+
   return (
-    <Router>
-      <Navbar />
+    <>
+      {!hideNavbar && <Navbar />} {/* Render Navbar only if not on Login or Signup pages */}
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/customer" element={<Customer />} />
+        {/* Add other routes here */}
       </Routes>
-    </Router>
+      {!hideFooter && <Footer />} {/* Render Footer only if not on Login or Signup pages */}
+    </>
   );
 };
 
-export default App;
+// Wrap the App component with Router outside
+const WrappedApp = () => (
+  <Router>
+    <App />
+  </Router>
+);
+
+export default WrappedApp;

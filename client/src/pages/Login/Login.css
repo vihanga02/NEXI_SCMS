@@ -1,4 +1,4 @@
-@import url('Variables.css');
+@import url('../../Styles/Variables.css');
 
 * {
   overflow: hidden;
@@ -19,20 +19,20 @@
   align-items: center;
   justify-content: center;
   background-color : var(--white);
-  padding: 20px;
+  padding: 2vw;
 }
 
 .text{
   color: var(--black);
-  margin-bottom: 20px;
-  margin-top: 70px;
+  margin-bottom: 2vh;
+  margin-top: 10vh;
   font-size: 15px;
 }
 
 
 .logo-container {
   text-align: center;
-  margin-bottom: 40px
+  margin-top: -5vh;
 }
 
 .logo {
@@ -42,19 +42,19 @@
 }
 
 h2 {
-  margin: -25px;
+  margin: -3vh;
   font-size: 70px;
   font-family: var(--heading);
 }
 
 p {
-  font-size: 18px;
+  font-size: 30px;
   color: var(--color1);
 }
 
 .login-form {
   width: 100%;
-  max-width: 300px;
+  max-width: 25vw;
   display: flex;
   flex-direction: column;
 }
@@ -69,8 +69,8 @@ p {
 }
 span{
   padding: 10px;
+  font-size: 14px;
 }
-
 .login-button {
   background-color: var(--color1);
   color: var(--white);
@@ -81,7 +81,8 @@ span{
 }
 
 .login-button:hover {
-  background-color: #0056b3;
+  background-color: var(--color2);
+  color: var(--color1);
 }
 
 /* Right side - image and text */
@@ -94,9 +95,13 @@ span{
   justify-content: center;
   align-items: flex-start;
   padding: 50px;
-  background-image: url('../assets/Login.webp'); /* Background image */
+  background-image: url('../../assets/Login.webp'); /* Background image */
   background-size: cover;
   background-position: center;
+}
+
+.forgot-password {
+  font-size: 14px;
 }
 
 .info-text {
@@ -126,6 +131,5 @@ h3 {
   bottom: 0;
   left: 0;
   opacity: 0.3; /* Adjust the opacity of the background image */
-  z-index: 1;
-  
+  z-index: 1; 
 }
