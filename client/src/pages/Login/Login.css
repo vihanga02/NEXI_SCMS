@@ -1,14 +1,11 @@
 @import url('../../Styles/Variables.css');
 
-* {
-  overflow: hidden;
-}
-
 /* Container for the whole login page */
 .login-container {
   display: flex;
   height: 100vh;
   font-family: 'Arial', sans-serif;
+  overflow: hidden;
 }
 
 /* Left side - logo and login form */
@@ -33,6 +30,7 @@
 .logo-container {
   text-align: center;
   margin-top: -5vh;
+  overflow: hidden;
 }
 
 .logo {
