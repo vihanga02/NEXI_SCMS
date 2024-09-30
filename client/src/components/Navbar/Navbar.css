@@ -6,7 +6,10 @@
     justify-content: space-between;
     background-color: var(--white);
     color: var(--color1);
-    padding: 15px;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
   }
 
   .navbar-left{
@@ -14,6 +17,7 @@
     align-items: center;
     column-gap: 30px;
     width: 200px;
+    overflow: hidden;
   }
   
   .navbar-left .logo {
