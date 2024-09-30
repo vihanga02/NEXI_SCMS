@@ -8,7 +8,7 @@ const Signup = () => {
   
   return (
 
-    <div>
+    <div className='signupbody'>
       <div class="signup-form-heading">Be a registered member of Nexi family !!</div>
     <div class="signup-form-outer">
         <form class="signup-form-inner" action="" method="post" onsubmit={()=>setAction('Sign')}>    

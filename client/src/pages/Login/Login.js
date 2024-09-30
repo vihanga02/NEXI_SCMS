@@ -3,6 +3,7 @@ import './Login.css';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/2.png';
 
+
 const Login = () => {
   
   const[email, setEmail] = useState('');
@@ -17,6 +18,7 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="login-left">
+        
       
         <div className="logo-container">
           <img

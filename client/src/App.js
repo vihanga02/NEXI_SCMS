@@ -4,8 +4,11 @@ import Login from './pages/Login/Login.js';
 import Signup from './pages/Signup/Signup.jsx';
 import Navbar from './components/Navbar/Navbar.js';
 import Footer from './components/Footer/Footer.js';
+
 import Products from './pages/Products/Products.js';
 import ProductDetails from './pages/ProductDetails/ProductDetails.js';
+
+import Dashboard from './pages/Dashboard/Dashboard.js';
 
 const App = () => {
   const location = useLocation();
@@ -20,9 +23,12 @@ const App = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<ProductDetails />} />
-        {/* Add other routes here */}
+
+        <Route path="/dashboard" element={<Dashboard />} />
+
       </Routes>
       {!hideFooter && <Footer />} 
     </>
