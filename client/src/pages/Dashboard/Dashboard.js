@@ -1,11 +1,11 @@
 import React from 'react'
 import './Dashboard.css'
-import MyCarousel from '../../components/Carousel/MyCarouse'
+import Carousel from '../../components/Carousel/Carousel'
 
 export default function Dashboard() {
   return (
     <div>
-        <MyCarousel/>
+        <Carousel/>
     </div>
   )
 }

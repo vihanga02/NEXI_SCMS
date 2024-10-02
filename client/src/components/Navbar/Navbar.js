@@ -1,7 +1,7 @@
 import React from 'react';
 import './Navbar.css';
 import logo from '../../assets/2.png';
-import '@fortawesome/fontawesome-free/css/all.min.css'; // Font Awesome import
+import '@fortawesome/fontawesome-free/css/all.min.css'; 
 
 const Navbar = () => {
   return (
