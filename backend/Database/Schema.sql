@@ -145,7 +145,7 @@ CREATE TABLE Delivery_Schedule (
 CREATE TABLE Order_Item (
   Set_id INT AUTO_INCREMENT,
   Product_ID INT,
-  Order_ID INT,
+  Order_ID INT DEFAULT NULL,
   Quantity INT,
   Order_Item_Capacity INT,
   Order_item_Price DECIMAL(8,2),

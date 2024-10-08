@@ -16,3 +16,4 @@ async function fetchData() {
 }
 
 fetchData();
+module.export = pool;
