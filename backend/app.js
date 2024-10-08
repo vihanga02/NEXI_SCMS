@@ -1,5 +1,5 @@
 import express from 'express';
-
+const port = 3001;
 const app = express();
 
 app.get("/store", (req, res) => {
@@ -11,6 +11,12 @@ app.use((err, req, res, next) => {
     console.log(err);
 });
 
-app.listen(3000, () => {
-    console.log("Server started on http://localhost:3000");
+app.post('/login', (req, res) => {
+    res.send("Hello from login");
+});
+
+app.listen(port, () => {
+    console.log(`Server started on http://localhost:${port}`);
 })
+
+
