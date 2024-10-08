@@ -11,9 +11,8 @@ const pool = mysql.createPool({
 }).promise();
 
 async function fetchData() {
-  const result = await pool.query('SELECT * FROM store');
-  console.log(result[0]);
+  console.log("Connected to the Database");
 }
 
 fetchData();
-module.export = pool;
+export default pool;

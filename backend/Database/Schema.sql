@@ -9,7 +9,7 @@ CREATE TABLE Customer(
   Customer_ID INT AUTO_INCREMENT,
   Name VARCHAR(50),
   Password VARCHAR(100),
-  Email VARCHAR(50),
+  Email VARCHAR(50) NOT NULL UNIQUE,
   Address VARCHAR(100),
   Phone_Number VARCHAR(12),
   PRIMARY KEY (Customer_ID)
