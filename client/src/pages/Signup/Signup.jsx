@@ -93,9 +93,6 @@ const routes = ["a", "b", "c", "d"];
                     <button type="submit">Sign Up</button>
                 </form>
             </div>
-            <div className='img'>
-                <img src={photo}/>
-            </div>
         </div>
     </div>
   )
