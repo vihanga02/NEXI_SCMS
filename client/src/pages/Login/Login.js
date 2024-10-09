@@ -2,16 +2,40 @@ import React, { useState } from 'react';
 import './Login.css';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/2.png';
+import axios from 'axios';
 
 
 const Login = () => {
   
-  const[email, setEmail] = useState('');
+  const[username, setUsername] = useState('');
   const[password, setPassword] = useState('');
+  const[succes, setSuccess] = useState('');
+  const[status, setStatus] = useState('');
 
   function handleSubmit(event){
     event.preventDefault();
-    console.log(email, password);
+    console.log(username, password);
+
+    if (!username || !password) {
+      setStatus('Please fill in both fields.');
+      setSuccess(false);
+      return;
+    }
+
+    // axios.post('/login', {username, password})
+    // .then((res) => {
+    //   console.log(res.data);
+    //   setStatus(res.data.status);
+    //   setSuccess(res.data.success);
+    //   if (res.data.success) {
+    //     setSuccess(true);
+    //     setStatus('Login successful.');
+    //   } else {
+    //     setSuccess(false);
+    //     setStatus('Login failed.');
+    //   }
+    // })
+
   }
   
 
@@ -31,8 +55,8 @@ const Login = () => {
         </div>
         <p className='text'>Welcome back! Please login to your account.</p>
         <form className="login-form" onSubmit={handleSubmit}>
-          <input type="email" placeholder="Enter your Email Address" className="input-field" 
-          onChange={e => setEmail(e.target.value)}/>
+          <input type="Uname" placeholder="Enter your Username" className="input-field" 
+          onChange={e => setUsername(e.target.value)}/>
           <input type="password" placeholder="Enter your Password" className="input-field" 
           onChange={e => setPassword(e.target.value)}/>
           <button type="submit" className="login-button">Login</button>
