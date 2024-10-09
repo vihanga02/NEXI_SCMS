@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './Login.css';
 import { Link } from 'react-router-dom';
-import logo from '../../assets/2.png';
 
 
 const Login = () => {
@@ -22,7 +21,7 @@ const Login = () => {
       
         <div className="logo-container">
           <img
-            src={logo} // Replace with your actual logo image path
+            src='/assets/2.png' // Replace with your actual logo image path
             alt="Nexi Logo"
             className="logo"
           />

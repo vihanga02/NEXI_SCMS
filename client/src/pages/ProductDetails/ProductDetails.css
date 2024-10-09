@@ -12,12 +12,12 @@
     flex-direction: column;
     overflow: hidden;
     width: 45vw;
-    padding: 100px 20px 20px 50px;
+    padding: 150px 20px 20px 50px;
 }
 
 .product-details .img-container {
     overflow: hidden;
-    width: 45vw;
+    width: 40vw;
 }
 
 .product-details .discription-container h2 {
@@ -37,7 +37,7 @@
 .product-details .img-container img {
     position: relative;
     width: 40vw;
-    height: 70vh;
+    height: 40vw;
     padding: 5px 15px;
 }
 
