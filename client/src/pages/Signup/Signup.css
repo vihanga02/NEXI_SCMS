@@ -92,7 +92,7 @@
 }
 
 /* Media Query for Mobile Responsiveness */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     .signupbody {
         flex-direction: column;
     }
@@ -104,6 +104,7 @@
 
     .img {
         display: none;
-        /* Hides image on smaller screens */
     }
 }
+
+} */
