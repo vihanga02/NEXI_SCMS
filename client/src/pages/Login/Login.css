@@ -2,6 +2,7 @@
 
 /* Container for the whole login page */
 .login-container {
+  width: 100%;
   display: flex;
   height: 100vh;
   font-family: 'Arial', sans-serif;
