@@ -12,7 +12,6 @@ class Customer {
     }
 
     static async createOrder(request) {
-        const decodedToken = decodeToken(request);
         const { Customer_ID, Store_ID, Route_ID, Ordered_Date, Expected_Date, Total_Capacity, Total_Price } = request.body;
 
         const query = "INSERT INTO Orders('Customer_ID', 'Store_ID', 'Route_ID', 'Ordered_Date', 'Expected_Date', 'Total_Capacity', 'Total_Price') VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -26,13 +25,12 @@ class Customer {
     }
 
     static async getOrders(req) {
-        const token = decodeToken(req);
-        const userID = token.ID;
+        const { Customer_ID } = req.body;
 
         const query = `SELECT * FROM Orders WHERE Customer_ID=?`;
 
         try {
-            const [results] = await pool.query(query, [userID]);
+            const [results] = await pool.query(query, [Customer_ID]);
             return results;
         } catch (error) {
             throw error;
@@ -52,14 +50,12 @@ class Customer {
     }
 
     static async updateCustomer(req) {
-        const token = decodeToken(req);
-        const userID = token.ID;
-        const { Name, Email, Address, Phone_Number } = req.body;
+        const { Customer_ID, Name, Email, Address, Phone_Number } = req.body;
 
         const query = `UPDATE Customer SET Name=?, Email=?, Address=?, Phone_Number=? WHERE Customer_ID=?`;
 
         try {
-            const [results] = await pool.query(query, [Name, Email, Address, Phone_Number, userID]);
+            const [results] = await pool.query(query, [Name, Email, Address, Phone_Number, Customer_ID]);
             return results;
         } catch (error) {
             throw error;
