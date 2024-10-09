@@ -5,6 +5,8 @@
     padding: 0px 15px;
     background-color: var(--color4);
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .products h1 {
@@ -17,12 +19,46 @@
     top: 8vh;
 }
 
+/* Styles for the search bar */
+.search-container {
+    position: relative;
+    top: 8vh;
+    left: 18vw;
+}
+
+.search-icon {
+    background-color: var(--white);
+    padding: 10px;
+    border-radius: 50%;
+    border: 1px solid var(--color3);
+    position: relative;
+    top: 1vw;
+}
+
+.search-bar {
+    width: 100%;
+    max-width: 800px;
+    padding: 12px 20px;
+    border: 1px solid var(--color3);
+    border-radius: 25px;
+    font-size: 16px;
+    color: var(--color6);
+    background-color: var(--white);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar:focus {
+    outline: none;
+    border-color: var(--color1);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
     position: relative;
-    top: 10vh;
+    top: 11vh;
     margin-bottom: 15vh;
 }
 
