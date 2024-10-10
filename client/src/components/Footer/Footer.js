@@ -1,6 +1,5 @@
 import './Footer.css';
 import React from 'react';
-import logo from '../../assets/2.png';
 
 
 const Footer = () => {
@@ -8,7 +7,7 @@ const Footer = () => {
       <div className="footer">
         <div className='footer-img'>
             <img
-                src={logo}
+                src='/assets/2.png'
                 alt="Nexi Logo"
                 className="logo"
             />

@@ -6,9 +6,9 @@ import './Carousel.css';
 
 const Carousel = () => {
     const slides = [
-        require('../../assets/iphone-14.jpg'),
-        require('../../assets/iphone-13.jpeg'),
-        require('../../assets/iphone-13-pro.jpeg'),
+        '/assets/iphone-14.jpg',
+        '/assets/iphone-13.jpeg',
+        '/assets/iphone-12.jpeg',
     ];
 
     const settings = {

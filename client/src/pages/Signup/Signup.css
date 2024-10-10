@@ -1,27 +1,15 @@
 @import url('../../Styles/Variables.css');
 
-body {
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f3f4f6;
-    font-family: Arial, sans-serif;
-}
-
 .background {
-    flex-direction: row;
-    width: 100vw;
-    height: 100vh;
-    background-color: #37066f;
+    background-color: var(--color1);
 }
 
 /* Form and Layout Styling */
 .signupbody {
     width: 100%;
     height: 100%;
+    align-content: center;
+    align-items: center;
 }
 
 .signup-form-outer {
@@ -34,54 +22,63 @@ body {
 
 .signup-form-inner {
     background-color: var(--color4);
-    border-radius: 20px;
+    border-radius: 10px;
     padding: 40px;
     width: 80%;
     max-width: 500px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     color: #333;
-    height: 100%;
 }
 
 .signup-form-inner h2 {
     text-align: center;
-    margin-bottom: 30px;
-    color: #333;
-    font-size: 2rem;
+    color: var(--color5);
+    font-size: 2.5rem;
+    font-family: var(--heading);
+    margin-bottom: 20px;
 }
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label{
+    font-family: var(--body);
+}
+
 
 .signup-form-inner input[type="text"],
 .signup-form-inner input[type="email"],
-.signup-form-inner input[type="phone number"],
+.signup-form-inner input[type="tel"],
 .signup-form-inner input[type="date"],
-.signup-form-inner select,
-.signup-form-inner input[id='uname'],
-.signup-form-inner input[id='password'] {
+.signup-form-inner input[type="password"],
+.signup-form-inner select {
     width: 100%;
-    padding: 15px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
+    padding: 8px;
+    border: 1px solid var(--color3);
     border-radius: 5px;
     box-sizing: border-box;
-    font-size: 1rem;
+    font-size: 15px;
+    color: var(--color2);
 }
 
-/* Styling for Address fields */
-.signup-form-inner input[type="Address"] {
-    width: 100%;
-    padding: 12px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-    font-size: 1rem;
+/* Address fields styling */
+.signup-form-inner input[type="text"][placeholder="Address line 1"],
+.signup-form-inner input[type="text"][placeholder="Address line 2"] {
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.signup-form-inner input::placeholder {
+    color: var(--color2); /* Use your desired color variable or hex code */
+    opacity: 1; /* Ensures full opacity for consistent appearance */
 }
 
 /* Button Styling */
 .signup-form-inner button {
-    background-color: #6b4dbf;
-    color: white;
-    padding: 15px;
+    background-color: var(--color1);
+    color: var(--color4);
+    padding: 10px;
     border: none;
     border-radius: 5px;
     font-size: 1.2rem;
@@ -92,15 +89,6 @@ body {
 
 .signup-form-inner button:hover {
     background-color: var(--color6);
-}
-
-/* Image Section Styling */
-.img {
-    flex: 1;
-    background-size: cover;
-    background-position: bottom;
-    opacity: 0.9;
-    height: 100vh;
 }
 
 /* Media Query for Mobile Responsiveness */
@@ -117,4 +105,6 @@ body {
     .img {
         display: none;
     }
+}
+
 } */

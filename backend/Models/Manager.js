@@ -51,7 +51,7 @@ class Manager{
 
     
     static async getDeleverySchedule(req){
-        const query = `select * from Delivery_Schedule where date>=curdate()`
+        const query = `select * from Delivery_Schedule where vehicle_arival_time>=curdate()`
 
         const result = await call_db(query, null);
 
@@ -59,10 +59,9 @@ class Manager{
     }
     
     static async addDeleverySchedule(req){
-        const {Train_id_Truck_id, Driver_id, Assistant_id, Order_id, Vehicle_arrival_time, Vehicle_departure_time, Delivery_status} = req.body;
-        const query = `insert into Delivery_Schedule (Train_id_Truck_id, Driver_id, Assistant_id, Order_id, Vehicle_arrival_time, Vehicle_departure_time, Delivery_status) values (?, ?, ?, ?, ?, ?, ?)`;
-        const values = [Train_id_Truck_id, Driver_id, Assistant_id, Order_id, Vehicle_arrival_time, Vehicle_departure_time, Delivery_status];
-
+        const {store_id} = req.body.store_id;
+        const query = 'call CreateDeliverySchedule(store_id)'
+        const values = [store_id];
         try {
             const result = await pool.query(query, values);
             return result;

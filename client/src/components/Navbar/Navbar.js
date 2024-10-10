@@ -1,6 +1,5 @@
 import React from 'react';
 import './Navbar.css';
-import logo from '../../assets/2.png';
 import '@fortawesome/fontawesome-free/css/all.min.css'; 
 
 const Navbar = () => {
@@ -8,7 +7,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-left">
         <img
-          src={logo}
+          src='/assets/2.png'
           alt="Nexi Logo"
           className="logo"
         />

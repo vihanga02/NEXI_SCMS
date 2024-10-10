@@ -1,40 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import './Products.css';
 import { Link } from 'react-router-dom';
-
-
-const products = [
-    { id: '1', name: 'Product 1', price: '$20', image: 'https://img.freepik.com/free-photo/elegant-smartphone-composition_23-2149437106.jpg?t=st=1727331980~exp=1727335580~hmac=1854a4f49245882ca05cdda49c3c900d319bd3c33a78f75d32e5e0216b5f2bab&w=826' },
-    { id: '2', name: 'Product 2', price: '$30', image: 'https://img.freepik.com/free-photo/elegant-smartphone-composition_23-2149437106.jpg?t=st=1727331980~exp=1727335580~hmac=1854a4f49245882ca05cdda49c3c900d319bd3c33a78f75d32e5e0216b5f2bab&w=826' },
-    { id: '3', name: 'Product 3', price: '$40', image: 'https://img.freepik.com/free-photo/elegant-smartphone-composition_23-2149437106.jpg?t=st=1727331980~exp=1727335580~hmac=1854a4f49245882ca05cdda49c3c900d319bd3c33a78f75d32e5e0216b5f2bab&w=826' },
-    { id: '4', name: 'Product 4', price: '$50', image: 'https://img.freepik.com/free-photo/elegant-smartphone-composition_23-2149437106.jpg?t=st=1727331980~exp=1727335580~hmac=1854a4f49245882ca05cdda49c3c900d319bd3c33a78f75d32e5e0216b5f2bab&w=826' },
-    { id: '5', name: 'Product 5', price: '$60', image: 'https://img.freepik.com/free-photo/elegant-smartphone-composition_23-2149437106.jpg?t=st=1727331980~exp=1727335580~hmac=1854a4f49245882ca05cdda49c3c900d319bd3c33a78f75d32e5e0216b5f2bab&w=826' },
-    { id: '6', name: 'Product 6', price: '$70', image: 'https://img.freepik.com/free-photo/elegant-smartphone-composition_23-2149437106.jpg?t=st=1727331980~exp=1727335580~hmac=1854a4f49245882ca05cdda49c3c900d319bd3c33a78f75d32e5e0216b5f2bab&w=826' },
-    { id: '6', name: 'Product 6', price: '$70', image: 'https://img.freepik.com/free-photo/elegant-smartphone-composition_23-2149437106.jpg?t=st=1727331980~exp=1727335580~hmac=1854a4f49245882ca05cdda49c3c900d319bd3c33a78f75d32e5e0216b5f2bab&w=826' },
-    { id: '6', name: 'Product 6', price: '$70', image: 'https://img.freepik.com/free-photo/elegant-smartphone-composition_23-2149437106.jpg?t=st=1727331980~exp=1727335580~hmac=1854a4f49245882ca05cdda49c3c900d319bd3c33a78f75d32e5e0216b5f2bab&w=826' },
-    { id: '6', name: 'Product 6', price: '$70', image: 'https://img.freepik.com/free-photo/elegant-smartphone-composition_23-2149437106.jpg?t=st=1727331980~exp=1727335580~hmac=1854a4f49245882ca05cdda49c3c900d319bd3c33a78f75d32e5e0216b5f2bab&w=826' },
-    { id: '6', name: 'Product 6', price: '$70', image: 'https://img.freepik.com/free-photo/elegant-smartphone-composition_23-2149437106.jpg?t=st=1727331980~exp=1727335580~hmac=1854a4f49245882ca05cdda49c3c900d319bd3c33a78f75d32e5e0216b5f2bab&w=826' },
-    { id: '6', name: 'Product 6', price: '$70', image: 'https://img.freepik.com/free-photo/elegant-smartphone-composition_23-2149437106.jpg?t=st=1727331980~exp=1727335580~hmac=1854a4f49245882ca05cdda49c3c900d319bd3c33a78f75d32e5e0216b5f2bab&w=826' },
-    { id: '6', name: 'Product 6', price: '$70', image: 'https://img.freepik.com/free-photo/elegant-smartphone-composition_23-2149437106.jpg?t=st=1727331980~exp=1727335580~hmac=1854a4f49245882ca05cdda49c3c900d319bd3c33a78f75d32e5e0216b5f2bab&w=826' },
-    { id: '6', name: 'Product 6', price: '$70', image: 'https://img.freepik.com/free-photo/elegant-smartphone-composition_23-2149437106.jpg?t=st=1727331980~exp=1727335580~hmac=1854a4f49245882ca05cdda49c3c900d319bd3c33a78f75d32e5e0216b5f2bab&w=826' },
-    { id: '6', name: 'Product 6', price: '$70', image: 'https://img.freepik.com/free-photo/elegant-smartphone-composition_23-2149437106.jpg?t=st=1727331980~exp=1727335580~hmac=1854a4f49245882ca05cdda49c3c900d319bd3c33a78f75d32e5e0216b5f2bab&w=826' },
-    { id: '6', name: 'Product 6', price: '$70', image: 'https://img.freepik.com/free-photo/elegant-smartphone-composition_23-2149437106.jpg?t=st=1727331980~exp=1727335580~hmac=1854a4f49245882ca05cdda49c3c900d319bd3c33a78f75d32e5e0216b5f2bab&w=826' },
-    { id: '6', name: 'Product 6', price: '$70', image: 'https://img.freepik.com/free-photo/elegant-smartphone-composition_23-2149437106.jpg?t=st=1727331980~exp=1727335580~hmac=1854a4f49245882ca05cdda49c3c900d319bd3c33a78f75d32e5e0216b5f2bab&w=826' },
-    { id: '6', name: 'Product 6', price: '$70', image: 'https://img.freepik.com/free-photo/elegant-smartphone-composition_23-2149437106.jpg?t=st=1727331980~exp=1727335580~hmac=1854a4f49245882ca05cdda49c3c900d319bd3c33a78f75d32e5e0216b5f2bab&w=826' },
-    { id: '6', name: 'Product 6', price: '$70', image: 'https://img.freepik.com/free-photo/elegant-smartphone-composition_23-2149437106.jpg?t=st=1727331980~exp=1727335580~hmac=1854a4f49245882ca05cdda49c3c900d319bd3c33a78f75d32e5e0216b5f2bab&w=826' },
-    { id: '6', name: 'Product 6', price: '$70', image: 'https://img.freepik.com/free-photo/elegant-smartphone-composition_23-2149437106.jpg?t=st=1727331980~exp=1727335580~hmac=1854a4f49245882ca05cdda49c3c900d319bd3c33a78f75d32e5e0216b5f2bab&w=826' },
-];
+import axios from "axios";
+import '@fortawesome/fontawesome-free/css/all.min.css'; 
 
 const Products = () => {
+
+    const [products, setProducts] = useState([]);
+    const [searchTerm, setSearchTerm] = useState(""); // Add searchTerm state
+
+    useEffect(() => {
+        getProducts();
+    },[])
+
+    const getProducts = async () => {
+        try{
+            const result = await axios.get('/customer/products');
+            setProducts(result.data);
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+
+    // Filter products based on search term
+    const filteredProducts = products.filter(product => 
+        product.Product_Name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <div className="products">
             <h1>Explore Products</h1>
+
+            {/* Search Bar */}
+            <div className="search-container">
+                <i className="fas fa-search search-icon"></i>
+                <input 
+                    type="text" 
+                    className="search-bar" 
+                    placeholder="Search products..." 
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+            </div>
+
             <div className="product-grid">
-                {products.map(product => (
-                    <Link key={product.id} to={`/products/${product.id}`} className="product-item">
-                        <img src={product.image} alt={product.name} />
-                        <div className="product-name">{product.name}</div>
-                        <div className="product-price">{product.price}</div>
+                {filteredProducts.map(product => (
+                    <Link key={product.Product_ID} to={`/products/${product.Product_ID}`} className="product-item">
+                        <img src={product.Image_Link} alt={product.Product_Name} />
+                        <div className="product-name">{product.Product_Name}</div>
+                        <div className="product-price">{product.Price}</div>
                         <div><button className="add-to-cart">Add To Cart</button></div>
                     </Link>
                 ))}

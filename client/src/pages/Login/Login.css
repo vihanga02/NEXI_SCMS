@@ -94,7 +94,7 @@ span{
   justify-content: center;
   align-items: flex-start;
   padding: 50px;
-  background-image: url('../../assets/Login.webp'); /* Background image */
+  background-image: url('../../../public/assets/Login.webp'); /* Background image */
   background-size: cover;
   background-position: center;
 }
