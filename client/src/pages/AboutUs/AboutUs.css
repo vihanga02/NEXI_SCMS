@@ -1,0 +1,120 @@
+.aboutus {
+    background-color: #f9f9f9;
+    padding: 40px;
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    line-height: 1.8;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .aboutus h1 {
+    font-size: 2.5rem;
+    color: #0077cc;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .aboutus h2 {
+    font-size: 2rem;
+    color: #0077cc;
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+  
+  .aboutus h4 {
+    font-size: 1.8rem;
+    color: #005fa3;
+    margin-top: 30px;
+    margin-bottom: 15px;
+  }
+  
+  .aboutus p {
+    font-size: 1.1rem;
+    text-align: justify;
+    margin-bottom: 20px;
+  }
+  
+  .Mission {
+    background-color: #eef6fc;
+    padding: 15px;
+    border-left: 5px solid #0077cc;
+    border-radius: 5px;
+  }
+  
+  .future-goals ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .future-goals ul li {
+    background-color: #eef6fc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-left: 5px solid #005fa3;
+    border-radius: 5px;
+  }
+  
+  .future-goals ul li strong {
+    color: #005fa3;
+  }
+  
+  .contact-info {
+    background-color: #f0f0f0;
+    padding: 20px;
+    margin-top: 30px;
+    border-radius: 8px;
+  }
+  
+  .contact-info ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .contact-info ul li {
+    margin-bottom: 10px;
+  }
+  
+  .social-media ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .social-media ul li {
+    display: inline;
+    margin-right: 15px;
+  }
+  
+  .social-media a {
+    color: #0077cc;
+    text-decoration: none;
+  }
+  
+  .social-media a:hover {
+    text-decoration: underline;
+  }
+  
+  @media (max-width: 768px) {
+    .aboutus {
+      padding: 20px;
+    }
+  
+    .aboutus h1 {
+      font-size: 2rem;
+    }
+  
+    .aboutus h2, .aboutus h4 {
+      font-size: 1.5rem;
+    }
+  
+    .aboutus p {
+      font-size: 1rem;
+    }
+  
+    .future-goals ul li {
+      padding: 8px;
+    }
+  }
+  

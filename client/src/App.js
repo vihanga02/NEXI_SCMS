@@ -10,7 +10,12 @@ import CategoryPage from './pages/ProductCategory/ProductCategory.js';
 import ProductDetails from './pages/ProductDetails/ProductDetails.js';
 import Dashboard from './pages/Dashboard/Dashboard.js';
 
+
+import AboutUs from './pages/AboutUs/AboutUs.js';
+
+
 import data from './data.json';
+
 import AdminLogin from './pages/Admin/Login/Login.js';
 import AdminDashboard from './pages/Admin/AdminDashboard/AdminDashboard.js';
 import Driver from './pages/Admin/Driver/Driver.js';
@@ -18,6 +23,10 @@ import Assistant from './pages/Admin/Assistant/Assistant.js';
 import Order from './pages/Admin/Order/Order.js';
 import Report from './pages/Admin/Report/Report.js';
 
+
+
+import data from './data.json'
+import UserDetails from './pages/UserDetails/UserDetails.js';
 
 
 const path = data.backend;
@@ -56,11 +65,16 @@ const App = () => {
         <Route path="/products/:id" element={<ProductDetails />} />
 
         <Route path="/dashboard" element={<Dashboard />} />
+
+        <Route path="/aboutus" element={<AboutUs />} />
+        <Route path="/userdetails" element={<UserDetails />} />
+
         <Route path="/admindashboard" element={<AdminDashboard/>} />
         <Route path="/driver" element={<Driver/>}/>
         <Route path="/order" element={<Order/>}/>
         <Route path="/assistant" element={<Assistant/>}/>
         <Route path="/report" element={<Report/>}/>
+
 
       </Routes>
       {!hideFooter && <Footer />} 
