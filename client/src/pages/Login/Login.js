@@ -21,19 +21,19 @@ const Login = () => {
       return;
     }
 
-    // axios.post('/login', {username, password})
-    // .then((res) => {
-    //   console.log(res.data);
-    //   setStatus(res.data.status);
-    //   setSuccess(res.data.success);
-    //   if (res.data.success) {
-    //     setSuccess(true);
-    //     setStatus('Login successful.');
-    //   } else {
-    //     setSuccess(false);
-    //     setStatus('Login failed.');
-    //   }
-    // })
+    axios.post('/login', {username, password})
+    .then((res) => {
+      console.log(res.data);
+      setStatus(res.data.status);
+      setSuccess(res.data.success);
+      if (res.data.success) {
+        setSuccess(true);
+        setStatus('Login successful.');
+      } else {
+        setSuccess(false);
+        setStatus('Login failed.');
+      }
+    })
 
   }
   

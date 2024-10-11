@@ -1,0 +1,45 @@
+.cc {
+  display: flex;
+  height: 100vh; /* Full height of the viewport */
+  width: 100%;  
+}
+
+/* Left section */
+.left {
+  background-color: #2c3e50;
+  width: 20%; /* 20% of the container width */
+  padding: 20px;
+}
+
+/* Right section (which will be divided into top and bottom) */
+.right {
+  display: flex;
+  flex-direction: column;
+  width: 80%; /* 80% of the container width */
+}
+
+/* Right section - Top part */
+.right .top {
+  background-color: #2c3e50;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  font-size: 24px;
+}
+
+/* Right section - Bottom part */
+.right .bottom {
+  background-color: #cccccc;
+  height: 85%; /* Take up 85% of the right section */
+  padding: 0; /* Remove padding to make the image occupy full space */
+  display: flex; /* Flexbox to ensure the image stretches */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Image Styling - to cover the entire bottom section */
+.admin {
+  width: 100%; /* Make image take full width */
+  height: 100%; /* Make image take full height */
+  object-fit: contain; /* Ensure the image covers the entire area without distortion */
+}
