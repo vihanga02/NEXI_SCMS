@@ -10,8 +10,10 @@ import Products from './pages/Products/Products.js';
 import ProductDetails from './pages/ProductDetails/ProductDetails.js';
 
 import Dashboard from './pages/Dashboard/Dashboard.js';
+import AboutUs from './pages/AboutUs/AboutUs.js';
 
 import data from './data.json'
+import UserDetails from './pages/UserDetails/UserDetails.js';
 
 const path = data.backend;
 
@@ -35,6 +37,8 @@ const App = () => {
         <Route path="/products/:id" element={<ProductDetails />} />
 
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/aboutus" element={<AboutUs />} />
+        <Route path="/userdetails" element={<UserDetails />} />
 
       </Routes>
       {!hideFooter && <Footer />} 

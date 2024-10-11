@@ -22,7 +22,7 @@ const Navbar = () => {
             <a href="/products">Products</a>
           </li>
           <li>
-            <a href="/login">About Us</a>
+            <a href="/aboutus">About Us</a>
           </li>
           <li className='icon-li'>
             <a href="/login" className="cart-icon">
@@ -31,9 +31,10 @@ const Navbar = () => {
             </a>
           </li>
           <li className='icon-li'>
-            <a href="/login" className="user-icon">
+            <a href="/userdetails" className="user-icon">
                 <i className="fas fa-user"></i>
             </a>
+            
           </li>
         </ul>
       </div>

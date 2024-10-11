@@ -1,0 +1,83 @@
+/* Overall layout for the customer profile */
+@import url('../../Styles/Variables.css');
+.customer-profile {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 70px auto;
+    background-color: var(--color4);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Styling for the customer details section */
+  .customer-details {
+    flex: 1; /* Takes up one column */
+    margin-right: 20px; /* Spacing between columns */
+    background-color: white; /* White background for clarity */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+   
+  }
+  
+  .customer-details h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    margin-left: 5px;
+    font-style: var(--heading);
+  }
+  
+  .customer-details p {
+    margin: 8px 0; /* Space between paragraphs */
+    font-size: 20px;
+    line-height: 1.5; /* Better readability */
+    border: 1px solid gray; /* Border around the details */
+    border-radius: 5px;
+  }
+  
+  /* Styling for the customer orders section */
+  .customer-orders {
+    flex: 2; /* Takes up one column */
+    background-color:white ; /* White background for clarity */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .customer-orders h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    margin-left: 5px;
+  }
+  
+  .customer-orders ul {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove default padding */
+  }
+  
+  .order-item {
+    margin-bottom: 15px; /* Space between order items */
+    padding: 15px;
+    background-color: #f1f1f1; /* Light gray background for orders */
+    border-radius: 5px;
+  }
+  
+  .order-item p {
+    margin: 5px 0; /* Space between order details */
+    font-size: 16px;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .customer-profile {
+      flex-direction: column; /* Stack columns on smaller screens */
+    }
+  
+    .customer-details, .customer-orders {
+      margin-right: 0; /* Remove right margin in stacked layout */
+      margin-bottom: 20px; /* Space between stacked sections */
+    }
+  }
+  
