@@ -2,7 +2,7 @@
 
 .product-details {
     padding: 16.5vh 5vw 11vh 5vw;
-    background-color: var(--color4);
+    background: linear-gradient(225deg,var(--white), var(--color4), var(--color3) );
     display: flex;
     overflow: hidden;
 }
