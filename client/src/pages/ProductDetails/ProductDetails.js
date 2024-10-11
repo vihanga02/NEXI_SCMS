@@ -22,9 +22,7 @@ const ProductDetails = () => {
     }
 
     const { id } = useParams(); // Get the product ID from the URL
-    console.log(id);
     const product = products.find(p => p.Product_ID == id); // Find the product by ID
-    console.log(product);
     if (!product) {
         return <div>Product not found</div>; // Handle case where product is not found
     }
