@@ -1,7 +1,5 @@
 @import url('../../Styles/Variables.css');
 
-
-
 .footer{
     width: 100%;
     display: flex;
@@ -12,8 +10,7 @@
     padding: 3vh;
     position: relative;
     bottom: 0;
-    z-index: 199;
-    background-color: var(--white); ;
+    background-color: var(--white);
 }
 
 .footer-img {

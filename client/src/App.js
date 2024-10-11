@@ -9,18 +9,28 @@ import Products from './pages/Products/Products.js';
 import ProductDetails from './pages/ProductDetails/ProductDetails.js';
 
 import Dashboard from './pages/Dashboard/Dashboard.js';
+import AdminLogin from './pages/Admin/Login/Login.js';
+import AdminDashboard from './pages/Admin/AdminDashboard/AdminDashboard.js';
+import Driver from './pages/Admin/Driver/Driver.js';
+import Assistant from './pages/Admin/Assistant/Assistant.js';
+import Order from './pages/Admin/Order/Order.js';
+import Report from './pages/Admin/Report/Report.js';
+
 
 const App = () => {
   const location = useLocation();
 
   // Define paths where the Navbar should not appear
-  const hideNavbar = ['/login', '/signup'].includes(location.pathname);
-  const hideFooter = ['/login', '/signup'].includes(location.pathname);
+  const hideNavbar = ['/login', '/signup','/admindashboard','/driver','/order','/report','/assistant'].includes(location.pathname);
+  const hideFooter = ['/login', '/signup','/admindashboard','/driver','/order','/report','/assistant'].includes(location.pathname);
+  
 
   return (
     <>
       {!hideNavbar && <Navbar />} 
       <Routes>
+        
+        <Route path="/adminlogin" element={<AdminLogin/>} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
@@ -28,9 +38,15 @@ const App = () => {
         <Route path="/products/:id" element={<ProductDetails />} />
 
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/admindashboard" element={<AdminDashboard/>} />
+        <Route path="/driver" element={<Driver/>}/>
+        <Route path="/order" element={<Order/>}/>
+        <Route path="/assistant" element={<Assistant/>}/>
+        <Route path="/report" element={<Report/>}/>
 
       </Routes>
       {!hideFooter && <Footer />} 
+    
     </>
   );
 };
