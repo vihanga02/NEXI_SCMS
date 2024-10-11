@@ -1,0 +1,52 @@
+@import url('../../Styles/Variables.css');
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 2fr));
+    gap: 20px;
+    position: relative;
+    top: 11vh;
+    margin-bottom: 15vh;
+}
+
+.product-item {
+    background-color: var(--white);
+    border: 1px solid var(--color3);
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.product-item img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    height: auto;
+    border-radius: 8px;
+}
+
+.product-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 6px;
+    color: var(--color6);
+}
+
+.product-price {
+    color: var(--color1);
+    margin-bottom: 5px;
+}
+
+.add-to-cart {
+    border-radius: 5px;
+    border: none;
+    padding: 8px 10px;
+    font-weight: bolder;
+    cursor: pointer;
+    background-color: var(--color5);
+    color: var(--color4);
+}
+
+.add-to-cart:hover {
+    background-color: var(--color6);
+}

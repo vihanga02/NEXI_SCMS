@@ -6,9 +6,9 @@ import './Carousel.css';
 
 const Carousel = () => {
     const slides = [
-        '/assets/iphone-14.jpg',
-        '/assets/iphone-13.jpeg',
-        '/assets/iphone-12.jpeg',
+        '/assets/iphone-14-pro.jpg',
+        '/assets/pixel-7-pro.jpg',
+        '/assets/galaxy-s23-ultra.jpg',
     ];
 
     const settings = {

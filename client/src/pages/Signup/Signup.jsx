@@ -8,7 +8,6 @@ const Signup = () => {
 
   const districts = ["Colombo", "Negombo", "Galle", "Matara", "Jaffna", "Trinco", "Kandy", "Kurunegala"];
   const cities = ["Colombo", "Kotte", "Dehiwala", "Moratuwa", "Nugegoda"];
-  const routes = ["a", "b", "c", "d"];
 
   return (
     <div className='background'>
@@ -23,6 +22,11 @@ const Signup = () => {
             </div>
 
             <div className="form-group">
+              <label htmlFor="uname">Username:</label>
+              <input type="text" id="uname" name="uname" placeholder="Username" required />
+            </div>
+
+            <div className="form-group">
               <label htmlFor="email">Email:</label>
               <input type="email" id="email" name="email" placeholder="Email Address" required />
             </div>
@@ -33,24 +37,8 @@ const Signup = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="date">Birthday:</label>
-              <input type="date" id="date" name="date" required />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="gender">Gender:</label>
-              <select name="gender" id="gender" required>
-                <option value="" disabled selected>Select gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Rather not say">Rather not say</option>
-              </select>
-            </div>
-
-            <div className="form-group">
               <label>Address:</label>
-              <input type="text" placeholder="Address line 1" />
-              <input type="text" placeholder="Address line 2" />
+              <input type="text" placeholder="Address" />
             </div>
 
             <div className="form-group">
@@ -74,28 +62,13 @@ const Signup = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="route">Route from city to home:</label>
-              <select name="route" id="route">
-                <option value="" disabled selected>Select Route</option>
-                {routes.map((route) => (
-                  <option value={route} key={route}>{route}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="uname">Create Username:</label>
-              <input type="text" id="uname" name="uname" placeholder="Username" required />
-            </div>
-
-            <div className="form-group">
               <label htmlFor="password">Create Password:</label>
               <input type="password" id="password" name="password" placeholder="Create Strong password" required />
             </div>
 
             <div className="form-group">
               <label htmlFor="confirmPassword">Confirm Password:</label>
-              <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Retype password" required />
+              <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Re Enter password" required />
             </div>
 
             <button type="submit">Sign Up</button>

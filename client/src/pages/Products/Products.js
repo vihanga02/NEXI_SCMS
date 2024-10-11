@@ -1,38 +1,42 @@
 import React, { useEffect, useState } from "react";
 import './Products.css';
-import { Link } from 'react-router-dom';
 import axios from "axios";
 import '@fortawesome/fontawesome-free/css/all.min.css'; 
+import ProductGrid from '../../components/ProductGrid/ProductGrid.js';
+import { useParams } from "react-router-dom";
 
 const Products = () => {
-
     const [products, setProducts] = useState([]);
-    const [searchTerm, setSearchTerm] = useState(""); // Add searchTerm state
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const { category } = useParams(); // Use "category" as the parameter name
+
+    console.log(category); // Log the selected category
 
     useEffect(() => {
         getProducts();
-    },[])
+    }, []);
 
     const getProducts = async () => {
-        try{
+        try {
             const result = await axios.get('/customer/products');
             setProducts(result.data);
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err);
         }
-    }
+    };
 
-    // Filter products based on search term
+    // Filter products based on the selected category and search term
     const filteredProducts = products.filter(product => 
+        (category === "All" || product.Category === category) && 
         product.Product_Name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (
         <div className="products">
-            <h1>Explore Products</h1>
+            <h1>{`Explore ${category} Products`}</h1>
 
-            {/* Search Bar */}
+            {/* Display the search bar when a category is selected */}
             <div className="search-container">
                 <i className="fas fa-search search-icon"></i>
                 <input 
@@ -44,16 +48,8 @@ const Products = () => {
                 />
             </div>
 
-            <div className="product-grid">
-                {filteredProducts.map(product => (
-                    <Link key={product.Product_ID} to={`/products/${product.Product_ID}`} className="product-item">
-                        <img src={product.Image_Link} alt={product.Product_Name} />
-                        <div className="product-name">{product.Product_Name}</div>
-                        <div className="product-price">{product.Price}</div>
-                        <div><button className="add-to-cart">Add To Cart</button></div>
-                    </Link>
-                ))}
-            </div>
+            {/* Display filtered products */}
+            <ProductGrid products={filteredProducts} />
         </div>
     );
 };
