@@ -20,6 +20,7 @@ const CategoryPage = () => {
             // Extract distinct categories from the products data
             const distinctCategories = [...new Set(result.data.map(product => product.Category))];
             setCategories(distinctCategories); // Set categories state
+            console.log(result.data.map(product => product.Category));
         } catch (err) {
             console.log(err); // Log any errors
         }

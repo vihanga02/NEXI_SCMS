@@ -15,6 +15,7 @@ const ProductDetails = () => {
         try{
             const result = await axios.get('/customer/products/');
             setProducts(result.data);
+            
         }
         catch (err) {
             console.log(err);
