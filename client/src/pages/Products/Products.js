@@ -1,57 +1,65 @@
 import React, { useEffect, useState } from "react";
-import './Products.css';
+import "./Products.css";
+import { Link } from "react-router-dom";
 import axios from "axios";
-import '@fortawesome/fontawesome-free/css/all.min.css'; 
-import ProductGrid from '../../components/ProductGrid/ProductGrid.js';
-import { useParams } from "react-router-dom";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const Products = () => {
-    const [products, setProducts] = useState([]);
-    const [searchTerm, setSearchTerm] = useState("");
+  const [products, setProducts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState(""); // Add searchTerm state
 
-    const { category } = useParams(); // Use "category" as the parameter name
+  useEffect(() => {
+    getProducts();
+  }, []);
 
-    console.log(category); // Log the selected category
+  const getProducts = async () => {
+    try {
+      const result = await axios.get("/customer/products");
+      setProducts(result.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-    useEffect(() => {
-        getProducts();
-    }, []);
+  // Filter products based on search term
+  const filteredProducts = products.filter((product) =>
+    product.Product_Name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-    const getProducts = async () => {
-        try {
-            const result = await axios.get('/customer/products');
-            setProducts(result.data);
-        } catch (err) {
-            console.log(err);
-        }
-    };
+  return (
+    <div className="products">
+      <h1>Explore Products</h1>
 
-    // Filter products based on the selected category and search term
-    const filteredProducts = products.filter(product => 
-        (category === "All" || product.Category === category) && 
-        product.Product_Name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+      {/* Search Bar */}
+      <div className="search-container">
+        <i className="fas fa-search search-icon"></i>
+        <input
+          type="text"
+          className="search-bar"
+          placeholder="Search products..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
 
-    return (
-        <div className="products">
-            <h1>{`Explore ${category} Products`}</h1>
-
-            {/* Display the search bar when a category is selected */}
-            <div className="search-container">
-                <i className="fas fa-search search-icon"></i>
-                <input 
-                    type="text" 
-                    className="search-bar" 
-                    placeholder="Search products..." 
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
+      <div className="product-grid">
+        {filteredProducts.map((product) => (
+          <Link
+            key={product.Product_ID}
+            to={`/products/${product.Product_ID}`}
+            className="product-item"
+          >
+            <img src={product.Image_Link} alt={product.Product_Name} />
+            <div className="product-name">{product.Product_Name}</div>
+            <div className="product-price">{product.Price}</div>
+            <div>
+              <button className="add-to-cart">Add To Cart</button>
             </div>
-
-            {/* Display filtered products */}
-            <ProductGrid products={filteredProducts} />
-        </div>
-    );
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default Products;

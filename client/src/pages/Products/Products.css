@@ -3,11 +3,10 @@
 .products {
     font-family: var(--heading);
     padding: 0px 15px;
-    background: linear-gradient(225deg,var(--white), var(--color4), var(--color3) );
+    background-color: var(--color4);
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
 }
 
 .products h1 {
@@ -51,5 +50,56 @@
 .search-bar:focus {
     outline: none;
     border-color: var(--color1);
-    box-shadow: 0px 4px 8px var(--color3);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    position: relative;
+    top: 11vh;
+    margin-bottom: 15vh;
+}
+
+.product-item {
+    background-color: var(--white);
+    border: 1px solid var(--color3);
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.product-item img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    height: auto;
+    border-radius:8px;
+}
+
+.product-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 6px;
+    color: var(--color6);
+}
+
+.product-price {
+    color: var(--color1);
+    margin-bottom: 5px;
+}
+
+.add-to-cart {
+    border-radius: 5px;
+    border: none;
+    padding:8px 10px;
+    font-weight: bolder;
+    cursor: pointer;
+    background-color: var(--color5);
+    color: var(--color4);
+}
+
+.add-to-cart:hover {
+    background-color: var(--color6);
+}   
