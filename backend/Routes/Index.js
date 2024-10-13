@@ -1,10 +1,8 @@
-import express from 'express';
+import express from "express";
 const router = express.Router();
 
-import customer_routes from './Customer.js';
-import auth_routes from './Auth.js';
+import customer_routes from "./CustomerRoutes.js";
 
-router.use('/customer', customer_routes);
-router.use('/auth', auth_routes);
+router.use("/customer", customer_routes);
 
 export default router;

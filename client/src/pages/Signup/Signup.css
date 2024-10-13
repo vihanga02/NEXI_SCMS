@@ -1,16 +1,22 @@
 @import url('../../Styles/Variables.css');
 
+/* Background Styling */
 .background {
-    background: linear-gradient(225deg,var(--white), var(--color4), var(--color3) );
-
+    background-color: var(--color1);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
 
 /* Form and Layout Styling */
 .signupbody {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     height: 100%;
-    align-content: center;
-    align-items: center;
 }
 
 .signup-form-outer {
@@ -18,35 +24,40 @@
     justify-content: center;
     align-items: center;
     flex: 1;
-    padding: 50px;
+    padding: 20px;
+    max-width: 600px;
 }
 
 .signup-form-inner {
-    background-color: var(--white);
-    border-radius: 10px;
+    background-color: var(--color4);
+    border-radius: 12px;
     padding: 40px;
-    width: 80%;
+    width: 100%;
     max-width: 500px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    color: var(--color5);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    color: #333;
 }
 
 .signup-form-inner h2 {
     text-align: center;
     color: var(--color5);
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-family: var(--heading);
+    margin-bottom: 25px;
+}
+
+/* Form Group Styling */
+.form-group {
     margin-bottom: 20px;
 }
 
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label{
+.form-group label {
     font-family: var(--body);
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+    color: var(--color2);
 }
-
 
 .signup-form-inner input[type="text"],
 .signup-form-inner input[type="email"],
@@ -55,59 +66,73 @@
 .signup-form-inner input[type="password"],
 .signup-form-inner select {
     width: 100%;
-    padding: 8px;
+    padding: 12px;
     border: 1px solid var(--color3);
-    border-radius: 5px;
+    border-radius: 8px;
     box-sizing: border-box;
-    font-size: 15px;
+    font-size: 16px;
     color: var(--color2);
-    background-color: var(--color4);
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
 }
 
-/* Address fields styling */
-.signup-form-inner input[type="text"][placeholder="Address line 1"],
-.signup-form-inner input[type="text"][placeholder="Address line 2"] {
-    padding: 10px;
-    margin-bottom: 10px;
+.signup-form-inner input:focus,
+.signup-form-inner select:focus {
+    border-color: var(--color6);
+    outline: none;
 }
 
+/* Placeholder Styling */
 .signup-form-inner input::placeholder {
-    color: var(--color2); /* Use your desired color variable or hex code */
-    opacity: 1; /* Ensures full opacity for consistent appearance */
+    color: #999;
+    opacity: 1;
 }
 
 /* Button Styling */
 .signup-form-inner button {
     background-color: var(--color1);
     color: var(--color4);
-    padding: 10px;
+    padding: 12px;
     border: none;
-    border-radius: 5px;
-    font-size: 1.2rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-family: var(--body);
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
     width: 100%;
-    margin-top: 10px;
+    text-align: center;
+    margin-top: 20px;
 }
 
 .signup-form-inner button:hover {
     background-color: var(--color6);
+    transform: translateY(-2px);
+}
+
+.signup-form-inner button:active {
+    transform: translateY(0);
+}
+
+/* Error Message Styling */
+.error {
+    color: #d9534f;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    font-family: var(--body);
 }
 
 /* Media Query for Mobile Responsiveness */
-/* @media (max-width: 768px) {
-    .signupbody {
-        flex-direction: column;
-    }
-
+@media (max-width: 768px) {
     .signup-form-inner {
-        width: 90%;
         padding: 30px;
     }
 
-    .img {
-        display: none;
+    .signup-form-inner h2 {
+        font-size: 1.8rem;
+    }
+
+    .signup-form-inner button {
+        font-size: 1rem;
     }
 }
-
-} */

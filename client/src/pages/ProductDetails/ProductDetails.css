@@ -2,7 +2,7 @@
 
 .product-details {
     padding: 16.5vh 5vw 11vh 5vw;
-    background: linear-gradient(225deg,var(--white), var(--color4), var(--color3) );
+    background-color: var(--color4);
     display: flex;
     overflow: hidden;
 }
@@ -54,7 +54,18 @@
     margin-bottom: 5vh;
 }
 
-.product-details .add-to-cart {
+.product-details .discription-container .quantity-display {
+    margin: 10px;
+}
+
+.product-details .discription-container .quantity-display .counter_btn{
+    margin: 10px;
+    
+}
+
+
+.product-details .discription-container .add-to-cart {
+    margin-top: 10px;
     background-color: var(--color5);
     color: var(--color4);
     border: none;
