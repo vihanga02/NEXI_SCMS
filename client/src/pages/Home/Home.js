@@ -1,5 +1,5 @@
 import React from 'react'
-import './Dashboard.css'
+import './Home.css'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import Carousel from '../../components/Carousel/Carousel'

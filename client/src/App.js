@@ -8,7 +8,7 @@ import Footer from './components/Footer/Footer.js';
 import Products from './pages/Products/Products.js';
 import CategoryPage from './pages/ProductCategory/ProductCategory.js';
 import ProductDetails from './pages/ProductDetails/ProductDetails.js';
-import Dashboard from './pages/Dashboard/Dashboard.js';
+import Dashboard from './pages/Home/Home.js';
 
 
 import AboutUs from './pages/AboutUs/AboutUs.js';
@@ -47,7 +47,7 @@ const App = () => {
         <Route path="/products" element={<CategoryPage />} />
         
         <Route path="/products/category/:id" element={<ProductDetails />} />
-        <Route path="/dashboard" element ={<Dashboard />} />
+        <Route path="/" element ={<Dashboard />} />
 
 
         <Route path="/products" element={<Products />} />
