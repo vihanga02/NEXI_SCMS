@@ -25,7 +25,7 @@ const Navbar = () => {
             <a href="/aboutus">About Us</a>
           </li>
           <li className='icon-li'>
-            <a href="/login" className="cart-icon">
+            <a href="/cart" className="cart-icon">
                 <i className="fas fa-shopping-cart"></i>
                 <span className="cart-count">0</span> {/* Dynamic cart count can be updated here */}
             </a>
