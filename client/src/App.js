@@ -8,7 +8,11 @@ import Footer from './components/Footer/Footer.js';
 import Products from './pages/Products/Products.js';
 import CategoryPage from './pages/ProductCategory/ProductCategory.js';
 import ProductDetails from './pages/ProductDetails/ProductDetails.js';
+
 import Dashboard from './pages/Home/Home.js';
+
+
+
 
 
 import AboutUs from './pages/AboutUs/AboutUs.js';
@@ -16,6 +20,7 @@ import AboutUs from './pages/AboutUs/AboutUs.js';
 
 import data from './data.json';
 import UserDetails from './pages/UserDetails/UserDetails.js';
+import Cart from './pages/cart/Cart.js';
 
 
 const path = data.backend;
@@ -55,6 +60,8 @@ const App = () => {
 
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/userdetails" element={<UserDetails />} />
+        <Route path="/cart" element={<Cart />} />
+       
 
         
 
