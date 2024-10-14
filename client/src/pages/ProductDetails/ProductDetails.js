@@ -8,6 +8,8 @@ const ProductDetails = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [quantity, setQuantity] = useState(1);
+
+    const navigate = useNavigate();
     
     useEffect(() => {
         getProducts();
@@ -24,14 +26,9 @@ const ProductDetails = () => {
         }
 
     }
-  };
 
-  const handleIncrease = () => {
-    setQuantity((prevQuantity) => prevQuantity + 1);
-  };
-
-    const { id } = useParams(); // Get the product ID from the URL
-    const product = products.find(p => p.Product_ID == id); // Find the product by ID
+  const { id } = useParams(); // Get the product ID from the URL
+  const product = products.find(p => p.Product_ID == id); // Find the product by ID
 
     // Loading state
     if (loading) {
@@ -46,6 +43,7 @@ const ProductDetails = () => {
     // Handle case where product is not found
     if (!product) {
         return <div>Product not found</div>; 
+    }
 
     const handleIncrease = () => {
         setQuantity(prevQuantity => prevQuantity + 1);
@@ -98,6 +96,6 @@ const ProductDetails = () => {
       </div>
     </div>
   );
-};
+}
 
 export default ProductDetails;

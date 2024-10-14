@@ -3,6 +3,7 @@ import "./Products.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import ProductGrid from "../../components/ProductGrid/ProductGrid";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -41,22 +42,8 @@ const Products = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-
-      <div className="product-grid">
-        {filteredProducts.map((product) => (
-          <Link
-            key={product.Product_ID}
-            to={`/products/${product.Product_ID}`}
-            className="product-item"
-          >
-            <img src={product.Image_Link} alt={product.Product_Name} />
-            <div className="product-name">{product.Product_Name}</div>
-            <div className="product-price">{product.Price}</div>
-            <div>
-              <button className="add-to-cart">Add To Cart</button>
-            </div>
-          </Link>
-        ))}
+      <div>
+        <ProductGrid products={filteredProducts} />
       </div>
     </div>
   );

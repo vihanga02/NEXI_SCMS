@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import './ProductGrid.css'; // Ensure this CSS file is linked correctly
 
 const ProductGrid = ({ products }) => {
-    
     return (
         <div className="product-grid">
             {products.map(product => (
