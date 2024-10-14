@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Cart.css';
+import { FaTrash } from 'react-icons/fa'; // Import the delete icon
 import phone1 from '../../assets/galaxy-a54.jpg';
 import phone2 from '../../assets/iphone-12.jpeg';
 
@@ -8,32 +9,24 @@ const Cart = () => {
   const [cartItems, setCartItems] = useState([
     { id: 1, name: 'Samsung Galaxy', price: 500, quantity: 2, image: phone1 },
     { id: 2, name: 'Iphone-12', price: 600, quantity: 1, image: phone2 },
+    
   ]);
 
-  // Calculate total price
-  const totalPrice = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
-
-  // Handle quantity change
-  const handleQuantityChange = (id, delta) => {
-    setCartItems(cartItems.map(item =>
-      item.id === id
-        ? { ...item, quantity: Math.max(1, item.quantity + delta) }
-        : item
-    ));
+  // Handle delete item
+  const handleDeleteItem = (id) => {
+    setCartItems(cartItems.filter(item => item.id !== id));
   };
 
   return (
     <div className="cart">
+      <h1 className="cart-heading">Your Smartphone Cart</h1>
+      <h2 className="cart-subheading">Finalize your smartphone choices and proceed to checkout!</h2>
+
       <table className="cart-table">
         <thead>
           <tr>
             <th>Product</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total Price</th>
+            <th></th> {/* Column for the delete icon */}
           </tr>
         </thead>
         <tbody>
@@ -47,23 +40,17 @@ const Cart = () => {
                   <p>Size: Standard</p>
                 </div>
               </td>
-              <td>${item.price.toFixed(2)}</td>
               <td>
-                <div className="item-quantity">
-                  <button onClick={() => handleQuantityChange(item.id, -1)}>-</button>
-                  <span>{item.quantity}</span>
-                  <button onClick={() => handleQuantityChange(item.id, 1)}>+</button>
-                </div>
-              </td>
-              <td className="item-total-price">
-                ${(item.price * item.quantity).toFixed(2)}
+                <button className="delete-btn" onClick={() => handleDeleteItem(item.id)}>
+                  <FaTrash />
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
       <div className="cart-summary">
-        <h4>Total: ${totalPrice.toFixed(2)}</h4>
+        <h4>Total: ${cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2)}</h4>
         <button className="checkout-btn">Proceed to Checkout</button>
       </div>
     </div>
