@@ -33,7 +33,7 @@ const Login = () => {
         setSuccess(res.data.success);
         if (res.data.success) {
           setMessage("Login successful.");
-          navigate("/dashboard"); // Redirect to dashboard
+          navigate("/"); // Redirect to dashboard
         } else {
           setMessage("Login failed. Please check your credentials.");
         }
