@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"; // Import useParams to access route parameters
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import './ProductDetails.css';
 
@@ -22,7 +22,13 @@ const ProductDetails = () => {
         } finally {
             setLoading(false);
         }
+
     }
+  };
+
+  const handleIncrease = () => {
+    setQuantity((prevQuantity) => prevQuantity + 1);
+  };
 
     const { id } = useParams(); // Get the product ID from the URL
     const product = products.find(p => p.Product_ID == id); // Find the product by ID
@@ -40,7 +46,6 @@ const ProductDetails = () => {
     // Handle case where product is not found
     if (!product) {
         return <div>Product not found</div>; 
-    }
 
     const handleIncrease = () => {
         setQuantity(prevQuantity => prevQuantity + 1);
@@ -50,24 +55,49 @@ const ProductDetails = () => {
         setQuantity(prevQuantity => (prevQuantity > 1 ? prevQuantity - 1 : 1));
     };
 
-    return (
-        <div className="product-details">
-            <div className="img-container">
-                <img src={product.Image_Link} alt={product.Product_Name} />   
-            </div>
-            <div className="description-container">
-                <h2>{product.Product_Name}</h2>
-                <p className="price">Price: {product.Price}</p>
-                <p className="product-description">{product.Description}</p>
-                <div>
-                    <button className="decrease" onClick={handleDecrease}>-</button>
-                    <input type="number" min="1" value={quantity} readOnly />
-                    <button className="increase" onClick={handleIncrease}>+</button>
-                    <button className="add-to-cart">Add To Cart</button>
-                </div>
-            </div>  
+  // Function to handle adding to cart
+  const handleAddToCart = async () => {
+    try {
+      await axios.post(
+        "/customer/cart/add",
+        {
+          Product_ID: product.Product_ID,
+          Quantity: quantity,
+        },
+        { withCredentials: true }
+      );
+      alert("Product added to cart!");
+    } catch (err) {
+      console.error("Error adding to cart:", err);
+      if (err.response.status === 401) {
+        // Redirect to login if not authenticated
+        navigate("/login");
+      }
+    }
+  };
+
+  return (
+    <div className="product-details">
+      <div className="img-container">
+        <img src={product.Image_Link} alt={product.Product_Name} />
+      </div>
+      <div className="discription-container">
+        <h2>{product.Product_Name}</h2>
+        <p className="price">Price: {product.Price}</p>
+
+        <p className="product-descritpion">{product.Description}</p>
+
+        <div className="quantity-container">
+          <button onClick={handleDecrease} className="counter-btn">-</button>
+          <span className="quantity-display">{quantity}</span>
+          <button onClick={handleIncrease} className="counter-btn">+</button>
         </div>
-    );
+        <button className="add-to-cart" onClick={handleAddToCart}>
+          Add To Cart
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default ProductDetails;
