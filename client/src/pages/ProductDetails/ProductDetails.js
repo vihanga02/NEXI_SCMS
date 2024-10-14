@@ -79,16 +79,16 @@ const ProductDetails = () => {
       <div className="img-container">
         <img src={product.Image_Link} alt={product.Product_Name} />
       </div>
-      <div className="discription-container">
+      <div className="description-container">
         <h2>{product.Product_Name}</h2>
         <p className="price">Price: {product.Price}</p>
 
         <p className="product-descritpion">{product.Description}</p>
 
         <div className="quantity-container">
-          <button onClick={handleDecrease} className="counter-btn">-</button>
-          <span className="quantity-display">{quantity}</span>
-          <button onClick={handleIncrease} className="counter-btn">+</button>
+          <button onClick={handleDecrease} className="increase">-</button>
+          <p className="quantity-display">{quantity}</p>
+          <button onClick={handleIncrease} className="decrease">+</button>
         </div>
         <button className="add-to-cart" onClick={handleAddToCart}>
           Add To Cart

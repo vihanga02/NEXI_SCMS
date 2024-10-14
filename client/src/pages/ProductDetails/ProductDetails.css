@@ -5,19 +5,18 @@
     background: linear-gradient(225deg, var(--white), var(--color4), var(--color3));
     display: flex;
     overflow: hidden;
+    height: 75vh;
 }
 
-.product-details .description-container { /* Fixed the typo here */
-    display: flex;
-    flex-direction: column;
+.product-details .description-container {
     overflow: hidden;
     width: 45vw;
-    padding: 150px 20px 20px 50px;
+    padding: 150px 0px 20px 0px;
 }
 
 .product-details .img-container {
     overflow: hidden;
-    width: 40vw;
+    width: 45vw;
 }
 
 .product-details .description-container h2 {
@@ -36,9 +35,8 @@
 
 .product-details .img-container img {
     position: relative;
-    width: 100%; 
-    height: auto; 
-    padding: 5px 15px;
+    width: 40vw;
+    height: auto;
 }
 
 .product-details .description-container .price {
@@ -48,29 +46,40 @@
     margin-bottom: 20px;
 }
 
-.product-details .description-container .product-description { 
+.product-details .description-container .product-description { /* Corrected from 'product-descritpion' */
     font-size: 15px;
     color: var(--color6);
     margin-bottom: 5vh;
+    text-align: justify;
 }
 
-
-.product-details .description-container div input{
+.product-details .description-container .quantity-display {
     width: 1.5vw;
     height: 1.5vw;
     text-align: center;
+    font-family: var(--monospace);
+    font-size: 15px;
+    color: var(--color6);
     border-radius: 50%;
+    background-color: var(--white);
     border: 1px solid var(--color3);
 }
 
-.product-details .description-container div::before{
-    content: 'Quantity ';
+.product-details .description-container div{
+    position: relative;
+    top: 6vh;
+    display: flex;
+}
+
+.product-details .description-container div::before {
+    content: 'Quantity';
     position: relative;
     font-family: var(--monospace);
     color: var(--color6);
 }
 
-.product-details .description-container div .increase, .product-details .description-container div .decrease {
+.product-details .description-container div .increase, 
+.product-details .description-container div .decrease {
     border: none;
     background-color: var(--color5);
     color: var(--white);
@@ -79,18 +88,7 @@
     height: 1.5vw;
 }
 
-.product-details .discription-container .quantity-display {
-    margin: 10px;
-}
-
-.product-details .discription-container .quantity-display .counter_btn{
-    margin: 10px;
-    
-}
-
-
-.product-details .discription-container .add-to-cart {
-    margin-top: 10px;
+.product-details .add-to-cart {
     background-color: var(--color5);
     color: var(--color4);
     border: none;
@@ -99,10 +97,10 @@
     cursor: pointer;
     font-size: 16px;
     width: 30vw;
-    margin-left: 4vw;
+    margin-left: 15vw;
+    margin-top: 2vh;
 }
 
 .product-details .add-to-cart:hover {
     background-color: var(--color6);
 }
-
