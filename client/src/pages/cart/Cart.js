@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import './Cart.css';
-import { FaTrash } from 'react-icons/fa'; // Import the delete icon
-import phone1 from '../../assets/galaxy-a54.jpg';
-import phone2 from '../../assets/iphone-12.jpeg';
+import { FaTrash } from 'react-icons/fa'; 
 
 const Cart = () => {
   // Example cart items
   const [cartItems, setCartItems] = useState([
-    { id: 1, name: 'Samsung Galaxy', price: 500, quantity: 2, image: phone1 },
-    { id: 2, name: 'Iphone-12', price: 600, quantity: 1, image: phone2 },
+    { id: 1, name: 'Samsung Galaxy', price: 500, quantity: 2, image: '/assets/iphone-11.jpeg'  },
+    { id: 2, name: 'Iphone-12', price: 600, quantity: 1, image: '/assets/iphone-14.jpg' },
     
   ]);
 

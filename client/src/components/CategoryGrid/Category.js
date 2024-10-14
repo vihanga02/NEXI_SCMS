@@ -10,7 +10,6 @@ const CatGrid = ({ category, onSelectCategory }) => {
             {categoriesWithAll.map(cat => (
                 <div key={cat} className="cat-item" onClick={() => onSelectCategory(cat)}>
                     <img src={`/assets/${cat}.jpg`} alt={cat} />
-                    <div className="category-name">{cat}</div>
                 </div>
             ))}
         </div>

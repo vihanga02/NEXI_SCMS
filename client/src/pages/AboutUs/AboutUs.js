@@ -7,7 +7,7 @@ export default function AboutUs() {
   return (
     <div className='aboutus'>
         <h1>Welcome to Nexi!</h1>
-        <p> 
+        <p style={{marginBottom: '3vh'}}> 
         Established in 2002, Nexi is a trusted name in the mobile phone industry. Over the past two decades, we have been dedicated to providing the latest and most reliable mobile phones to customers across Sri Lanka. Based in Kandy, our company prides itself on delivering high-quality products and exceptional service to wholesalers, retailers, and end customers alike.
 
 At Nexi, we prioritize customer satisfaction by offering a wide range of mobile phones from top brands, ensuring that you have access to the best technology at competitive prices. Our mission is to connect people with the tools they need to stay in touch, informed, and empowered in today’s digital world.
@@ -21,7 +21,7 @@ We are committed to excellence and are constantly evolving to meet the needs of 
         Our mission is to deliver the latest mobile technology to customers across Sri Lanka with unparalleled service. We strive to empower individuals and businesses by keeping them connected and informed through innovative and reliable mobile phones. At Nexi, we are dedicated to creating long-lasting relationships by consistently exceeding our customers’ expectations.
         </p>
         <div className='future-goals'>
-      <h4>Future Goals</h4>
+      <h2>Future Goals</h2>
       <ul>
         <li><strong>Expansion of Product Range</strong>: As part of our growth, Nexi plans to expand its offerings by introducing a wider range of mobile phones and accessories to cater to diverse customer needs.</li>
 
@@ -36,7 +36,7 @@ We are committed to excellence and are constantly evolving to meet the needs of 
     </div>
     <div className='contact-info'>
       <h2>Contact Information</h2>
-      <p>If you have any inquiries, feedback, or are interested in collaboration, feel free to reach out to us:</p>
+      <p >If you have any inquiries, feedback, or are interested in collaboration, feel free to reach out to us:</p>
       
       <ul>
         <li><strong>Email:</strong> info@nexi.com</li>
@@ -44,7 +44,7 @@ We are committed to excellence and are constantly evolving to meet the needs of 
         <li><strong>Address:</strong> 123 Main Street, Kandy, Sri Lanka</li>
       </ul>
 
-      <p>Follow us on social media for updates:</p>
+      <p style={{marginTop:'1.5vh'}}>Follow us on social media for updates</p>
       <ul className='social-media'>
         <li><a href='https://www.facebook.com/Nexi'> <FontAwesomeIcon icon={faFacebook} />Facebook</a></li>
         <li><a href='https://www.instagram.com/Nexi'> <FontAwesomeIcon icon={faInstagram} /> Instagram</a></li>
