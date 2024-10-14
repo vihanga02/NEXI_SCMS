@@ -1,48 +1,59 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import "./ProductDetails.css";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import './ProductDetails.css';
 
 const ProductDetails = () => {
-  const [products, setProducts] = useState([]);
-  const [quantity, setQuantity] = useState(0);
-  const navigate = useNavigate(); // For redirecting if not authenticated
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [quantity, setQuantity] = useState(1);
+    
+    useEffect(() => {
+        getProducts();
+    }, [])
 
-  // Configure Axios to include cookies in requests
-  axios.defaults.withCredentials = true;
+    const getProducts = async () => {
+        try {
+            const result = await axios.get('/customer/products/');
+            setProducts(result.data);
+        } catch (err) {
+            setError("Error fetching products. Please try again later.");
+        } finally {
+            setLoading(false);
+        }
 
-  useEffect(() => {
-    getProducts();
-  }, []);
-
-  const getProducts = async () => {
-    try {
-      const result = await axios.get("/customer/products/");
-      setProducts(result.data);
-    } catch (err) {
-      console.log(err);
     }
   };
 
-  const { id } = useParams(); // Get the product ID from the URL
-  const product = products.find((p) => p.Product_ID == id); // Find the product by ID
-
-  if (!product) {
-    return <div>Product not found</div>; // Handle case where product is not found
-  }
-
-  // Function to increase the quantity
   const handleIncrease = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);
   };
 
-  // Function to decrease the quantity (min = 0)
-  const handleDecrease = () => {
-    if (quantity > 0) {
-      setQuantity((prevQuantity) => prevQuantity - 1);
+    const { id } = useParams(); // Get the product ID from the URL
+    const product = products.find(p => p.Product_ID == id); // Find the product by ID
+
+    // Loading state
+    if (loading) {
+        return <div>Loading...</div>; 
     }
-  };
+
+    // Error handling
+    if (error) {
+        return <div>{error}</div>; 
+    }
+
+    // Handle case where product is not found
+    if (!product) {
+        return <div>Product not found</div>; 
+
+    const handleIncrease = () => {
+        setQuantity(prevQuantity => prevQuantity + 1);
+    };
+
+    const handleDecrease = () => {
+        setQuantity(prevQuantity => (prevQuantity > 1 ? prevQuantity - 1 : 1));
+    };
 
   // Function to handle adding to cart
   const handleAddToCart = async () => {
@@ -77,15 +88,10 @@ const ProductDetails = () => {
         <p className="product-descritpion">{product.Description}</p>
 
         <div className="quantity-container">
-          <button onClick={handleDecrease} className="counter-btn">
-            -
-          </button>
+          <button onClick={handleDecrease} className="counter-btn">-</button>
           <span className="quantity-display">{quantity}</span>
-          <button onClick={handleIncrease} className="counter-btn">
-            +
-          </button>
+          <button onClick={handleIncrease} className="counter-btn">+</button>
         </div>
-
         <button className="add-to-cart" onClick={handleAddToCart}>
           Add To Cart
         </button>
