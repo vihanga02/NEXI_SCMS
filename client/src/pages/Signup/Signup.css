@@ -3,11 +3,11 @@
 /* Background Styling */
 .background {
     background: url('../../../public/assets/Login.webp');
-    height: 100vh;
+    height: fit-content;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 20px 0 30px 0;
     overflow: hidden;
 }
 
@@ -17,7 +17,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100%;
+    height: fit-content;
 }
 
 .signup-form-outer {
@@ -49,13 +49,13 @@
 
 /* Form Group Styling */
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .form-group label {
     font-family: var(--body);
     font-weight: 600;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
     display: block;
     color: var(--color2);
 }
@@ -103,7 +103,7 @@
     transition: background-color 0.3s ease, transform 0.2s ease;
     width: 100%;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 1.5vh;
 }
 
 .signup-form-inner button:hover {
