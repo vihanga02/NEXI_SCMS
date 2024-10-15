@@ -19,7 +19,6 @@
     box-shadow: 0 4px 20px var(--color3);
     height: fit-content;
     width: 40vw;
-    background: linear-gradient(225deg, var(--color4), var(--white));
     margin-bottom: 4vh;
 }
 
@@ -82,7 +81,7 @@
 }
 
 .previous-orders {
-    background: linear-gradient(225deg, var(--color4), var(--white));
+    background-color: var(--white);
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 4px 20px var(--color3);

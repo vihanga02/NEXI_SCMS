@@ -84,103 +84,56 @@ class Manager{
         }
     }
 
+// ----------------------------------------------------------------------
 
-    static async getTrains(req){
+    // Function to get trains by Store_ID using the stored procedure
+    static async getTrains(req) {
         const { Store_ID } = req.body;
-        const query = `SELECT 
-                        t.Train_ID,
-                        t.Train_Name,
-                        ts.Day,
-                        ts.Start_Time,
-                        ts.End_Station_ID
-                    FROM 
-                        Train t
-                    JOIN 
-                        Train_Schedule ts ON t.Train_ID = ts.Train_ID
-                    JOIN 
-                        Destination d ON ts.Trip_ID = d.Trip_ID
-                    JOIN 
-                        Store s ON d.Store_ID = s.Store_ID
-                    JOIN 
-                        Store_Manager sm ON sm.Store_ID = s.Store_ID
-                    WHERE 
-                        s.Store_ID = ?`;
-
+        const query = `CALL getTrainsByStoreID(?)`;
         const values = [Store_ID];
 
         try {
             const result = await pool.query(query, values);
-            return result;
+            return result[0]; // Stored procedure returns results as an array of arrays
         } catch (error) {
             throw error;
         }
     }
 
-// ----------------------------------------------------------------------
-
-    static async getDrivers(city){
-        const query = `SELECT 
-                            d.Driver_ID,
-                            d.Work_Hours,
-                            d.Availability,
-                            s.City
-                        FROM 
-                            Driver d
-                        JOIN 
-                            Store s ON d.Store_ID = s.Store_ID
-                        WHERE 
-                            s.City = '[CITY_NAME]';  -- Replace [CITY_NAME] with the actual city name`;
+    // Function to get drivers by city using the stored procedure
+    static async getDrivers(city) {
+        const query = `CALL getDriversByCity(?)`;
         const values = [city];
 
         try {
             const result = await pool.query(query, values);
-            return result;
+            return result[0]; // Stored procedure returns results as an array of arrays
         } catch (error) {
             throw error;
         }
     }
 
-
-    static async getAssistants(city){
-        const query = `SELECT 
-            da.Assistant_ID,
-            da.Work_Hours,
-            da.Availability,
-            s.City
-        FROM 
-            Driver_Assistant da
-        JOIN 
-            Store s ON da.Store_ID = s.Store_ID
-        WHERE 
-            s.City = ?`;
+    // Function to get driver assistants by city using the stored procedure
+    static async getAssistants(city) {
+        const query = `CALL getAssistantsByCity(?)`;
         const values = [city];
 
         try {
             const result = await pool.query(query, values);
-            return result;
+            return result[0]; // Stored procedure returns results as an array of arrays
         } catch (error) {
             throw error;
         }
     }
 
-    static async getVehicles(city){
-        const query = `SELECT 
-            t.Truck_ID,
-            t.Reg_Number,
-            t.Used_Hours,
-            t.Availability,
-            s.City
-        FROM 
-            Truck t
-        JOIN 
-            Store s ON t.Store_ID = s.Store_ID
-        WHERE 
-            s.City = ?`;
+    // Function to get vehicles by city using the stored procedure
+    static async getVehicles(city) {
+        const query = `CALL getVehiclesByCity(?)`;
         const values = [city];
 
         try {
             const result = await pool.query(query, values);
-            return result;
+            return result[0]; // Stored procedure returns results as an array of arrays
         } catch (error) {
             throw error;
         }

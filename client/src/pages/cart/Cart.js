@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Cart.css';
-import { FaTrash } from 'react-icons/fa'; 
+import { FaTrash } from 'react-icons/fa';
 
 const Cart = () => {
   // Example cart items
@@ -16,35 +16,36 @@ const Cart = () => {
 
   return (
     <div className="cart">
-      <h1 className="cart-heading">Your Smartphone Cart</h1>
-      <h2 className="cart-subheading">Finalize your smartphone choices and proceed to checkout!</h2>
-
+      <div>
+        <h1 className="cart-heading">Your Smartphone Cart</h1>
+        <h2 className="cart-subheading">Finalize your smartphone choices and proceed to checkout!</h2>
+      </div>
       <table className="cart-table">
         <thead>
           <tr>
+            <th></th>
             <th>Product</th>
-            <th>Details</th> {/* Column for color and size */}
-            <th>Delete</th> {/* Column for the delete icon */}
+            <th>Quantity</th>
+            <th>Remove</th>
+            <th>Price</th>
           </tr>
         </thead>
         <tbody>
           {cartItems.map(item => (
             <tr key={item.id} className="cart-item-row">
+              <td>
+                  <img src={item.image} alt={item.name} className="cart-item-image" />
+              </td>
               <td className="cart-item-details">
-                <img src={item.image} alt={item.name} className="cart-item-image" />
-                <div className="item-info">
-                  <h3>{item.name}</h3>
-                </div>
+                  <h3 className="item-info">{item.name}</h3>      
               </td>
-              <td className="cart-item-details-middle">
-                <p>Color: Black</p>
-                <p>Size: Standard</p>
-              </td>
+              <td>{item.quantity}</td>
               <td>
                 <button className="delete-btn" onClick={() => handleDeleteItem(item.id)}>
                   <FaTrash />
                 </button>
               </td>
+              <td>${(item.price * item.quantity).toFixed(2)}</td>
             </tr>
           ))}
         </tbody>
