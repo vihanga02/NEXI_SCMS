@@ -5,9 +5,8 @@ import { FaTrash } from 'react-icons/fa';
 const Cart = () => {
   // Example cart items
   const [cartItems, setCartItems] = useState([
-    { id: 1, name: 'Samsung Galaxy', price: 500, quantity: 2, image: '/assets/iphone-11.jpeg'  },
+    { id: 1, name: 'Samsung Galaxy', price: 500, quantity: 2, image: '/assets/iphone-11.jpeg' },
     { id: 2, name: 'Iphone-12', price: 600, quantity: 1, image: '/assets/iphone-14.jpg' },
-    
   ]);
 
   // Handle delete item
@@ -24,7 +23,8 @@ const Cart = () => {
         <thead>
           <tr>
             <th>Product</th>
-            <th></th> {/* Column for the delete icon */}
+            <th>Details</th> {/* Column for color and size */}
+            <th>Delete</th> {/* Column for the delete icon */}
           </tr>
         </thead>
         <tbody>
@@ -34,9 +34,11 @@ const Cart = () => {
                 <img src={item.image} alt={item.name} className="cart-item-image" />
                 <div className="item-info">
                   <h3>{item.name}</h3>
-                  <p>Color: Black</p>
-                  <p>Size: Standard</p>
                 </div>
+              </td>
+              <td className="cart-item-details-middle">
+                <p>Color: Black</p>
+                <p>Size: Standard</p>
               </td>
               <td>
                 <button className="delete-btn" onClick={() => handleDeleteItem(item.id)}>
