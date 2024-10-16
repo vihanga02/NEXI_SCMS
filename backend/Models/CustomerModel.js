@@ -117,7 +117,7 @@ class Customer {
     const orderItemQuery =
       "INSERT INTO Order_item (Product_ID, Order_ID, Quantity) VALUES (?, ?, ?)"; // Insert into Order_item table
     const checkCartQuery =
-      "SELECT * FROM Orders WHERE Customer_ID = ? AND order_state = 'pending'"; // Check if there's a pending order
+      "SELECT * FROM Orders WHERE Customer_ID = ? AND order_state = 'Pending'"; // Check if there's a pending order
 
     try {
       // Check if there's an existing pending order
@@ -148,9 +148,29 @@ class Customer {
     }
   }
 
+  static async getCart(Customer_ID ) {
+    const query = `
+        SELECT product.product_id as product_id, product_name, image_link, Price AS unit_price, SUM(Order_item.Quantity) AS total_quantity
+        FROM Order_item
+        JOIN Orders 
+            ON Order_item.Order_ID = Orders.Order_ID
+        JOIN Product
+            ON Order_item.Product_ID = Product.Product_ID
+        WHERE Orders.Customer_ID = ?
+        AND Orders.order_state = 'Pending'
+        GROUP BY Product.Product_ID, Product.Product_name, Product.Image_Link, Product.Price;
+    `;
+    try {
+      const [results] = await pool.query(query, [Customer_ID]); 
+      return results;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async removeFromCart({ Customer_ID, Product_ID }) {
     const checkOrderQuery =
-      "SELECT Order_ID FROM Orders WHERE Customer_ID = ? AND order_state = 'pending'";
+      "SELECT Order_ID FROM Orders WHERE Customer_ID = ? AND order_state = 'Pending'";
     const removeItemQuery =
       "DELETE FROM Order_item WHERE Order_ID = ? AND Product_ID = ?";
     const checkItemsQuery = "SELECT * FROM Order_item WHERE Order_ID = ?";

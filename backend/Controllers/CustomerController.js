@@ -95,9 +95,22 @@ async function addToCart(req, res) {
   }
 }
 
+async function getCart(req, res) {
+  const Customer_ID = req.user.id;
+
+  try {
+    const cart = await Customer.getCart(Customer_ID);
+    res.status(200).json(cart);
+  } catch (error) {
+    console.error("Error in getCart:", error);
+    res.status(500).json({ message: "Error getting cart" });
+  }
+}
+
 // Remove an item from the cart
 async function removeFromCart(req, res) {
-  const { Customer_ID, Product_ID } = req.body;
+  const { Product_ID } = req.body;
+  const Customer_ID = req.user.id;
 
   try {
     const result = await Customer.removeFromCart({
@@ -167,4 +180,5 @@ export {
   removeFromCart,
   checkout,
   checkLogin,
+  getCart,
 };
