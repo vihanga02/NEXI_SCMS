@@ -35,7 +35,7 @@ const Cart = () => {
                     <FaTrash />
                   </button>
                 </td>
-                <td>Price: LKR {(item.price * item.quantity).toFixed(2)}</td>
+                <td>LKR {(item.price * item.quantity).toFixed(2)}</td>
               </tr>
             ))}
           </tbody>
