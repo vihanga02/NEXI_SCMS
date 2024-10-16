@@ -8,7 +8,6 @@ async function login(req, res) {
 
     // Find the user by username
     const [user] = await Customer.getCustomerByUsername(Username);
-    console.log(user);
 
     if (!user) {
       return res
