@@ -53,6 +53,18 @@ async function login(req, res) {
   }
 }
 
+async function logout(req, res) {
+  // Clear the token cookie
+  res.cookie("token", "", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    expires: new Date(0), // Set to expire immediately
+  });
+
+  return res.status(200).json({ message: "Logout successful", success: true });
+}   
+
 async function signup(req, res) {
   const { Name, Username, Password, Email, Address, Phone_Number } = req.body;
 
@@ -170,15 +182,28 @@ async function createOrder(req, res) {
   }
 }
 
+async function getProfile(req, res) {
+  try {
+    req = req.user.username;
+    const profile = await Customer.getCustomerByUsername(req);
+    res.status(200).json(profile);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "server error" });
+  }
+}
+
 export {
   getOrder,
   getProducts,
   createOrder,
   login,
+  logout,
   signup,
   addToCart,
   removeFromCart,
   checkout,
   checkLogin,
   getCart,
+  getProfile,
 };

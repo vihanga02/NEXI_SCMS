@@ -40,13 +40,10 @@ const App = () => {
   return (
     <>
       {!hideNavbar && <Navbar />} 
-      <Routes>
-        
-        
+      <Routes>        
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
-        
         {/* Use element prop instead of render prop */}
         <Route path="/products/:category" element={<Products/>} />
         <Route path="/products" element={<CategoryPage />} />
@@ -61,11 +58,6 @@ const App = () => {
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/userdetails" element={<UserDetails />} />
         <Route path="/cart" element={<Cart />} />
-       
-
-        
-
-
       </Routes>
       {!hideFooter && <Footer />} 
     

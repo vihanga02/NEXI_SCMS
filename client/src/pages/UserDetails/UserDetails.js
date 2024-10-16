@@ -1,17 +1,35 @@
-import React from 'react';
+import React,{useState, useEffect} from 'react';
 import './UserDetails.css';
-
+import axios from 'axios';
+import {useNavigate} from 'react-router-dom';
 
 const UserDetails = () => {
-  // Dummy data for the customer profile
-  const customerData = {
-    fullName: "John Doe",
-    username: "johndoe",
-    email: "john.doe@example.com",
-    phone: "+1 234 567 890",
-    address: "123 Main Street, Springfield, USA",
-    
-  };
+    const navigate = useNavigate();
+    const [customerData, setCustomerData] = useState({});
+    const [login_status, setLoginStatus] = useState(true);
+
+    useEffect(() => {
+        // Fetch the customer profile data from the server
+        axios.get("/customer/profile",{withCredentials:true})
+        .then((response) => {
+            setCustomerData(response.data[0]);
+        })
+        .catch((error) => {
+            setLoginStatus(false);
+            console.error("Error fetching customer profile:", error);
+        });
+    }, []);
+  
+    const handleLogout = () => {
+        axios.post('/customer/logout', {}, { withCredentials: true })
+          .then((response) => {
+            console.log(response.data.message);
+            navigate('/login');  // Redirect to login page after logout
+          })
+          .catch((error) => {
+            console.error('Logout failed:', error);
+          });
+      };
 
   // Dummy data for the customer's orders
 const orders = [
@@ -26,30 +44,36 @@ const orders = [
     { id: 9, Product_Name: "Realme 8", Quantity: 1, Total_Price: "$299", Image_Link:"/assets/iphone-14.jpg" },
     { id: 10, Product_Name: "Asus Zenfone 8", Quantity: 1, Total_Price: "$599", Image_Link:"/assets/iphone-14.jpg" },
 ];
-return (
+useEffect(() => {
+    if (!login_status) {
+        navigate('/');
+    }
+}, [login_status]);
+
+return login_status ? (
     <div className="customer-profile">
         <div>
             <div className="customer-details">
                 <h2>Customer Details</h2>
                 <div>
                     <p className='detail-topic'><strong>Full Name</strong></p>
-                    <p className='detail-value'>{customerData.fullName}</p>
+                    <p className='detail-value'>{customerData.Name}</p>
                     <button className="edit-button">Edit</button>
                 </div>
                 <div>
                     <p className='detail-topic'><strong>Username</strong></p>
-                    <p className='detail-value'>{customerData.username}</p>
+                    <p className='detail-value'>{customerData.Username}</p>
                 </div>
                 <div>
                     <p className='detail-topic'><strong>Email</strong></p>
-                    <p className='detail-value'>{customerData.email}</p>
+                    <p className='detail-value'>{customerData.Email}</p>
                 </div>
                 <div>
                     <p className='detail-topic'><strong>Phone Number</strong>
-                    </p><p className='detail-value'>{customerData.phone}</p>
+                    </p><p className='detail-value'>{customerData.Phone_Number}</p>
                     <button className="edit-button">Edit</button>
                 </div>
-                <button className="logout-button">Logout</button>
+                <button className="logout-button" onClick={handleLogout}>Logout</button>
             </div>
             <div className="previous-orders">
                 <h2>Last Order</h2>
@@ -105,7 +129,7 @@ return (
             
         </div>
     </div>
-);
+) : <div>sa</div>;
 };
 
 export default UserDetails;
