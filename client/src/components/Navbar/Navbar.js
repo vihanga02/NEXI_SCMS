@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './Navbar.css';
 import '@fortawesome/fontawesome-free/css/all.min.css'; 
 
 const Navbar = () => {
+  const [login_status, setLoginStatus] = useState(true);
+
   return (
     <nav className="navbar">
       <div className="navbar-left">
@@ -24,18 +26,28 @@ const Navbar = () => {
           <li>
             <a href="/aboutus">About Us</a>
           </li>
-          <li className='icon-li'>
-            <a href="/cart" className="cart-icon">
-                <i className="fas fa-shopping-cart"></i>
-                <span className="cart-count">0</span> {/* Dynamic cart count can be updated here */}
-            </a>
-          </li>
-          <li className='icon-li'>
-            <a href="/userdetails" className="user-icon">
-                <i className="fas fa-user"></i>
-            </a>
-            
-          </li>
+          {login_status && (
+            <>
+              <li className='icon-li'>
+                <a href="/cart" className="cart-icon">
+                    <i className="fas fa-shopping-cart"></i>
+                    <span className="cart-count">0</span> {/* Dynamic cart count can be updated here */}
+                </a>
+              </li>
+              <li className='icon-li'>
+                <a href="/userdetails" className="user-icon">
+                    <i className="fas fa-user"></i>
+                </a>
+              </li>
+            </>
+          )}
+          {!login_status && (
+            <li className='login-button-div'>
+              <button onClick={() => window.location.href='/login'} className="login-button">
+                Login
+              </button>
+            </li>
+          )}
         </ul>
       </div>
     </nav>

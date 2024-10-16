@@ -65,3 +65,10 @@
     top: 10px;
     right: 140px;
   }
+
+  .navbar-center .login-button{
+    padding: 0px;
+    width: 100px;
+    height: 30px;
+    border: none;
+  }
