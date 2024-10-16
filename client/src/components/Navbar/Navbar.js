@@ -1,9 +1,18 @@
 import React, {useState} from 'react';
 import './Navbar.css';
 import '@fortawesome/fontawesome-free/css/all.min.css'; 
+import axios from 'axios';
 
 const Navbar = () => {
-  const [login_status, setLoginStatus] = useState(true);
+  const [login_status, setLoginStatus] = useState(false);
+
+  axios.get('/customer/navbar', { withCredentials: true })
+  .then((res) => {
+    setLoginStatus(res.data.login_status);
+  }
+  ).catch((error) => {
+    console.error(error);
+  })
 
   return (
     <nav className="navbar">

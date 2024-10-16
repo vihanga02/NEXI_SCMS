@@ -2,6 +2,14 @@ import Customer from "../Models/CustomerModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+async function checkLogin(req, res) {
+  if (req.user) {
+    return res.status(200).json({ login_status: true });
+  } else {
+    return res.status(401).json({ success: false });
+  }
+}
+
 async function login(req, res) {
   try {
     const { Username, Password } = req.body;
@@ -171,5 +179,6 @@ export {
   addToCart,
   removeFromCart,
   checkout,
+  checkLogin,
   getCart,
 };
