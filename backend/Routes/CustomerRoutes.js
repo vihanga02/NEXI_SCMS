@@ -7,9 +7,10 @@ import {
   createOrder,
   login,
   signup,
-  addToCart, // Import the new method for adding to the cart
-  removeFromCart, // Import the new method for removing from the cart
-  checkout, // Import the new method for checking out
+  addToCart, 
+  getCart,
+  removeFromCart, 
+  checkout,
 } from "../Controllers/CustomerController.js";
 import authenticateToken from "../Middleware/Authentication.js";
 
@@ -23,8 +24,9 @@ router.get("/products", getProducts);
 router.post("/createOrder", createOrder);
 
 // Cart-related routes
-router.post("/cart/add", authenticateToken, addToCart); // Route for adding items to the cart
-router.delete("/cart/remove", authenticateToken, removeFromCart); // Route for removing items from the cart
-router.post("/cart/checkout", authenticateToken, checkout); // Route for checking out
+router.post("/cart/add", authenticateToken, addToCart); 
+router.get("/cart", authenticateToken, getCart); 
+router.delete("/cart/remove", authenticateToken, removeFromCart);
+router.post("/cart/checkout", authenticateToken, checkout); 
 
 export default router;
