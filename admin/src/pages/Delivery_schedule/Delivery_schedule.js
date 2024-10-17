@@ -9,6 +9,9 @@ function delivery_schedule() {
       <Sidebar />
       <div className='dscontainer'>
         <Topbar/>
+        <div className='datebutton'>
+          <input className='datebutton' type='date' placeholder='Select date'/>
+        </div>
       </div>
     </div>
   )

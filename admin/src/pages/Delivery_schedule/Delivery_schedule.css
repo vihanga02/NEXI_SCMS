@@ -12,3 +12,11 @@
     flex-direction: column; 
     gap: 20px; 
 }
+
+datebutton{
+    display: flex;
+    flex-direction: row;
+    padding: 100px;
+    margin-top: 200px;
+    gap: 50px;
+}
