@@ -1,0 +1,92 @@
+.ADcontainer {
+    display: flex;
+    height: 100vh; 
+}
+
+.Acontainer {
+    flex-grow: 1; /* Take up the remaining space */
+    margin-left: 250px; 
+    padding: 0 5px 5px;
+    background-color: #f5f5f58f; 
+    display: flex;
+    flex-direction: column; 
+    gap: 20px; /* Spacing between elements */
+}
+
+/* Widgets Row - Side by Side */
+.widgets-row {
+    display: flex;
+    gap: 20px; /* Space between widgets */
+    justify-content: space-between; /* Ensure widgets take full width */
+}
+
+/* Widget Styling */
+.widget {
+    background: linear-gradient(135deg, #6a11cb, #2575fc); 
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 48%; 
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); 
+    text-align: center;
+    position: relative;
+    min-height: 150px;
+    transition: box-shadow 0.3s ease; }
+
+.widget:hover {
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3); 
+}
+
+.widget h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.widget p {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+/* Progress Bar Styling */
+.progress-bar {
+    background: #ddd;
+    border-radius: 5px;
+    height: 10px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.progress {
+    background: #4caf50;
+    height: 100%;
+    border-radius: 5px;
+    transition: width 0.4s ease;
+}
+
+.active-users .progress {
+    background: #4caf50; /* Green progress bar */
+}
+
+.incomplete-orders .progress {
+    background: #f44336; /* Red progress bar */
+}
+
+/* Calendar Container */
+.calendar-container {
+    margin-top: 20px;
+    width: 100%;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); 
+    transition: box-shadow 0.3s ease; 
+}
+
+.calendar-container:hover {
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3); 
+}
+
+.react-calendar {
+    width: 100%;
+    border: none;
+}
