@@ -193,6 +193,59 @@ async function getProfile(req, res) {
   }
 }
 
+// Controller to get the current (pending) order
+async function fetchCurrentOrder(req, res) {
+  const customerId = req.user.id; // Assuming you have middleware that sets req.user with authenticated user info
+  
+  try {
+    const currentOrder = await Customer.getCurrentOrder(customerId)
+    if (!currentOrder || currentOrder.length === 0) {
+      return res.status(404).json({ success: false, message: 'No pending order found' });
+    }
+    const  current_order_item = await Customer.getCurrentOrderItem(currentOrder[0].Order_ID);
+
+    return res.status(200).json({ success: true, data: currentOrder, order_item: current_order_item });
+  } catch (error) {
+    console.error('Error fetching current order:', error);
+    return res.status(500).json({ success: false, message: 'Server error' });
+  }
+}
+
+// Controller to get the previous order
+async function fetchPreviousOrder(req, res) {
+  const customerId = req.user.id; // Assuming you have middleware that sets req.user with authenticated user info
+  
+  try {
+    const previousOrder = await Customer.getPreviousOrder(customerId);
+    
+    if (!previousOrder || previousOrder.length === 0) {
+      return res.status(404).json({ success: false, message: 'No previous order found' });
+    }
+
+    return res.status(200).json({ success: true, data: previousOrder });
+  } catch (error) {
+    console.error('Error fetching previous order:', error);
+    return res.status(500).json({ success: false, message: 'Server error' });
+  }
+}
+
+async function updateCustomer(req, res) {
+  const { Name, Phone_Number } = req.body;
+  try {
+    const profile = await Customer.getCustomerByUsername(req.user.username);
+    if (Phone_Number &&  !Name) {
+      profile[0].Phone_Number = Phone_Number;
+    }else if (!Phone_Number && Name) {
+      profile[0].Name = Name;
+    }
+    const result = await Customer.updateCustomer(profile[0]); 
+    return res.status(200).json({ success: true, message: "Customer updated successfully" });
+  } catch (error) {
+    console.error("Error updating customer:", error);
+    return res.status(500).json({ success: false, message: "Server error" });
+  }
+}
+
 export {
   getOrder,
   getProducts,
@@ -206,4 +259,7 @@ export {
   checkLogin,
   getCart,
   getProfile,
+  fetchCurrentOrder,
+  fetchPreviousOrder,
+  updateCustomer,
 };

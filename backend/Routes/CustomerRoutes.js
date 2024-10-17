@@ -13,7 +13,10 @@ import {
   checkout, // Import the new method for checking out
   checkLogin,
   getCart,
-  getProfile
+  getProfile,
+  fetchPreviousOrder,
+  fetchCurrentOrder,
+  updateCustomer,
 } from "../Controllers/CustomerController.js";
 import authenticateToken from "../Middleware/Authentication.js";
 
@@ -38,5 +41,8 @@ router.get('/navbar',authenticateToken, checkLogin);
 
 // Customer Details
 router.get('/profile', authenticateToken, getProfile);
+router.get('/lastOrder', authenticateToken, fetchPreviousOrder);
+router.get('/currentOrder', authenticateToken, fetchCurrentOrder);
+router.post('/updateCustomer', authenticateToken, updateCustomer);
 
 export default router;
