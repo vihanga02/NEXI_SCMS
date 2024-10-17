@@ -1,111 +1,239 @@
-import React from 'react';
+import React,{useState, useEffect} from 'react';
 import './UserDetails.css';
-
+import axios from 'axios';
+import {useNavigate} from 'react-router-dom';
 
 const UserDetails = () => {
-  // Dummy data for the customer profile
-  const customerData = {
-    fullName: "John Doe",
-    username: "johndoe",
-    email: "john.doe@example.com",
-    phone: "+1 234 567 890",
-    address: "123 Main Street, Springfield, USA",
-    
-  };
+    const navigate = useNavigate();
+    const [customerData, setCustomerData] = useState({});
+    const [last_order_details, setLastOrderDetails] = useState({});
+    const [order_details, setOrderDetails] = useState([]); 
+    const [orders, setOrders] = useState([]);
+    const [Phone_Number, setPhoneNumber] = useState('');
+    const [Name, setName] = useState('');
+    const [login_status, setLoginStatus] = useState(true);
 
-  // Dummy data for the customer's orders
-const orders = [
-    { id: 1, Product_Name: "iPhone 14", Quantity: 1, Total_Price: "$999", Image_Link:"/assets/iphone-14.jpg" },
-    { id: 2, Product_Name: "Samsung Galaxy S21", Quantity: 2, Total_Price: "$799", Image_Link:"/assets/iphone-14.jpg" },
-    { id: 3, Product_Name: "Google Pixel 7", Quantity: 1, Total_Price: "$699", Image_Link:"/assets/iphone-14.jpg" },
-    { id: 4, Product_Name: "OnePlus 9", Quantity: 1, Total_Price: "$729", Image_Link:"/assets/iphone-14.jpg" },
-    { id: 5, Product_Name: "Xiaomi Mi 11", Quantity: 2, Total_Price: "$599", Image_Link:"/assets/iphone-14.jpg" },
-    { id: 6, Product_Name: "Sony Xperia 5", Quantity: 1, Total_Price: "$949", Image_Link:"/assets/iphone-14.jpg" },
-    { id: 7, Product_Name: "Nokia 8.3", Quantity: 1, Total_Price: "$479", Image_Link:"/assets/iphone-14.jpg" },
-    { id: 8, Product_Name: "Oppo Reno 5", Quantity: 1, Total_Price: "$499", Image_Link:"/assets/iphone-14.jpg" },
-    { id: 9, Product_Name: "Realme 8", Quantity: 1, Total_Price: "$299", Image_Link:"/assets/iphone-14.jpg" },
-    { id: 10, Product_Name: "Asus Zenfone 8", Quantity: 1, Total_Price: "$599", Image_Link:"/assets/iphone-14.jpg" },
-];
-return (
-    <div className="customer-profile">
-        <div>
-            <div className="customer-details">
-                <h2>Customer Details</h2>
-                <div>
-                    <p className='detail-topic'><strong>Full Name</strong></p>
-                    <p className='detail-value'>{customerData.fullName}</p>
-                    <button className="edit-button">Edit</button>
-                </div>
-                <div>
-                    <p className='detail-topic'><strong>Username</strong></p>
-                    <p className='detail-value'>{customerData.username}</p>
-                </div>
-                <div>
-                    <p className='detail-topic'><strong>Email</strong></p>
-                    <p className='detail-value'>{customerData.email}</p>
-                </div>
-                <div>
-                    <p className='detail-topic'><strong>Phone Number</strong>
-                    </p><p className='detail-value'>{customerData.phone}</p>
-                    <button className="edit-button">Edit</button>
-                </div>
-                <button className="logout-button">Logout</button>
-            </div>
-            <div className="previous-orders">
-                <h2>Last Order</h2>
-                <div>
-                    <p className='order-d'><strong>Order ID</strong></p><p>5</p>
-                </div>
-                <div>
-                    <p className='order-d'><strong>Ordered Date</strong></p><p>2222-22-22</p>
-                </div>
-                <div>
-                    <p className='order-d'><strong>Total Price</strong></p><p>$2000</p>                    
-                </div>
-            </div>
-        </div>
+    const [isEditingPhone, setIsEditingPhone] = useState(false);
+    const [isEditingName, setIsEditingName] = useState(false);
 
-        {/* Right side - Customer orders */}
-        <div className="customer-orders">
-            <h2>Your Current Order</h2>
-            <div className='order-details'>
-                <div>
-                    <p className='order-d'><strong>Order ID</strong></p><p>5</p>
+    useEffect(() => {
+        axios.get("/customer/profile",{withCredentials:true})
+        .then((response) => {
+            setCustomerData(response.data[0]);
+        })
+        .catch((error) => {
+            setLoginStatus(false);
+            console.error("Error fetching customer profile:", error);
+        });
+
+        axios.get('customer/lastOrder', { withCredentials: true })
+        .then((response) => {
+            response.data.data[0].Ordered_Date = new Date(response.data.data[0].Ordered_Date).toLocaleDateString();
+            setLastOrderDetails(response.data.data[0]);
+        })
+        .catch((error) => {
+            setLoginStatus(false);
+            console.error('Error fetching last order:', error);
+        });
+
+        axios.get('customer/currentOrder', { withCredentials: true })
+        .then((response) => {
+            const orderData = response.data.data[0];
+            setOrders(response.data.order_item);
+            orderData.Ordered_Date = new Date(orderData.Ordered_Date).toLocaleDateString();
+            orderData.Expected_Date = new Date(orderData.Expected_Date).toLocaleDateString();
+            setOrderDetails(Array.isArray(orderData) ? orderData : [orderData]); // Ensure it's an array
+        })
+        .catch((error) => {
+            setLoginStatus(false);
+            console.error('Error fetching current order:', error);
+        });
+    }, []);
+
+    const updateCustomerDataPhoneNumber = () => {
+        if (login_status) {
+            setIsEditingPhone(true); // Set edit mode for phone number
+        } else {
+            navigate('/');
+        }
+    };
+
+    const updateCustomerDataName = () => {
+        if (login_status) {
+            setIsEditingName(true); // Set edit mode for name
+        } else {
+            navigate('/');
+        }
+    };
+
+    const handleSavePhoneNumber = () => {
+        if (!/^\d{10}$/.test(Phone_Number)) {
+            setPhoneNumber('');
+            alert('Phone number must be exactly 10 digits.');
+            return;
+        }
+
+        axios.post('customer/updateCustomer', 
+            { Phone_Number }, 
+            { withCredentials: true }
+        )
+        .then(response => {
+            setCustomerData({ ...customerData, Phone_Number });
+            setIsEditingPhone(false); // Exit edit mode
+            console.log('Phone number updated successfully.');
+        })
+        .catch(error => {
+            setLoginStatus(false);
+            console.error('Error updating phone number:', error);
+        });
+    };
+
+    const handleSaveName = () => {
+        axios.post('customer/updateCustomer', 
+            { Name }, 
+            { withCredentials: true }
+        )
+        .then(response => {
+            setCustomerData({ ...customerData, Name });
+            setIsEditingName(false); // Exit edit mode
+            console.log('Name updated successfully.');
+        })
+        .catch(error => {
+            setLoginStatus(false);
+            console.error('Error updating name:', error);
+        });
+    };
+
+    const handleLogout = () => {
+        axios.post('/customer/logout', {}, { withCredentials: true })
+        .then((response) => {
+            console.log(response.data.message);
+            navigate('/');  
+        })
+        .catch((error) => {
+            console.error('Logout failed:', error);
+        });
+    };
+
+    useEffect(() => {
+        if (!login_status) {
+            navigate('/');
+        }
+    }, [login_status]);
+
+    return login_status ? (
+        <div className="customer-profile">
+            <div>
+                <div className="customer-details">
+                    <h2>Customer Details</h2>
+                    <div>
+                        <p className='detail-topic'><strong>Full Name</strong></p>
+                        {isEditingName ? (
+                            <>
+                                <input 
+                                    type="text" 
+                                    value={Name} 
+                                    onChange={(e) => setName(e.target.value)} 
+                                />
+                                <button className='save-btn' onClick={handleSaveName}>Save</button>
+                                <button className='cancel-btn' onClick={() => setIsEditingName(false)}>Cancel</button>
+                            </>
+                        ) : (
+                            <>
+                                <p className='detail-value'>{customerData.Name}</p>
+                                <button className="edit-button" onClick={updateCustomerDataName}>Edit</button>
+                            </>
+                        )}
+                    </div>
+                    <div>
+                        <p className='detail-topic'><strong>Username</strong></p>
+                        <p className='detail-value'>{customerData.Username}</p>
+                    </div>
+                    <div>
+                        <p className='detail-topic'><strong>Email</strong></p>
+                        <p className='detail-value'>{customerData.Email}</p>
+                    </div>
+                    <div>
+                        <p className='detail-topic'><strong>Phone Number</strong></p>
+                        {isEditingPhone ? (
+                            <>
+                                <input 
+                                    type="text" 
+                                    value={Phone_Number} 
+                                    onChange={(e) => setPhoneNumber(e.target.value)} 
+                                />
+                                <button className='save-btn' onClick={handleSavePhoneNumber}>Save</button>
+                                <button className='cancel-btn' onClick={() => setIsEditingPhone(false)}>Cancel</button>
+                            </>
+                        ) : (
+                            <>
+                                <p className='detail-value'>{customerData.Phone_Number}</p>
+                                <button className="edit-button" onClick={updateCustomerDataPhoneNumber}>Edit</button>
+                            </>
+                        )}
+                    </div>
+                    <button className="logout-button" onClick={handleLogout}>Logout</button>
                 </div>
-                <div>
-                    <p className='order-d'><strong>Ordered Date</strong></p><p>2222-22-22</p>
-                </div>
-                <div>
-                    <p className='order-d'><strong>Expected Date</strong></p><p>2222-22-22</p>
-                </div>
-                <div>
-                    <p className='order-d'><strong>Total Price</strong></p><p>$1231</p>
+                <div className="previous-orders">
+                    <h2>Last Order</h2>
+                    <div>
+                        <p className='order-d'><strong>Order ID</strong></p><p>{last_order_details.Order_ID}</p>
+                    </div>
+                    <div>
+                        <p className='order-d'><strong>Ordered Date</strong></p><p>{(last_order_details.Ordered_Date)}</p>
+                    </div>
+                    <div>
+                        <p className='order-d'><strong>Total Price</strong></p><p>LKR {last_order_details.Total_Price}</p>                    
+                    </div>
                 </div>
             </div>
-            <div className='order-item-div'>
-                <ul>
-                {orders.map(order => (
-                    <li key={order.id} className="order-item">
-                        <img src={order.Image_Link} alt={order.Product_Name} />
+
+            {/* Right side - Customer orders */}
+            <div className="customer-orders">
+                <h2>Your Current Order</h2>
+                {orders.length > 0 ? (
+                <>
+                    <div className='order-details'>
                         <div>
-                            <div>
-                                <p className='order-topic'><strong>Product</strong></p><p className='detail-value'>{order.Product_Name}</p>
-                            </div>
-                            <div>
-                                <p className='order-topic'><strong>Quantity</strong></p><p className='detail-value'>{order.Quantity}</p>
-                            </div>
-                            <div>
-                                <p className='order-topic'><strong>Price</strong></p><p className='detail-value'>{order.Total_Price}</p>
-                            </div>
+                            <p className='order-d'><strong>Order ID</strong></p><p>{order_details[0].Order_ID}</p>
                         </div>
-                    </li>
-                ))}
-                </ul>
+                        <div>
+                            <p className='order-d'><strong>Ordered Date</strong></p><p>{order_details[0].Ordered_Date}</p>
+                        </div>
+                        <div>
+                            <p className='order-d'><strong>Expected Date</strong></p><p>{order_details[0].Expected_Date}</p>
+                        </div>
+                        <div>
+                            <p className='order-d'><strong>Total Price</strong></p><p>{order_details[0].Total_Price}</p>
+                        </div>
+                    </div>
+                    <div className='order-item-div'>
+                        <ul>
+                        {orders.map(order => (
+                            <li key={order.Order_ID} className="order-item">
+                                <img src={order.Image_Link} alt={order.Product_Name} />
+                                <div>
+                                    <div>
+                                        <p className='order-topic'><strong>Product</strong></p><p className='detail-value'>{order.Product_Name}</p>
+                                    </div>
+                                    <div>
+                                        <p className='order-topic'><strong>Quantity</strong></p><p className='detail-value'>{order.Quantity}</p>
+                                    </div>
+                                    <div>
+                                        <p className='order-topic'><strong>Price</strong></p><p className='detail-value'>{order.Total_Price}</p>
+                                    </div>
+                                </div>
+                            </li>
+                        ))}
+                        </ul>
+                    </div>
+                </>
+                ) : (
+                    <p>No current orders.</p>
+                )}
             </div>
-            
         </div>
-    </div>
-);
+    ) : <div>Not logged in.</div>;
 };
 
 export default UserDetails;

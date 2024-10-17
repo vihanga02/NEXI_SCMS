@@ -1,13 +1,19 @@
 .carousel-container {
-    padding: 10vh 5vw 10vh 5vw;
-    width: 600px;
-    height: 600px;
+    width: 550px;
+    height: 550px;
     overflow: hidden;
     position: relative;
 }
 
 .slider{
     overflow: hidden;
+}
+
+.slider img{
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    transition: transform 0.5s;
 }
 
 

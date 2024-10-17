@@ -32,17 +32,16 @@ export default function Dashboard() {
   return (
     <div className='dashboard'>
         <div className='dashboard-welcome'>
-            <div>
-                <h1>Welcome!</h1>
-                <p>The Nexus of Distribution</p>
-            </div>
-            <Carousel/>
+            <h1>Welcome</h1>
+            <p>-The Nexus of Distribution-</p>
         </div>
         <div className='dashboard-products'>
-            <h1>Lets Shop With NEXI</h1>
+            <Carousel />
             <div className='dashboard-products-grid'>
+                <h1>Lets Shop With NEXI</h1>
                 <CatGrid category={category} onSelectCategory={handleSelectCategory}/>
             </div>
+            
         </div>
     </div>
   )

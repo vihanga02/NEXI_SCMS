@@ -7,46 +7,95 @@
 }
 
 .dashboard .dashboard-welcome {
-    display: flex;
     padding-top: 4vh;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../../../public/assets/Welcome.jpg') ;
+    background-size: cover;
+    background-position: center;
+    background-color: rgba(223, 222, 231, 0.749);
+    background-blend-mode: overlay;
+    position: fixed;
 }
 
-.dashboard .dashboard-welcome div h1 {
-    font-size: 120px;
+.dashboard .dashboard-welcome h1 {
+    font-size: 200px;
     font-family: var(--heading);
     font-weight: bolder;
     color: var(--color5);
     text-align: center;
-    width: 50vw;
-    position: relative;
-    top: 30vh;
+    margin-top: 20vh;
+    text-shadow: 5px 5px 1px var(--color4);
 }
 
-.dashboard .dashboard-welcome div p {
+.dashboard .dashboard-welcome p {
     position: relative;
     font-size: 30px;
     font-family: var(--monospace);
-    top: 25vh;
-    left: 15vw;
+    font-weight: bolder;
+    color: var(--color6);
+    left: 50vw;
+    top: -8vh;
+    text-shadow: 1px 1px 1px var(--color4);
 }
 
 .dashboard .dashboard-products {
     display: flex;
     flex-direction: column;
-    padding: 15px 0px;
+    justify-content: center;
+    padding: 5vh 5vw;
+    margin-top: 100vh;
+    background: linear-gradient(225deg,var(--white), var(--color4), var(--color3) );
+    z-index: 1;
+
 }
 
 .dashboard .dashboard-products h1 {
-    font-size: 50px;
+    font-size: 57px;
     font-family: var(--heading);
     font-weight: bolder;
     color: var(--color1);
-    text-align: center;
+    text-align: center; 
 }
 
 
 .dashboard .dashboard-products .dashboard-products-grid {
-    width: 80%;
-    margin: auto;
-    margin-top: -5vh;
+    margin: 15vh 0 6vh 0;
+    overflow: hidden;
 }
+
+.dashboard .dashboard-products .dashboard-products-grid .cat-grid {
+    height: fit-content;
+    grid-template-columns: repeat(auto-fit, minmax(182px, 1fr));
+    column-gap: 1%;
+    margin-bottom: 0px;
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.dashboard .dashboard-products  .carousel-container {
+    width: auto;
+    height: auto;
+    overflow: hidden;
+    background: linear-gradient(225deg,var(--white), var(--color4) );
+    border-radius: 10px;
+    padding: 2vh 4vw;
+}
+
+.dashboard .dashboard-products  .carousel-container .slider {
+    width: 80vw;
+    height: 30vw;
+    position: relative;
+    top: 0;
+
+}
+
+.dashboard .dashboard-products .carousel-container p {
+    font-size: 40px;
+    font-family: var(--body);
+    font-weight: bolder;
+    text-align: center;
+    padding: 10px ;
+}
+

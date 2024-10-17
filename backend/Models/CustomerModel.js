@@ -76,8 +76,7 @@ class Customer {
   }
 
   static async updateCustomer(req) {
-    const { Customer_ID, Name, Phone_Number } = req.body;
-
+    const { Customer_ID, Name, Phone_Number } = req;
     const query = `UPDATE Customer SET Name=?, Phone_Number=? WHERE Customer_ID=?`;
 
     try {
@@ -225,6 +224,38 @@ class Customer {
       throw error; // You may want to handle errors more gracefully in production
     }
   }
+
+// Function to get the current (pending) order
+static async getCurrentOrder(customerId) {
+  const query = `CALL GetCurrentOrder(?);`;
+  try {
+    const [results] = await pool.query(query, [customerId]);
+    return results[0]; // results[0] returns the first result set from CALL
+  } catch (error) {
+    throw error;
+  }
+}
+
+static async getCurrentOrderItem(orderId) {
+  const query = `CALL GetCurrentOrderItem(?);`;
+  try {
+    const [results] = await pool.query(query, [orderId]);
+    return results[0]; // results[0] returns the first result set from CALL
+  }
+  catch (error) {
+    throw error;
+  }
+}
+
+static async getPreviousOrder(customerId) {
+  const query = `CALL GetPreviousOrder(?);`;
+  try {
+    const [results] = await pool.query(query, [customerId]);
+    return results[0]; // results[0] returns the first result set from CALL
+  } catch (error) {
+    throw error;
+  }
+}
 }
 
 export default Customer;
