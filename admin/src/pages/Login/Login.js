@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 import './Login.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 
 const Login = () => {
-  
-  const[username, setUsername] = useState('');
-  const[password, setPassword] = useState('');
-  const[succes, setSuccess] = useState('');
-  const[status, setStatus] = useState('');
 
-  function handleSubmit(event){
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [success, setSuccess] = useState('');
+  const [status, setStatus] = useState('');
+  const navigate = useNavigate();
+
+  function handleSubmit(event) {
     event.preventDefault();
     console.log(username, password);
 
@@ -21,28 +23,30 @@ const Login = () => {
       return;
     }
 
-    axios.post('/login', {username, password})
-    .then((res) => {
-      console.log(res.data);
-      setStatus(res.data.status);
-      setSuccess(res.data.success);
-      if (res.data.success) {
-        setSuccess(true);
-        setStatus('Login successful.');
-      } else {
-        setSuccess(false);
-        setStatus('Login failed.');
-      }
-    })
+    axios
+      .post('admin/login', { username, password })
+      .then((res) => {
+        console.log(res.data);
+        setStatus(res.data.status);
+        // setSuccess(res.data.success);
+        if (res.data.success) {
+          setSuccess(true);
+          setStatus('Login successful.');
+          navigate('/admindashboard');
+        } else {
+          setSuccess(false);
+          setStatus('Login failed.');
+        }
+      })
 
   }
-  
+
 
   return (
     <div className="login-container">
       <div className="login-left">
-        
-      
+
+
         <div className="logo-container">
           <img
             src='/assets/admin.jpeg' // Replace with your actual logo image path
@@ -54,17 +58,16 @@ const Login = () => {
         </div>
         <p className='text'>Welcome back! Please login to your account.</p>
         <form className="login-form" onSubmit={handleSubmit}>
-          <input type="Uname" placeholder="Enter your Username" className="input-field" 
-          onChange={e => setUsername(e.target.value)}/>
-          <input type="password" placeholder="Enter your Password" className="input-field" 
-          onChange={e => setPassword(e.target.value)}/>
+          <input type="Uname" placeholder="Enter your Username" className="input-field"
+            onChange={e => setUsername(e.target.value)} />
+          <input type="password" placeholder="Enter your Password" className="input-field"
+            onChange={e => setPassword(e.target.value)} />
           <button type="submit" className="login-button">Login</button>
         </form>
-        <span>Don't you have an account?<Link to ='/signup'>Register</Link></span>
+        <span>Don't you have an account?<Link to='/signup'>Register</Link></span>
         <div className="forgot-password" ><a href="">Forgot password</a></div>
       </div>
       <div className="login-right">
-          {/* <h3>Streamlining your distribution from railway to doorstep with seamless efficiency.</h3> */}
       </div>
     </div>
   );

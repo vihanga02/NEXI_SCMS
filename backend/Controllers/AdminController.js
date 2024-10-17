@@ -1,7 +1,7 @@
-import Manager from '../Models/Manager';
+import Manager from '../Models/Manager.js';
 
 // Controller to get incomplete train orders
-export const getIncompletedTrainOrders = async (req, res) => {
+async function getIncompletedTrainOrders(req, res){
     try {
         const result = await Manager.getIncompletedTrainOrders(req);
         res.status(200).json(result);
@@ -11,7 +11,7 @@ export const getIncompletedTrainOrders = async (req, res) => {
 };
 
 // Controller to get incomplete truck orders
-export const getIncompletedTruckOrders = async (req, res) => {
+async function getIncompletedTruckOrders(req, res){
     try {
         const result = await Manager.getIncompletedTruckOrders(req);
         res.status(200).json(result);
@@ -21,7 +21,7 @@ export const getIncompletedTruckOrders = async (req, res) => {
 };
 
 // Controller to get all orders
-export const getOrders = async (req, res) => {
+async function getOrders(req, res){
     try {
         const result = await Manager.getOrders(req);
         res.status(200).json(result);
@@ -31,9 +31,9 @@ export const getOrders = async (req, res) => {
 };
 
 // Controller to get the delivery schedule
-export const getDeliverySchedule = async (req, res) => {
+async function getDeliverySchedule(req, res){
     try {
-        const result = await Manager.getDeleverySchedule(req);
+        const result = await Manager.getDeliverySchedule(req);
         res.status(200).json(result);
     } catch (error) {
         res.status(500).json({ message: "Error fetching delivery schedule", error: error.message });
@@ -41,9 +41,9 @@ export const getDeliverySchedule = async (req, res) => {
 };
 
 // Controller to add a new delivery schedule
-export const addDeliverySchedule = async (req, res) => {
+async function addDeliverySchedule(req, res){
     try {
-        const result = await Manager.addDeleverySchedule(req);
+        const result = await Manager.addDeliverySchedule(req);
         res.status(201).json({ message: "Delivery schedule added successfully", data: result });
     } catch (error) {
         res.status(500).json({ message: "Error adding delivery schedule", error: error.message });
@@ -51,7 +51,7 @@ export const addDeliverySchedule = async (req, res) => {
 };
 
 // Controller to change order status to "In Truck"
-export const changeOrderStatusToIn_Truck = async (req, res) => {
+async function changeOrderStatusToIn_Truck(req, res){
     try {
         const result = await Manager.changeOrderStatusToIn_Truck(req);
         res.status(200).json({ message: "Order status changed to 'In Truck'", data: result });
@@ -61,7 +61,7 @@ export const changeOrderStatusToIn_Truck = async (req, res) => {
 };
 
 // Controller to get trains for a specific store
-export const getTrains = async (req, res) => {
+async function getTrains(req, res){
     try {
         const result = await Manager.getTrains(req);
         res.status(200).json(result);
@@ -71,7 +71,7 @@ export const getTrains = async (req, res) => {
 };
 
 // Controller to get drivers for a specific city
-export const getDrivers = async (req, res) => {
+async function getDrivers(req, res){
     const { city } = req.params;
     try {
         const result = await Manager.getDrivers(city);
@@ -82,7 +82,7 @@ export const getDrivers = async (req, res) => {
 };
 
 // Controller to get assistant drivers for a specific city
-export const getAssistants = async (req, res) => {
+async function getAssistants(req, res){
     const { city } = req.params;
     try {
         const result = await Manager.getAssistants(city);
@@ -93,7 +93,7 @@ export const getAssistants = async (req, res) => {
 };
 
 // Controller to get vehicles for a specific city
-export const getVehicles = async (req, res) => {
+async function getVehicles(req, res){
     const { city } = req.params;
     try {
         const result = await Manager.getVehicles(city);
@@ -102,3 +102,41 @@ export const getVehicles = async (req, res) => {
         res.status(500).json({ message: `Error fetching vehicles for city: ${city}`, error: error.message });
     }
 };
+
+async function manager_login (req, res) {
+    const { Username, Password } = req.body;
+
+    // Find the manager by email
+    const [manager] = await Manager.getManager(Username);
+    console.log(manager);
+
+    if (!manager) {
+        return res.status(401).json({ message: 'Invalid credentials', success: false });
+    }
+
+    // Check if the password is correct
+    // const match = await bcrypt.compare(Password, manager.Password);
+    const match = Password === manager.Password;
+    if (!match) {
+        return res.status(401).json({ message: 'Invalid credentials', success: false });
+    }
+
+    // Create a token
+    const token = jwt.sign({ id: manager.Manager_ID, username: manager.Username }, process.env.SECRET_KEY, { expiresIn: '1h' });
+
+    res.status(200).json({ token, success: true });
+}
+
+export{
+    getIncompletedTrainOrders,
+    getIncompletedTruckOrders,
+    getOrders,
+    getDeliverySchedule,
+    addDeliverySchedule,
+    changeOrderStatusToIn_Truck,
+    getTrains,
+    getDrivers,
+    getAssistants,
+    getVehicles,
+    manager_login
+}
