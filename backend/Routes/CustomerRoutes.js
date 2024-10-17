@@ -39,7 +39,7 @@ router.post("/createOrder", createOrder);
 // Cart-related routes
 router.post("/cart/add", authenticateToken, addToCart);
 router.get("/cart", authenticateToken, getCart);
-router.delete("/cart/remove", authenticateToken, removeFromCart);
+router.delete("/cart/remove/:Product_ID", authenticateToken, removeFromCart);
 router.post("/cart/checkout", authenticateToken, checkout);
 
 // Navbar route

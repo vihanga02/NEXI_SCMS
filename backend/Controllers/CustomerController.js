@@ -121,8 +121,8 @@ async function getCart(req, res) {
 
 // Remove an item from the cart
 async function removeFromCart(req, res) {
-  const { Product_ID } = req.body;
-  const Customer_ID = req.user.id;
+  const Product_ID = req.params.Product_ID; // Get Product_ID from the URL parameter
+  const Customer_ID = req.user.id; // Assuming you still need the customer ID
 
   try {
     const result = await Customer.removeFromCart({
@@ -138,9 +138,10 @@ async function removeFromCart(req, res) {
   }
 }
 
+
 // Checkout the cart
 async function checkout(req, res) {
-  const { Customer_ID } = req.body;
+  const Customer_ID = req.user.id;
 
   try {
     const result = await Customer.checkout(Customer_ID);

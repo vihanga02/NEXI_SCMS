@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "./Login.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import CSS for Toastify
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -31,8 +32,22 @@ const Login = () => {
         console.log(res.data);
         setSuccess(res.data.success);
         if (res.data.success) {
-          setMessage("Login successful.");
-          navigate("/"); // Redirect to dashboard
+          // Show success toast notification
+          toast.success("Login successful!", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+
+          // Redirect to dashboard after a short delay to show the toast
+          setTimeout(() => {
+            navigate("/"); // Redirect to dashboard
+          }, 500);
         } else {
           setMessage("Login failed. Please check your credentials.");
         }
@@ -63,7 +78,7 @@ const Login = () => {
         <p className="text">Welcome back! Please login to your account.</p>
         <form className="login-form" onSubmit={handleSubmit}>
           <input
-            type="text" // Changed from Uname to text
+            type="text"
             placeholder="Enter your Username"
             className="input-field"
             onChange={(e) => setUsername(e.target.value)}
@@ -95,9 +110,10 @@ const Login = () => {
           <a href="">Forgot password</a>
         </div>
       </div>
-      <div className="login-right">
-        {/* <h3>Streamlining your distribution from railway to doorstep with seamless efficiency.</h3> */}
-      </div>
+      <div className="login-right"></div>
+
+      {/* Add ToastContainer for toast notifications */}
+      <ToastContainer />
     </div>
   );
 };

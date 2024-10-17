@@ -21,9 +21,31 @@ const Cart = () => {
   };
 
   // Handle delete item
-  const handleDeleteItem = (product_id) => {
+const handleDeleteItem = async (product_id) => {
+  try {
+    // Send DELETE request to backend with Product_ID in the URL
+    await axios.delete(`/customer/cart/remove/${product_id}`, {withCredentials: true});
+
+    // If successful, remove the item from the frontend state
     setCartItems(cartItems.filter((item) => item.product_id !== product_id));
-  };
+  } catch (error) {
+    console.error("Error deleting cart item:", error);
+  }
+};
+
+const handleCheckout = async () => {
+  try {
+    // Send POST request to backend to checkout
+    await axios.post("/customer/cart/checkout",{},{withCredentials: true});
+
+    // If successful, clear the cart items
+    setCartItems([]);
+
+  } catch (error) {
+    console.error("Error checking out:", error);
+}
+};
+
 
   return (
     <div className="cart">
@@ -76,7 +98,7 @@ const Cart = () => {
               .toFixed(2)}
           </p>
         </div>
-        <button className="checkout-btn">Checkout Now</button>
+        <button className="checkout-btn" onClick={()=>handleCheckout()}>Checkout Now</button>
       </div>
     </div>
   );
