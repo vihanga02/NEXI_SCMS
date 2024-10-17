@@ -20,7 +20,6 @@ import {
   updateCustomer,
 
   // addToCart, 
-  getCart,
   // removeFromCart, 
   checkout
 
