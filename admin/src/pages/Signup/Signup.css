@@ -1,0 +1,113 @@
+@import url('../../Styles/Variables.css');
+
+.background {
+    background: linear-gradient(225deg,var(--white), var(--color4), var(--color3) );
+
+}
+
+/* Form and Layout Styling */
+.signupbody {
+    width: 100%;
+    height: 100%;
+    align-content: center;
+    align-items: center;
+}
+
+.signup-form-outer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    padding: 50px;
+}
+
+.signup-form-inner {
+    background-color: var(--white);
+    border-radius: 10px;
+    padding: 40px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    color: var(--color5);
+}
+
+.signup-form-inner h2 {
+    text-align: center;
+    color: var(--color5);
+    font-size: 2.5rem;
+    font-family: var(--heading);
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label{
+    font-family: var(--body);
+}
+
+
+.signup-form-inner input[type="text"],
+.signup-form-inner input[type="email"],
+.signup-form-inner input[type="tel"],
+.signup-form-inner input[type="date"],
+.signup-form-inner input[type="password"],
+.signup-form-inner select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--color3);
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 15px;
+    color: var(--color2);
+    background-color: var(--color4);
+}
+
+/* Address fields styling */
+.signup-form-inner input[type="text"][placeholder="Address line 1"],
+.signup-form-inner input[type="text"][placeholder="Address line 2"] {
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.signup-form-inner input::placeholder {
+    color: var(--color2); /* Use your desired color variable or hex code */
+    opacity: 1; /* Ensures full opacity for consistent appearance */
+}
+
+/* Button Styling */
+.signup-form-inner button {
+    background-color: var(--color1);
+    color: var(--color4);
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.signup-form-inner button:hover {
+    background-color: var(--color6);
+}
+
+/* Media Query for Mobile Responsiveness */
+/* @media (max-width: 768px) {
+    .signupbody {
+        flex-direction: column;
+    }
+
+    .signup-form-inner {
+        width: 90%;
+        padding: 30px;
+    }
+
+    .img {
+        display: none;
+    }
+}
+
+} */
