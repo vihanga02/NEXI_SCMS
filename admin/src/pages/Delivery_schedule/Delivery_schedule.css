@@ -1,0 +1,22 @@
+.DScontainer {
+    display: flex;
+    height: 100vh; /* Full viewport height */
+}
+
+.dscontainer {
+    flex-grow: 1; /* Take up the remaining space */
+    margin-left: 250px; 
+ 
+    padding: 0 5px 5px;
+    background-color: #f5f5f58f; 
+    flex-direction: column; 
+    gap: 20px; 
+}
+
+datebutton{
+    display: flex;
+    flex-direction: row;
+    padding: 100px;
+    margin-top: 200px;
+    gap: 50px;
+}

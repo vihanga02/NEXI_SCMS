@@ -2,12 +2,11 @@ import pool from '../dbConfig.js'
 
 class Manager{
 
-    static async getManagar(Email) {
-
-        const query = `SELECT * FROM Store_Manager WHERE Email=?`;
+    static async getManager(UserName) {
+        const query = `SELECT * FROM Store_Manager WHERE Username=?`;
 
         try {
-            const [results] = await pool.query(query, [Email]);
+            const [results] = await pool.query(query, [UserName]);
             return results;
         } catch (error) {
             throw error;
@@ -50,7 +49,7 @@ class Manager{
     }
 
     
-    static async getDeleverySchedule(req){
+    static async getDeliverySchedule(req){
         const query = `select * from Delivery_Schedule where vehicle_arival_time>=curdate()`
 
         const result = await call_db(query, null);
@@ -58,7 +57,7 @@ class Manager{
         return result;
     }
     
-    static async addDeleverySchedule(req){
+    static async addDeliverySchedule(req){
         const {store_id} = req.body.store_id;
         const query = 'call CreateDeliverySchedule(store_id)'
         const values = [store_id];
@@ -73,11 +72,11 @@ class Manager{
 
     static async changeOrderStatusToIn_Truck(req){
         const { Delivery_id } = req.body;
-        const query = `update Delivery_Schedule set Delivery_status='In_Truck' where Delivery_id=?`;
-        const values = [Delivery_id];
+        const query = 
+            `update Delivery_Schedule set Delivery_status='In_Truck' where Delivery_id=?`;
 
         try {
-            const result = await pool.query(query, values);
+            const result = await pool.query(query,[Delivery_id]);
             return result;
         } catch (error) {
             throw error;
@@ -103,10 +102,9 @@ class Manager{
     // Function to get drivers by city using the stored procedure
     static async getDrivers(city) {
         const query = `CALL getDriversByCity(?)`;
-        const values = [city];
 
         try {
-            const result = await pool.query(query, values);
+            const result = await pool.query(query, [city]);
             return result[0]; // Stored procedure returns results as an array of arrays
         } catch (error) {
             throw error;
@@ -116,10 +114,9 @@ class Manager{
     // Function to get driver assistants by city using the stored procedure
     static async getAssistants(city) {
         const query = `CALL getAssistantsByCity(?)`;
-        const values = [city];
 
         try {
-            const result = await pool.query(query, values);
+            const result = await pool.query(query, [city]);
             return result[0]; // Stored procedure returns results as an array of arrays
         } catch (error) {
             throw error;
@@ -129,10 +126,9 @@ class Manager{
     // Function to get vehicles by city using the stored procedure
     static async getVehicles(city) {
         const query = `CALL getVehiclesByCity(?)`;
-        const values = [city];
 
         try {
-            const result = await pool.query(query, values);
+            const result = await pool.query(query, [city]);
             return result[0]; // Stored procedure returns results as an array of arrays
         } catch (error) {
             throw error;
