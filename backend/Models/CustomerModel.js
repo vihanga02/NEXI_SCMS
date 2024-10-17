@@ -147,7 +147,7 @@ class Customer {
     }
   }
 
-  static async getCart(Customer_ID ) {
+  static async getCart(Customer_ID) {
     const query = `
         SELECT product.product_id as product_id, product_name, image_link, Price AS unit_price, SUM(Order_item.Quantity) AS total_quantity
         FROM Order_item
@@ -160,7 +160,7 @@ class Customer {
         GROUP BY Product.Product_ID, Product.Product_name, Product.Image_Link, Product.Price;
     `;
     try {
-      const [results] = await pool.query(query, [Customer_ID]); 
+      const [results] = await pool.query(query, [Customer_ID]);
       return results;
     } catch (error) {
       throw error;
@@ -177,11 +177,14 @@ class Customer {
 
     try {
       // Get the existing order ID for the customer
-      const [[order]] = await pool.query(checkOrderQuery, [Customer_ID]);
+      const [orderResults] = await pool.query(checkOrderQuery, [Customer_ID]);
 
-      if (!order) {
+      // Check if an order exists
+      if (orderResults.length === 0) {
         return { success: false, message: "No active cart found." };
       }
+
+      const order = orderResults[0]; // Assuming one active order per customer
 
       // Remove the item from the cart
       await pool.query(removeItemQuery, [order.Order_ID, Product_ID]);
@@ -199,13 +202,13 @@ class Customer {
       return { success: true, message: "Item removed successfully." };
     } catch (error) {
       console.error("Error removing item from cart:", error);
-      throw error; // You may want to handle errors more gracefully in production
+      throw error; // Consider more detailed error handling for production
     }
   }
 
   static async checkout(Customer_ID) {
     const updateOrderStateQuery =
-      "UPDATE Orders SET order_state = 'paid' WHERE Customer_ID = ? AND order_state = 'pending'";
+      "UPDATE Orders SET order_state = 'Paid' WHERE Customer_ID = ? AND order_state = 'Pending'";
 
     try {
       // Update the order state to 'paid'
@@ -225,37 +228,54 @@ class Customer {
     }
   }
 
-// Function to get the current (pending) order
-static async getCurrentOrder(customerId) {
-  const query = `CALL GetCurrentOrder(?);`;
-  try {
-    const [results] = await pool.query(query, [customerId]);
-    return results[0]; // results[0] returns the first result set from CALL
-  } catch (error) {
-    throw error;
+  // Function to get the current (pending) order
+  static async getCurrentOrder(customerId) {
+    const query = `CALL GetCurrentOrder(?);`;
+    try {
+      const [results] = await pool.query(query, [customerId]);
+      return results[0]; // results[0] returns the first result set from CALL
+    } catch (error) {
+      throw error;
+    }
   }
-}
 
-static async getCurrentOrderItem(orderId) {
-  const query = `CALL GetCurrentOrderItem(?);`;
-  try {
-    const [results] = await pool.query(query, [orderId]);
-    return results[0]; // results[0] returns the first result set from CALL
+  static async getCurrentOrderItem(orderId) {
+    const query = `CALL GetCurrentOrderItem(?);`;
+    try {
+      const [results] = await pool.query(query, [orderId]);
+      return results[0]; // results[0] returns the first result set from CALL
+    } catch (error) {
+      throw error;
+    }
   }
-  catch (error) {
-    throw error;
-  }
-}
 
-static async getPreviousOrder(customerId) {
-  const query = `CALL GetPreviousOrder(?);`;
-  try {
-    const [results] = await pool.query(query, [customerId]);
-    return results[0]; // results[0] returns the first result set from CALL
-  } catch (error) {
-    throw error;
+  static async getPreviousOrder(customerId) {
+    const query = `CALL GetPreviousOrder(?);`;
+    try {
+      const [results] = await pool.query(query, [customerId]);
+      return results[0]; // results[0] returns the first result set from CALL
+    } catch (error) {
+      throw error;
+    }
   }
-}
+
+  static async selectStore(Store_ID) {
+    const query = "SELECT * FROM Store";
+    try {
+      const [results] = await pool.query(query, [Store_ID]);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async selectRoute(Route_ID) {
+    const query = "SELECT * FROM Truck_route";
+    try {
+      const [results] = await pool.query(query, [Route_ID]);
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default Customer;
