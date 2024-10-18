@@ -1,0 +1,43 @@
+.d-flex {
+  display: flex;
+}
+
+#sidebar {
+  width: 250px;
+  height: calc(100vh - 56px); /* Adjust height after top navbar */
+  position: fixed;
+  top: 56px; /* Leave space for the top navbar */
+  left: 0;
+  padding-top: 20px;
+}
+
+#content {
+  margin-left: 250px;
+  margin-top: 20px;
+  width: calc(100% - 250px);
+  padding: 20px;
+}
+
+ul.components {
+  padding-left: 0;
+}
+
+ul.components li {
+  padding: 10px;
+  text-align: left;
+}
+
+ul.components li button {
+  width: 100%;
+  text-align: left;
+  color: black;
+}
+
+ul.components li.active button {
+  font-weight: bold;
+  background-color: #f8f9fa;
+}
+
+.table {
+  margin-top: 20px;
+}
