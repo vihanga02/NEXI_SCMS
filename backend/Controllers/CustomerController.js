@@ -141,16 +141,45 @@ async function removeFromCart(req, res) {
 
 // Checkout the cart
 async function checkout(req, res) {
-  const Customer_ID = req.user.id;
+  const Customer_ID = req.user.id; // Extracting Customer_ID from the request
+  const { Store_ID, Route_ID } = req.body; // Extract Store_ID and Route_ID from the request body
 
   try {
-    const result = await Customer.checkout(Customer_ID);
+    // Pass Customer_ID, Store_ID, and Route_ID to the checkout method
+    const result = await Customer.checkout(Customer_ID, Store_ID, Route_ID);
     res.status(200).json(result);
   } catch (error) {
     console.error("Error in checkout:", error);
     res.status(500).json({ success: false, message: "Error during checkout." });
   }
 }
+
+
+async function getStores(req, res) {
+  try{
+    const result = await Customer.getStores();
+    res.status(200).json(result);
+
+  }
+  catch(error){
+    console.error("Error in selecting store:", error);
+    res.status(500).json({success:false, message:"Error during selecting store"});
+  }
+}
+
+
+async function getRoutes(req, res) {
+  try {
+    const result = await Customer.getRoutes();
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Error in selecting store:", error);
+    res
+      .status(500)
+      .json({ success: false, message: "Error during selecting store" });
+  }
+}
+
 
 async function getOrder(req, res) {
   try {
@@ -263,4 +292,6 @@ export {
   fetchCurrentOrder,
   fetchPreviousOrder,
   updateCustomer,
+  getRoutes,
+  getStores
 };
