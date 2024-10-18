@@ -79,7 +79,7 @@ const UserDetails = () => {
         )
         .then(response => {
             setCustomerData({ ...customerData, Phone_Number });
-            setIsEditingPhone(false); // Exit edit mode
+            setIsEditingPhone(false);
             console.log('Phone number updated successfully.');
         })
         .catch(error => {
@@ -117,7 +117,7 @@ const UserDetails = () => {
 
     useEffect(() => {
         if (!login_status) {
-            navigate('/');
+            navigate('/login');
         }
     }, [login_status]);
 
