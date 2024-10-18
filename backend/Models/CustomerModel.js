@@ -207,9 +207,11 @@ class Customer {
   }
 
   static async checkout(Customer_ID) {
-    const updateOrderStateQuery =
-      "UPDATE Orders SET order_state = 'Paid' WHERE Customer_ID = ? AND order_state = 'Pending'";
-
+    const updateOrderStateQuery = `UPDATE Orders 
+    SET order_state = 'Paid',
+        ordered_date = CURRENT_DATE,
+        expected_date = DATE_ADD(CURRENT_DATE, INTERVAL 7 DAY)
+    WHERE Customer_ID = ? AND order_state = 'Pending';`;
     try {
       // Update the order state to 'paid'
       const [results] = await pool.query(updateOrderStateQuery, [Customer_ID]);
