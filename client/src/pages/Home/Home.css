@@ -43,7 +43,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 5vh 5vw;
+    padding: 5vh 0vw;
     margin-top: 100vh;
     background: linear-gradient(225deg,var(--white), var(--color4), var(--color3) );
     z-index: 1;
@@ -75,27 +75,5 @@
 }
 
 .dashboard .dashboard-products  .carousel-container {
-    width: auto;
-    height: auto;
-    overflow: hidden;
     background: linear-gradient(225deg,var(--white), var(--color4) );
-    border-radius: 10px;
-    padding: 2vh 4vw;
 }
-
-.dashboard .dashboard-products  .carousel-container .slider {
-    width: 80vw;
-    height: 30vw;
-    position: relative;
-    top: 0;
-
-}
-
-.dashboard .dashboard-products .carousel-container p {
-    font-size: 40px;
-    font-family: var(--body);
-    font-weight: bolder;
-    text-align: center;
-    padding: 10px ;
-}
-
