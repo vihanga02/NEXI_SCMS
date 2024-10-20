@@ -9,7 +9,7 @@ import Driver from './pages/Driver/Driver.js';
 import Assistant from './pages/Assistant/Assistant.js';
 import Report from './pages/Report/Report.js';
 import Order from './pages/Order/Order.js';
-import Delivery_schedule from './pages/Delivery_schedule/Delivery_schedule.js';
+import DeliverySchedule from './pages/Delivery_schedule/DeliverySchedule.js';
 const App = () => {
   return (
     <>
@@ -23,7 +23,7 @@ const App = () => {
         <Route path='/driver' element={<Driver/>}/>
         <Route path='/assistant' element={<Assistant/>}/>
         <Route path='/order' element={<Order/>}/>
-        <Route path='/delivery_schedule' element={<Delivery_schedule/>}/>
+        <Route path='/delivery_schedule' element={<DeliverySchedule/>}/>
         <Route path='/report' element={<Report/>}/>
 
 
