@@ -50,11 +50,14 @@ class Manager{
 
     
     static async getDeliverySchedule(req){
-        const query = `select * from Delivery_Schedule where vehicle_arival_time>=curdate()`
-
-        const result = await call_db(query, null);
-
-        return result;
+        const {date} = req.body;
+        const query = `select * from Delivery_Schedule where shipment_date=?`;
+        try{
+            const result = await pool.query(query, date);
+            return result;
+        }catch(error){
+            throw error;
+        }
     }
     
     static async addDeliverySchedule(req){
