@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./StoreRouteSelector.css";
 
 const StoreRouteSelector = ({ onStoreRouteChange }) => {
   const [stores, setStores] = useState([]);
@@ -51,10 +52,10 @@ const StoreRouteSelector = ({ onStoreRouteChange }) => {
   };
 
   return (
-    <div>
-      <div>
-        <label htmlFor="store">Select Store:</label>
-        <select id="store" value={selectedStore} onChange={handleStoreChange}>
+    <div className="select-out">
+      <div className="city-select">
+        <label htmlFor="select">Select Store</label>
+        <select id="select"  value={selectedStore} onChange={handleStoreChange}>
           <option value="">--Choose Store--</option>
           {stores.map((store) => (
             <option key={store.Store_ID} value={store.Store_ID}>
@@ -64,7 +65,7 @@ const StoreRouteSelector = ({ onStoreRouteChange }) => {
         </select>
       </div>
 
-      <div style={{ marginTop: "20px" }}>
+      <div className="route-name">
         <label htmlFor="route">Select Route:</label>
         <select
           id="route"

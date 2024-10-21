@@ -5,14 +5,24 @@ import axios from 'axios';
 
 const Navbar = () => {
   const [login_status, setLoginStatus] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
 
   axios.get('/customer/navbar', { withCredentials: true })
   .then((res) => {
     setLoginStatus(res.data.login_status);
-  }
-  ).catch((error) => {
+    getCartItems();
+  }).catch((error) => {
     console.error(error);
   })
+
+  const getCartItems = async () => {
+    try {
+      const cart = await axios.get("/customer/cart", { withCredentials: true });
+      setCartItems(cart.data);
+    } catch (error) {
+      console.error("Error getting cart items:", error);
+    }
+  };
 
   return (
     <nav className="navbar">
@@ -40,7 +50,7 @@ const Navbar = () => {
               <li className='icon-li'>
                 <a href="/cart" className="cart-icon">
                     <i className="fas fa-shopping-cart"></i>
-                    <span className="cart-count">0</span> {/* Dynamic cart count can be updated here */}
+                    <span className="cart-count">{cartItems.length}</span> {/* Dynamic cart count can be updated here */}
                 </a>
               </li>
               <li className='icon-li'>

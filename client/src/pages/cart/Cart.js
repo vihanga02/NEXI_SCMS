@@ -3,11 +3,23 @@ import "./Cart.css";
 import { FaTrash } from "react-icons/fa";
 import axios from "axios";
 import StoreRouteSelector from "../../components/StoreRouteSelector/StoreRouteSelector";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
+  const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
-  const [selectedStore, setSelectedStore] = useState(""); // State for selected store
-  const [selectedRoute, setSelectedRoute] = useState(""); // State for selected route
+  const [selectedStore, setSelectedStore] = useState(""); 
+  const [selectedRoute, setSelectedRoute] = useState(""); 
+
+  useEffect(() => {
+    axios.get("/customer/profile",{withCredentials:true})
+    .then((response) => {
+    })
+    .catch((error) => {
+      navigate("/login"); 
+        console.error("Error fetching customer profile:", error);
+    });
+  }, []); 
 
   useEffect(() => {
     getCartItems();
@@ -17,7 +29,7 @@ const Cart = () => {
   const getCartItems = async () => {
     try {
       const cart = await axios.get("/customer/cart", { withCredentials: true });
-      setCartItems(cart.data); // Assuming the data is in the correct format
+      setCartItems(cart.data);
     } catch (error) {
       console.error("Error getting cart items:", error);
     }
@@ -98,10 +110,6 @@ const Cart = () => {
           </tbody>
         </table>
       </div>
-
-      {/* Pass the handleStoreRouteChange function to StoreRouteSelector */}
-      <StoreRouteSelector onStoreRouteChange={handleStoreRouteChange} />
-
       <div className="cart-summary">
         <div className="price-details">
           <h4>Total Price</h4>
@@ -115,6 +123,7 @@ const Cart = () => {
               .toFixed(2)}
           </p>
         </div>
+        <StoreRouteSelector onStoreRouteChange={handleStoreRouteChange} />
         <button className="checkout-btn" onClick={handleCheckout}>
           Checkout Now
         </button>
