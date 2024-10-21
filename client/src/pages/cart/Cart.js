@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react";
 import "./Cart.css";
 import { FaTrash } from "react-icons/fa";
 import axios from "axios";
+import StoreRouteSelector from "../../components/StoreRouteSelector/StoreRouteSelector";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [selectedStore, setSelectedStore] = useState(""); // State for selected store
+  const [selectedRoute, setSelectedRoute] = useState(""); // State for selected route
 
   useEffect(() => {
     getCartItems();
@@ -21,31 +24,41 @@ const Cart = () => {
   };
 
   // Handle delete item
-const handleDeleteItem = async (product_id) => {
-  try {
-    // Send DELETE request to backend with Product_ID in the URL
-    await axios.delete(`/customer/cart/remove/${product_id}`, {withCredentials: true});
+  const handleDeleteItem = async (product_id) => {
+    try {
+      await axios.delete(`/customer/cart/remove/${product_id}`, {
+        withCredentials: true,
+      });
+      setCartItems(cartItems.filter((item) => item.product_id !== product_id));
+    } catch (error) {
+      console.error("Error deleting cart item:", error);
+    }
+  };
 
-    // If successful, remove the item from the frontend state
-    setCartItems(cartItems.filter((item) => item.product_id !== product_id));
-  } catch (error) {
-    console.error("Error deleting cart item:", error);
-  }
-};
+  // Handle checkout
+  const handleCheckout = async () => {
+    try {
+      // Send POST request to backend to checkout with store_id and route_id
+      await axios.post(
+        "/customer/cart/checkout",
+        { Store_ID: selectedStore, Route_ID: selectedRoute }, // Include selected store and route
+        { withCredentials: true }
+      );
 
-const handleCheckout = async () => {
-  try {
-    // Send POST request to backend to checkout
-    await axios.post("/customer/cart/checkout",{},{withCredentials: true});
+      // If successful, clear the cart items
+      setCartItems([]);
+      setSelectedStore(""); // Reset store selection
+      setSelectedRoute(""); // Reset route selection
+    } catch (error) {
+      console.error("Error checking out:", error);
+    }
+  };
 
-    // If successful, clear the cart items
-    setCartItems([]);
-
-  } catch (error) {
-    console.error("Error checking out:", error);
-}
-};
-
+  // Function to handle store and route selection
+  const handleStoreRouteChange = (storeId, routeId) => {
+    setSelectedStore(storeId);
+    setSelectedRoute(routeId);
+  };
 
   return (
     <div className="cart">
@@ -85,6 +98,10 @@ const handleCheckout = async () => {
           </tbody>
         </table>
       </div>
+
+      {/* Pass the handleStoreRouteChange function to StoreRouteSelector */}
+      <StoreRouteSelector onStoreRouteChange={handleStoreRouteChange} />
+
       <div className="cart-summary">
         <div className="price-details">
           <h4>Total Price</h4>
@@ -98,7 +115,9 @@ const handleCheckout = async () => {
               .toFixed(2)}
           </p>
         </div>
-        <button className="checkout-btn" onClick={()=>handleCheckout()}>Checkout Now</button>
+        <button className="checkout-btn" onClick={handleCheckout}>
+          Checkout Now
+        </button>
       </div>
     </div>
   );

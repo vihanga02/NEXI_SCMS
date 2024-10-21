@@ -8,20 +8,17 @@ import {
   login,
   logout,
   signup,
-  addToCart, // Import the new method for adding to the cart
-  removeFromCart, // Import the new method for removing from the cart
-  // checkout, // Import the new method for checking out
+  addToCart, 
+  removeFromCart,
   checkLogin,
-
   getCart,
   getProfile,
   fetchPreviousOrder,
   fetchCurrentOrder,
   updateCustomer,
-
-  // addToCart, 
-  // removeFromCart, 
-  checkout
+  checkout,
+  getRoutes,
+  getStores,
 
 } from "../Controllers/CustomerController.js";
 import authenticateToken from "../Middleware/Authentication.js";
@@ -41,6 +38,9 @@ router.post("/cart/add", authenticateToken, addToCart);
 router.get("/cart", authenticateToken, getCart);
 router.delete("/cart/remove/:Product_ID", authenticateToken, removeFromCart);
 router.post("/cart/checkout", authenticateToken, checkout);
+
+router.get("/stores", getStores);
+router.get("/routes", getRoutes);
 
 // Navbar route
 router.get('/navbar', authenticateToken, checkLogin);

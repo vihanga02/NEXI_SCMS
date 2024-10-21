@@ -206,15 +206,22 @@ class Customer {
     }
   }
 
-  static async checkout(Customer_ID) {
+  static async checkout(Customer_ID, Store_ID, Route_ID) {
     const updateOrderStateQuery = `UPDATE Orders 
     SET order_state = 'Paid',
         ordered_date = CURRENT_DATE,
-        expected_date = DATE_ADD(CURRENT_DATE, INTERVAL 7 DAY)
+        expected_date = DATE_ADD(CURRENT_DATE, INTERVAL 7 DAY),
+        Store_ID = ?,
+        Route_ID = ?
     WHERE Customer_ID = ? AND order_state = 'Pending';`;
+
     try {
-      // Update the order state to 'paid'
-      const [results] = await pool.query(updateOrderStateQuery, [Customer_ID]);
+      // Update the order state to 'paid' using separate values for each placeholder
+      const [results] = await pool.query(updateOrderStateQuery, [
+        Store_ID,
+        Route_ID,
+        Customer_ID,
+      ]);
 
       if (results.affectedRows === 0) {
         return {
@@ -261,23 +268,28 @@ class Customer {
     }
   }
 
-  static async selectStore(Store_ID) {
+  static async getStores() {
     const query = "SELECT * FROM Store";
     try {
-      const [results] = await pool.query(query, [Store_ID]);
+      const [results] = await pool.query(query);
+      return results;
     } catch (error) {
       throw error;
     }
   }
 
-  static async selectRoute(Route_ID) {
+  static async getRoutes() {
     const query = "SELECT * FROM Truck_route";
     try {
-      const [results] = await pool.query(query, [Route_ID]);
+      const [results] = await pool.query(query);
+      return results;
     } catch (error) {
       throw error;
     }
   }
+
 }
+
+
 
 export default Customer;

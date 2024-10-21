@@ -3,6 +3,11 @@
     height: 100vh; /* Full viewport height */
 }
 
+h1 {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
 .dscontainer {
     flex-grow: 1; /* Take up the remaining space */
     margin-left: 250px; 
@@ -13,10 +18,3 @@
     gap: 20px; 
 }
 
-datebutton{
-    display: flex;
-    flex-direction: row;
-    padding: 100px;
-    margin-top: 200px;
-    gap: 50px;
-}
