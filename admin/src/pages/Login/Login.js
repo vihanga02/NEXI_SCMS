@@ -49,7 +49,7 @@ const Login = () => {
 
         <div className="logo-container">
           <img
-            src='/assets/admin.jpeg' // Replace with your actual logo image path
+            src='../../assets/admin.jpeg' // Replace with your actual logo image path
             alt="Nexi Logo"
             className="logo"
           />
