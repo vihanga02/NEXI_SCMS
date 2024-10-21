@@ -9,7 +9,7 @@ const Topbar = () => {
 
   return (
     <div className="topbar">
-      <div className="company-name">A company</div>
+      <div className="company-name">NEXI-THE NEXUS OF DISTRIBUTION</div>
       <button className="logout-button" onClick={handleLogout}>Logout</button>
     </div>
   );

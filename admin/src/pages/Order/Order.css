@@ -1,15 +1,48 @@
-.Ocontainer {
+.ADcontainer {
     display: flex;
-    height: 100vh; /* Full viewport height */
+    height: 100vh; 
 }
 
-.ocontainer {
-    flex-grow: 1; 
+.Acontainer {
+    flex-grow: 1; /* Take up the remaining space */
     margin-left: 250px; 
-  
     padding: 0 5px 5px;
-    background-color: #f5f5f58f; 
+    background-color: #f5f5f58f;
     display: flex;
     flex-direction: column; 
-    gap: 20px; 
+    gap: 20px; /* Spacing between elements */
+}
+
+.order-content {
+    padding: 20px;
+    padding-right:  10px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.order-content h2 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.order-table th, .order-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.order-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.order-table tr:hover {
+    background-color: #f1f1f1;
 }
