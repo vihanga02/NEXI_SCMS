@@ -25,7 +25,7 @@ router.get("/login", manager_login);
 router.get("/incompletedTrainOrders", authenticateToken, getIncompletedTrainOrders);
 router.get("/incompletedTruckOrders", authenticateToken, getIncompletedTruckOrders);
 router.get("/orders", authenticateToken, getOrders);
-router.get("/deliverySchedule", authenticateToken, getDeliverySchedule);
+router.get("/deliverySchedule/:date", getDeliverySchedule);
 router.post("/addDeliverySchedule", authenticateToken, addDeliverySchedule);
 router.post("/changeOrderStatusToIn_Truck", authenticateToken, changeOrderStatusToIn_Truck);
 router.get("/trains", authenticateToken, getTrains);
