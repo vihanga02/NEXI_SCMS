@@ -12,6 +12,19 @@ class Manager{
             throw error;
         }
     }
+    static async getQuarterlySales(req) {
+        const {startDate} = req.body;
+        console.log("Fetching quarterly sales starting from:", startDate);
+        const query = `CALL Quarterly_sales_from(?)`;
+        try {
+            const [results] = await pool.query(query, [startDate]);
+            return results;
+        } catch (error) {
+            console.error("Error in getQuarterlySales:", error);
+            throw error;
+        }
+    }
+    
     
     static async getIncompletedTrainOrders(req){
         // get the orders which does not have a train assigned the state is not delivered

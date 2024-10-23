@@ -13,8 +13,9 @@ import {
     getDrivers,
     getAssistants,
     getVehicles,
-    manager_login
-} from "../Controllers/AdminController.js";
+    manager_login,
+    getQuarterlySales
+} from "../controllers/AdminController.js";
 
 // User authentication routes
 router.get("/login", manager_login);
@@ -31,5 +32,6 @@ router.get("/trains", authenticateToken, getTrains);
 router.get("/drivers", authenticateToken, getDrivers);
 router.get("/assistants", authenticateToken, getAssistants);
 router.get("/vehicles", authenticateToken, getVehicles);
+router.get("/quarterlySales",authenticateToken,getQuarterlySales);
 
 export default router;
