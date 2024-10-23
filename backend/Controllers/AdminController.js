@@ -9,6 +9,18 @@ async function getIncompletedTrainOrders(req, res){
         res.status(500).json({ message: "Error fetching incomplete train orders", error: error.message });
     }
 };
+//controller to get quaterly sales
+async function getQuarterlySales(req, res){
+    try {
+        console.log("In controller");
+        //const startDate = req.query.startDate; // Ensure you are extracting the date from the request query
+        const result = await Manager.getQuarterlySales(req);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching quarterly sales", error: error.message });
+    }
+}
+
 
 // Controller to get incomplete truck orders
 async function getIncompletedTruckOrders(req, res){
@@ -138,5 +150,6 @@ export{
     getDrivers,
     getAssistants,
     getVehicles,
-    manager_login
+    manager_login,
+    getQuarterlySales
 }
