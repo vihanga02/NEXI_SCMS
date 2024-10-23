@@ -11,22 +11,19 @@ const Products = () => {
 
     const { category } = useParams(); // Use "category" as the parameter name
 
-    console.log(category); // Log the selected category
-
     useEffect(() => {
+        const getProducts = async () => {
+            try {
+                const result = await axios.get('/customer/products');
+                setProducts(result.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
         getProducts();
-    }, []);
+    }, []); 
 
-    const getProducts = async () => {
-        try {
-            const result = await axios.get('/customer/products');
-            setProducts(result.data);
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
-    // Filter products based on the selected category and search term
     const filteredProducts = products.filter(product => 
         (category === "All" || product.Category === category) && 
         product.Product_Name.toLowerCase().includes(searchTerm.toLowerCase())

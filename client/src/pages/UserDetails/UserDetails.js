@@ -38,11 +38,23 @@ const UserDetails = () => {
 
         axios.get('customer/currentOrder', { withCredentials: true })
         .then((response) => {
-            const orderData = response.data.data[0];
-            setOrders(response.data.order_item);
-            orderData.Ordered_Date = new Date(orderData.Ordered_Date).toLocaleDateString();
-            orderData.Expected_Date = new Date(orderData.Expected_Date).toLocaleDateString();
-            setOrderDetails(Array.isArray(orderData) ? orderData : [orderData]); // Ensure it's an array
+            const orderData = response.data.data;
+            const orderItems = response.data.order_item;
+
+            if (orderData.length > 0) {
+                const formattedOrders = orderData.map(order => {
+                order.Ordered_Date = new Date(order.Ordered_Date).toLocaleDateString();
+                order.Expected_Date = new Date(order.Expected_Date).toLocaleDateString();
+                return order;
+            });
+            setOrderDetails(formattedOrders);
+            setOrders(orderItems);
+            console.log('Current orders:', formattedOrders);
+            console.log('Order items:', orderItems);
+            } else {
+            setOrderDetails([]);
+            setOrders([]);
+            }
         })
         .catch((error) => {
             setLoginStatus(false);
@@ -190,47 +202,51 @@ const UserDetails = () => {
 
             {/* Right side - Customer orders */}
             <div className="customer-orders">
-                <h2>Your Current Order</h2>
-                {orders.length > 0 ? (
+                <h2>Your Current Orders</h2>
+                <div className='customer-order-in'>
+                    {order_details.length > 0 ? (
                 <>
-                    <div className='order-details'>
-                        <div>
-                            <p className='order-d'><strong>Order ID</strong></p><p>{order_details[0].Order_ID}</p>
+                    {order_details.map((order, index) => (
+                        <div key={index} className='order-details'>
+                            <div className='order-details-inside'>
+                                <p className='order-d'><strong>Order ID</strong></p><p>{order.Order_ID}</p>
+                            </div>
+                            <div className='order-details-inside'>
+                                <p className='order-d'><strong>Ordered Date</strong></p><p>{order.Ordered_Date}</p>
+                            </div>
+                            <div className='order-details-inside'>
+                                <p className='order-d'><strong>Expected Date</strong></p><p>{order.Expected_Date}</p>
+                            </div>
+                            <div className='order-details-inside'>
+                                <p className='order-d'><strong>Total Price</strong></p><p>{order.Total_Price}</p>
+                            </div>
+                            <div className='order-item-div'>
+                                <ul>
+                                    {orders[order.Order_ID] && orders[order.Order_ID].map((filteredOrder, index) => (
+                                        <li key={`${filteredOrder.Order_ID}-${index}`} className="order-item">
+                                            <img src={filteredOrder.Image_Link} alt={filteredOrder.Product_Name} />
+                                            <div>
+                                                <div>
+                                                   <p className='detail-value'>{filteredOrder.Product_Name}</p>
+                                                </div>
+                                                <div>
+                                                    <p className='order-topic'><strong>Quantity</strong></p><p className='detail-value'>{filteredOrder.Quantity}</p>
+                                                </div>
+                                                <div>
+                                                    <p className='detail-value detail-value-price' >LKR {filteredOrder.Order_item_Price}</p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
                         </div>
-                        <div>
-                            <p className='order-d'><strong>Ordered Date</strong></p><p>{order_details[0].Ordered_Date}</p>
-                        </div>
-                        <div>
-                            <p className='order-d'><strong>Expected Date</strong></p><p>{order_details[0].Expected_Date}</p>
-                        </div>
-                        <div>
-                            <p className='order-d'><strong>Total Price</strong></p><p>{order_details[0].Total_Price}</p>
-                        </div>
-                    </div>
-                    <div className='order-item-div'>
-                        <ul>
-                        {orders.map(order => (
-                            <li key={order.Order_ID} className="order-item">
-                                <img src={order.Image_Link} alt={order.Product_Name} />
-                                <div>
-                                    <div>
-                                        <p className='order-topic'><strong>Product</strong></p><p className='detail-value'>{order.Product_Name}</p>
-                                    </div>
-                                    <div>
-                                        <p className='order-topic'><strong>Quantity</strong></p><p className='detail-value'>{order.Quantity}</p>
-                                    </div>
-                                    <div>
-                                        <p className='order-topic'><strong>Price</strong></p><p className='detail-value'>{order.Total_Price}</p>
-                                    </div>
-                                </div>
-                            </li>
-                        ))}
-                        </ul>
-                    </div>
+                    ))}
                 </>
                 ) : (
                     <p>No current orders.</p>
                 )}
+                </div>
             </div>
         </div>
     ) : <div>Not logged in.</div>;

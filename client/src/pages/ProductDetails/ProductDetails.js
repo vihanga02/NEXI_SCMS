@@ -14,19 +14,21 @@ const ProductDetails = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const getProducts = async () => {
+      try {
+        const result = await axios.get("/customer/products/");
+        setProducts(result.data);
+      } catch (err) {
+        setError("Error fetching products. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
     getProducts();
+
   }, []);
 
-  const getProducts = async () => {
-    try {
-      const result = await axios.get("/customer/products/");
-      setProducts(result.data);
-    } catch (err) {
-      setError("Error fetching products. Please try again later.");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const { id } = useParams(); // Get the product ID from the URL
   const product = products.find((p) => p.Product_ID == id); // Find the product by ID
@@ -77,7 +79,20 @@ const ProductDetails = () => {
       });
     } catch (err) {
       console.error("Error adding to cart:", err);
-      if (err.response.status === 401) {
+      
+      // Ensure response exists before accessing the status
+      if (!err.response) {
+        toast.error("Network error. Please check your internet connection.", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      } else if (err.response.status === 401) {
         // Redirect to login if not authenticated
         navigate("/login");
       } else {
@@ -104,7 +119,7 @@ const ProductDetails = () => {
         <h2>{product.Product_Name}</h2>
         <p className="price">LKR {product.Price}</p>
 
-        <p className="product-descritpion">{product.Description}</p>
+        <p className="product-description">{product.Description}</p>
 
         <div className="quantity-container">
           <button onClick={handleDecrease} className="increase">

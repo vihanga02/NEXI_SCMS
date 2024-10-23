@@ -56,11 +56,9 @@ const Cart = () => {
         { Store_ID: selectedStore, Route_ID: selectedRoute }, // Include selected store and route
         { withCredentials: true }
       );
-
-      // If successful, clear the cart items
       setCartItems([]);
-      setSelectedStore(""); // Reset store selection
-      setSelectedRoute(""); // Reset route selection
+      setSelectedStore(""); 
+      setSelectedRoute(""); 
     } catch (error) {
       console.error("Error checking out:", error);
     }

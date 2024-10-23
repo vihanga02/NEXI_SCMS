@@ -228,13 +228,17 @@ async function fetchCurrentOrder(req, res) {
   const customerId = req.user.id; // Assuming you have middleware that sets req.user with authenticated user info
   
   try {
-    const currentOrder = await Customer.getCurrentOrder(customerId)
+    const currentOrder = await Customer.getCurrentOrder(customerId);
     if (!currentOrder || currentOrder.length === 0) {
       return res.status(404).json({ success: false, message: 'No pending order found' });
     }
-    const  current_order_item = await Customer.getCurrentOrderItem(currentOrder[0].Order_ID);
 
-    return res.status(200).json({ success: true, data: currentOrder, order_item: current_order_item });
+    const orderItems = {};
+    for (const order of currentOrder) {
+      const currentOrderItems = await Customer.getCurrentOrderItem(order.Order_ID);
+      orderItems[order.Order_ID] = currentOrderItems;
+    }
+    return res.status(200).json({ success: true, data: currentOrder, order_item: orderItems });
   } catch (error) {
     console.error('Error fetching current order:', error);
     return res.status(500).json({ success: false, message: 'Server error' });

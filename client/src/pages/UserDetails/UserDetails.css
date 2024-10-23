@@ -53,6 +53,8 @@
     width: 24vw;
 }
 
+
+
 .customer-details div .edit-button{
     background-color: var(--color2);
     color: var(--white);
@@ -135,38 +137,54 @@
 .customer-orders {
     flex: 1; 
     background-color: var(--white);
-    padding: 30px;
+    padding: 30px 0;
     border-radius: 12px;
     box-shadow: 0 4px 20px var(--color3);
     max-height: 70vh;
-    overflow: hidden;
     width: 40vw;
+    overflow: hidden;
+}
+
+.customer-orders .customer-order-in{
+    overflow: scroll;
+    max-height: 65vh;
+    padding: 0 30px;
+}
+
+.order-item div{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
 }
 
 .order-item div div {
     display: flex;
     flex-direction: row;
     gap: 10px;
+    width: 20vw;
 }
 
 .order-item div div .order-topic {
     width: 5vw;
 }
 
+.order-item div div .detail-value-price{
+    padding-left: 4.5vw;
+}
+
 .customer-orders ul {
     padding-inline-start: 0px;
 }
 
-.customer-orders .order-item-div{
-    overflow: scroll;
-    max-height: 50vh;
-}
+
 
 .customer-orders .order-details {
     margin-bottom: 10px;
+    border-bottom: 2px solid var(--color3);
+    padding-bottom: 5vh;
 }
 
-.customer-orders .order-details div {
+.customer-orders .order-details .order-details-inside {
     display: flex;
     flex-direction: row;
     gap: 10px;
@@ -188,6 +206,7 @@
 .order-item {
     display: flex;
     align-items: center;
+    width: 96%;
     gap: 20px;
     padding: 10px;
     border: 1px solid var(--color3);

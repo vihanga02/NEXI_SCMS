@@ -249,7 +249,7 @@ class Customer {
   }
 
   static async getCurrentOrderItem(orderId) {
-    const query = `CALL GetCurrentOrderItem(?);`;
+    const query = `CALL GetCurrentOrderItem(?);`
     try {
       const [results] = await pool.query(query, [orderId]);
       return results[0]; // results[0] returns the first result set from CALL
