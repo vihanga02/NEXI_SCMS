@@ -49,8 +49,6 @@ const UserDetails = () => {
             });
             setOrderDetails(formattedOrders);
             setOrders(orderItems);
-            console.log('Current orders:', formattedOrders);
-            console.log('Order items:', orderItems);
             } else {
             setOrderDetails([]);
             setOrders([]);
