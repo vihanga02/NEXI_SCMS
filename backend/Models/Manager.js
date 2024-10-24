@@ -12,6 +12,19 @@ class Manager{
             throw error;
         }
     }
+    //model for getting the most orders
+    static async getMostOrders(req){
+        const query = `SELECT * FROM product_orders;`;
+        try {
+            const result = await pool.query(query, null);
+            return result;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+
+    //model for getting the quarterly sales
     static async getQuarterlySales(req) {
         const {startDate} = req.body;
         console.log("Fetching quarterly sales starting from:", startDate);
@@ -163,6 +176,20 @@ class Manager{
             throw error;
         }
     }
+
+
+    // Function to get the total hours worked by each driver
+    static async getDriverWorkedHours(req) {
+        const query = `SELECT * FROM driver_work_hours`;
+
+        try {
+            const result = await pool.query(query, null);
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+    
     
 
 }
