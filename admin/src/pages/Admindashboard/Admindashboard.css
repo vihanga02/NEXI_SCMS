@@ -1,16 +1,18 @@
+@import url(../../Styles/Variables.css);
+
 .ADcontainer {
     display: flex;
     height: 100vh; 
+    padding: 15vh 3vw 0 3vw;
+    background-color: var(--white);
 }
 
-.Acontainer {
-    flex-grow: 1; /* Take up the remaining space */
-    margin-left: 250px; 
-    padding: 0 5px 5px;
-    background-color: #f5f5f58f; 
+.ADcontainer .Acontainer {
+    flex-grow: 1; 
     display: flex;
     flex-direction: column; 
-    gap: 20px; /* Spacing between elements */
+    gap: 20px; 
+    background-color: var(--white);
 }
 
 /* Widgets Row - Side by Side */
@@ -22,7 +24,7 @@
 
 /* Widget Styling */
 .widget {
-    background: linear-gradient(135deg, #6a11cb, #2575fc); 
+    background: linear-gradient(135deg, var(--color3),var(--color2), var(--color1)); 
     color: white;
     padding: 20px;
     border-radius: 10px;
@@ -31,25 +33,31 @@
     text-align: center;
     position: relative;
     min-height: 150px;
-    transition: box-shadow 0.3s ease; }
+    transition: box-shadow 0.3s ease; 
+}
 
 .widget:hover {
     box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3); 
 }
 
 .widget h3 {
-    font-size: 1.5em;
-    margin-bottom: 10px;
+    font-size: 1.2em;
+    margin-top: -10px;
 }
 
-.widget p {
+.incomplete-orders h3 {
+    font-size: 1.1em;
+    margin-top: -10px;
+}
+
+
+.widget p, .incomplete-orders p {
     font-size: 2em;
     font-weight: bold;
 }
 
-/* Progress Bar Styling */
-.progress-bar {
-    background: #ddd;
+.widget .progress-bar, .incomplete-orders .progress-bar {
+    background-color: #ffffff38;
     border-radius: 5px;
     height: 10px;
     width: 100%;
@@ -57,24 +65,51 @@
 }
 
 .progress {
-    background: #4caf50;
+    background-color: var(--white);
     height: 100%;
     border-radius: 5px;
     transition: width 0.4s ease;
 }
 
-.active-users .progress {
-    background: #4caf50; /* Green progress bar */
-}
-
 .incomplete-orders .progress {
-    background: #f44336; /* Red progress bar */
+    background: var(--red); 
+    padding: 0px;
+}
+.incomplete-orders{
+    background: linear-gradient(135deg, var(--color3),var(--color2), var(--color1)); 
+    color: white;
+    padding: 0 20px;
+    border-radius: 10px;
+    width: 100%; 
+    height: 12vh;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); 
+    text-align: center;
+    position: relative;
+    transition: box-shadow 0.3s ease; 
+    margin-bottom: 2vh;
 }
 
-/* Calendar Container */
+.incomplete-order-container .incomplete-orders p{
+    margin: 0px;
+}
+
+.Acontainer .calender-order-container{
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    margin-bottom: 2vh;
+}
+
+.incomplete-order-container .incomplete-orders .progress-bar{
+    margin: 0px;
+}
+
+.Acontainer .incomplete-order-container{
+    width: 44vw;
+}
+
 .calendar-container {
-    margin-top: 20px;
-    width: 100%;
+    width: 30vw;
     padding: 20px;
     background: white;
     border-radius: 10px;
@@ -90,3 +125,50 @@
     width: 100%;
     border: none;
 }
+
+
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse; /* Ensures borders are merged */
+    background-color: var(--white);
+    border-radius: 10px;
+    overflow: hidden; /* Hides overflow of rounded corners */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Light shadow for table */
+  }
+  
+  .orders-table th, .orders-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd; /* Adds horizontal dividers between rows */
+  }
+  
+  .orders-table th {
+    background-color: var(--color3); /* Header background color */
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase; /* Uppercase text for headers */
+  }
+  
+  .orders-table td {
+    background-color: var(--light-grey); /* Light grey background for cells */
+  }
+  
+  .orders-table .table-row:hover {
+    background-color: var(--hover-grey); /* Row highlight on hover */
+  }
+  
+  .orders-table .table-header {
+    font-size: 1em;
+    font-weight: bold;
+  }
+  
+  .orders-table .table-data {
+    font-size: 0.9em;
+    color: var(--dark-grey);
+  }
+  
+  .orders-table tr:last-child td {
+    border-bottom: none; /* Removes border from the last row */
+  }
+  

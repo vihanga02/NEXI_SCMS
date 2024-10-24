@@ -10,13 +10,17 @@ import Assistant from './pages/Assistant/Assistant.js';
 import Report from './pages/Report/Report.js';
 import Order from './pages/Order/Order.js';
 import DeliverySchedule from './pages/Delivery_schedule/DeliverySchedule.js';
+
+
+import Sidebar from './components/Sidebar/Sidebar.js';
+import Topbar from './components/Topbar/Topbar.js';
+
 const App = () => {
   return (
     <>
-      
+      <Sidebar/>
+      <Topbar/>
       <Routes>
-        
-        
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path='/admindashboard' element={<Admindashboard/>}/>
@@ -25,18 +29,7 @@ const App = () => {
         <Route path='/order' element={<Order/>}/>
         <Route path='/delivery_schedule' element={<DeliverySchedule/>}/>
         <Route path='/report' element={<Report/>}/>
-
-
-
-        
-       
-
-        
-
-
       </Routes>
-     
-    
     </>
   );
 };

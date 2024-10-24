@@ -19,9 +19,7 @@ function DeliverySchedule() {
 
   return (
     <div className='DScontainer'>
-      <Sidebar />
       <div className='dscontainer'>
-        <Topbar />
         <div>
           <h1>Delivery Schedule</h1>
           <label className='p-3'>Select Date : </label>

@@ -13,9 +13,7 @@ function Order() {
 
   return (
     <div className='ADcontainer'>
-      <Sidebar />
       <div className='Acontainer'>
-        <Topbar />
         <div className='order-content'>
           <h2>Customer's Pending Orders</h2>
           <table className='order-table'>

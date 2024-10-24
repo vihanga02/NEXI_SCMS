@@ -3,6 +3,7 @@ import './Login.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import logo from '../../assets/2.png';
 
 
 const Login = () => {
@@ -45,11 +46,9 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="login-left">
-
-
         <div className="logo-container">
           <img
-            src='../../assets/admin.jpeg' // Replace with your actual logo image path
+            src={logo}
             alt="Nexi Logo"
             className="logo"
           />
