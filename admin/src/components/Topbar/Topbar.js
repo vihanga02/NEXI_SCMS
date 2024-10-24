@@ -1,5 +1,6 @@
 import React from 'react';
 import './Topbar.css';
+import logo from '../../assets/2.png';
 
 const Topbar = () => {
   const handleLogout = () => {
@@ -9,7 +10,10 @@ const Topbar = () => {
 
   return (
     <div className="topbar">
-      <div className="company-name">NEXI-THE NEXUS OF DISTRIBUTION</div>
+      <div className="company-name">
+        <img src={logo} alt="Nexi Logo" />
+        <p>THE NEXUS OF DISTRIBUTION</p>
+      </div>
       <button className="logout-button" onClick={handleLogout}>Logout</button>
     </div>
   );

@@ -33,9 +33,8 @@ function DeliverySchedule() {
 
   return (
     <div className='DScontainer'>
-      <Sidebar />
       <div className='dscontainer'>
-        <Topbar />
+        <div>
         <form onSubmit={handleSubmit}>
           <h1>Delivery Schedule</h1>
           <label className='p-3'>Select Date : </label>

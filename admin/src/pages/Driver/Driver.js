@@ -6,9 +6,7 @@ import './Driver.css'
 function Driver() {
   return (
     <div className='Dcontainer'>
-      <Sidebar />
       <div className='dcontainer'>
-        <Topbar/>
       </div>
     </div>
   )
