@@ -7,8 +7,8 @@
     color: var(--white); /* Light text color */
     display: flex;
     flex-direction: column;
-    padding: 11vh 20px;
-    position: fixed; 
+    padding: 20px;
+    position: fixed; /* Fixed position */
     transition: width 0.3s ease;
 }
 
@@ -16,7 +16,7 @@
     margin-bottom: 20px;
     text-align: center;
     position: relative;
-    top: 25vh;
+    top: 35vh;
 }
 
 .admin-info h2 {
