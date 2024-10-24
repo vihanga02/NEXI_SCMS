@@ -38,11 +38,6 @@ const Sidebar = () => {
 
     return (
         <div className="sidebar">
-            <div className="admin-info">
-            <h2>{name}</h2> {/* Display admin's name */}
-            <p>{email}</p>
-            </div>
-            <hr />
             <ul className="menu">
                 {menuItems.map(item => (
                     <li key={item.name}>
@@ -53,6 +48,11 @@ const Sidebar = () => {
                     </li>
                 ))}
             </ul>
+            <div className="admin-info">
+                <hr />
+                <h2>Nimal Bandara</h2> 
+                <p>vihangadsada@gmail.com</p>
+            </div>
         </div>
     );
 };

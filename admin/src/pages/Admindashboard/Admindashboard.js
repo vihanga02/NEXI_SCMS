@@ -42,8 +42,8 @@ function Admindashboard() {
       <div className='Acontainer'>
 
         <div className='store-info'>
-          <h2>Store ID: 12345</h2>
-          <h2>Store City: New York</h2>
+          <h2>Store ID: <span>12345</span></h2>
+          <h2>Store City: <span>New York</span> </h2>
         </div>
         <div className='widgets-row'>
           <div className='widget available-drivers'>

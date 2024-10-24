@@ -13,12 +13,12 @@
     z-index: 100;
   }
   
-  .company-name {
+ .topbar .company-name {
     font-size: 1.5em;
     display: flex;
   }
 
-  .company-name p{
+.topbar  .company-name p{
     color: var(--white);
     font-family: var(--body);
     font-weight: bolder;
@@ -27,7 +27,7 @@
     font-size: 1.5rem;
   }
 
-  .company-name img{
+ .topbar .company-name img{
     width: 60px;
     height: 60px;
     margin-right: 10px;

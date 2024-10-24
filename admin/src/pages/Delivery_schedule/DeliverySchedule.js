@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import Sidebar from '../../components/Sidebar/Sidebar.js'
-import Topbar from '../../components/Topbar/Topbar.js';
+import React, { useState } from 'react'
 import './Delivery_schedule.css'
-import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 function DeliverySchedule() {
@@ -11,7 +9,7 @@ function DeliverySchedule() {
   const navigate = useNavigate();
   const [date, setDate] = useState('');
   const [data, setData] = useState([]);
-
+  // const navigate = useNavigate();
   // const date = '2024-10-21';
   // const data = [
   //   {Delivery_id: 'JohnDoe', Truck_id: 'Route 1'},
@@ -35,41 +33,46 @@ function DeliverySchedule() {
     <div className='DScontainer'>
       <div className='dscontainer'>
         <div>
-        <form onSubmit={handleSubmit}>
+      <div className='DScontainer'>
+        <div className='dscontainer'>
           <h1>Delivery Schedule</h1>
-          <label className='p-3'>Select Date : </label>
-          <input
-            className='text-black p-2 rounded bg-yellow-500 right-6'
-            type='date' name='date' placeholder='Enter date' value={date}
-            onChange={(e) => setDate(e.target.value)}
-          />
-          <button className='btn btn-primary left-3' type='submit'>Submit</button>
-        </form>
-        <table className='order-table'>
-          <thead>
-            <tr>
-              <th>Delivery_id</th>
-              <th>Truck_id</th>
-              <th>Driver_id</th>
-              <th>Assistant_id</th>
-              <th>Shipment_date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((delivery, index) => (
-              <tr key={index}>
-                <td>{delivery.Delivery_id}</td>
-                <td>{delivery.Truck_id}</td>
-                <td>{delivery.Driver_id}</td>
-                <td>{delivery.Assistant_id}</td>
-                <td>{delivery.shipment_date}</td>
+          <form onSubmit={handleSubmit}>
+            <label className='p-3'>Select Date : </label>
+            <input
+              className='text-black p-2 rounded bg-yellow-500 right-6'
+              type='date' name='date' placeholder='Enter date' value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+            <button className='btn btn-primary left-3' type='submit'>Submit</button>
+          </form>
+          <table className='order-table'>
+            <thead>
+              <tr>
+                <th>Delivery_id</th>
+                <th>Truck_id</th>
+                <th>Driver_id</th>
+                <th>Assistant_id</th>
+                <th>Shipment_date</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {data.map((delivery, index) => (
+                <tr key={index}>
+                  <td>{delivery.Delivery_id}</td>
+                  <td>{delivery.Truck_id}</td>
+                  <td>{delivery.Driver_id}</td>
+                  <td>{delivery.Assistant_id}</td>
+                  <td>{delivery.shipment_date}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
+  </div>
+</div>
   )
-}
 
-export default DeliverySchedule
+}
+export default DeliverySchedule;

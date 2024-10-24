@@ -1,6 +1,4 @@
 import React from 'react';
-import Sidebar from '../../components/Sidebar/Sidebar.js';
-import Topbar from '../../components/Topbar/Topbar.js';
 import './Order.css';
 
 function Order() {

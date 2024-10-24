@@ -16,7 +16,14 @@
 }
 
 .Acontainer .store-info{
-    color: var(--color1);
+    color: var(--color3);
+}
+
+.Acontainer .store-info span{
+    font-size: 2rem;
+    font-weight: bolder;
+    font-family: var(--monospace);
+    color: var(--color2);
 }
 
 .Acontainer .store-info h2{
@@ -140,6 +147,7 @@
 .incomplete-orders-table {
     max-height: 28vh;
     overflow-y: auto; 
+    border-radius: 1cqh;
 }
 
 .orders-table {
