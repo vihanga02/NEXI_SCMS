@@ -1,16 +1,37 @@
+@import url(../../Styles/Variables.css);
+
 .topbar {
     width: 100%;
     background-color: #2c3e50; 
-    color: white;
     display: flex;
-    justify-content: space-between; /* Aligns text and button to sides */
+    justify-content: space-between; 
     align-items: center;
     padding: 10px 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds shadow */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
   }
   
   .company-name {
     font-size: 1.5em;
+    display: flex;
+  }
+
+  .company-name p{
+    color: var(--white);
+    font-family: var(--body);
+    font-weight: bolder;
+    margin-bottom: none;
+    padding-top: 15px;
+    font-size: 1.5rem;
+  }
+
+  .company-name img{
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+    border-radius: 50%;
   }
   
   .logout-button {

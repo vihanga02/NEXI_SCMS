@@ -29,9 +29,12 @@
 
 
 .logo-container {
-  text-align: center;
   margin-top: -5vh;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .logo {
@@ -40,15 +43,16 @@
   border-radius: 50%;
 }
 
-h2 {
-  margin: -3vh;
-  font-size: 70px;
+.logo-container h2 {
+  font-size: 60px;
   font-family: var(--heading);
+  font-weight: bolder;
 }
 
-p {
-  font-size: 30px;
-  color: var(--color1);
+.logo-container p {
+  font-size: 20px;
+  color: var(--color2);
+  margin-top: -2vh;
 }
 
 .login-form {

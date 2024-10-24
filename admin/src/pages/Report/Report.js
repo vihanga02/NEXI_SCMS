@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Sidebar from '../../components/Sidebar/Sidebar.js';
-import Topbar from '../../components/Topbar/Topbar.js';
 import { Line } from 'react-chartjs-2';
 import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import axios from 'axios';
@@ -57,9 +55,7 @@ function Report() {
 
     return (
         <div className='Rcontainer'>
-            <Sidebar />
             <div className='rcontainer'>
-                <Topbar />
                 <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} />
                 <div className='chart-container'>
                     <h2>Quarterly Sales Report</h2>
