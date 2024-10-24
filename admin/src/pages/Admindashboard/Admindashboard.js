@@ -6,6 +6,7 @@ import 'react-calendar/dist/Calendar.css'; // Default styles for the calendar
 import './Admindashboard.css';
 
 function Admindashboard() {
+
   const [activeUsers, setActiveUsers] = useState(0);
   const [incompleteOrders, setIncompleteOrders] = useState(0);
   const [date, setDate] = useState(new Date());
@@ -35,9 +36,11 @@ function Admindashboard() {
     ]);
   }, []);
 
+
   return (
     <div className='ADcontainer'>
       <div className='Acontainer'>
+
         <div className='store-info'>
           <h2>Store ID: 12345</h2>
           <h2>Store City: New York</h2>
@@ -47,6 +50,7 @@ function Admindashboard() {
             <h3>Available Drivers</h3>
             <p>{activeUsers}%</p>
             <div className='progress-bar' style={{ width: '100%'}}>
+
               <div className='progress' style={{ width: `${(activeUsers / 100) * 100}%` }}></div>
             </div>
           </div>
@@ -100,9 +104,11 @@ function Admindashboard() {
               </table>
             </div>
 
+
           </div>
           
         </div>     
+
       </div>
     </div>
   );

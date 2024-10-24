@@ -2,11 +2,11 @@ import pool from '../dbConfig.js'
 
 class Manager{
 
-    static async getManager(UserName) {
-        const query = `SELECT * FROM Store_Manager WHERE Username=?`;
+    static async getManager(Username) {
+        const query = `SELECT * FROM store_manager WHERE Name=?`;
 
         try {
-            const [results] = await pool.query(query, [UserName]);
+            const [results] = await pool.query(query, [Username]);
             return results;
         } catch (error) {
             throw error;
@@ -150,6 +150,22 @@ class Manager{
             throw error;
         }
     }
+
+    static async getAdminDetails(adminID) { // Add adminId as a parameter
+        
+        const query = `CALL GetAdminDetails(?)`; // Use the placeholder
+      
+    
+        try {
+            const result = await pool.query(query, [adminID]); // Pass the adminId as the parameter
+            console.log(result);
+            return result[0][0][0]; 
+        } catch (error) {
+            throw error;
+        }
+    }
+    
+
 }
 
 export default Manager;

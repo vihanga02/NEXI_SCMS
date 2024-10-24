@@ -25,9 +25,9 @@ const Login = () => {
     }
 
     axios
-      .post('admin/login', { username, password })
+      .post("/admin/login", {Username: username, Password:password },{ withCredentials: true })
       .then((res) => {
-        console.log(res.data);
+        
         setStatus(res.data.status);
         // setSuccess(res.data.success);
         if (res.data.success) {

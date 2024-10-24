@@ -1,5 +1,9 @@
 import React from 'react';
+
+import axios from 'axios';
+
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+
 
 import Login from './pages/Login/Login.js';
 import Signup from './pages/Signup/Signup.js';
@@ -11,8 +15,14 @@ import Report from './pages/Report/Report.js';
 import Order from './pages/Order/Order.js';
 import DeliverySchedule from './pages/Delivery_schedule/DeliverySchedule.js';
 
+import data from './data.json';
+const path = data.backend;
+axios.defaults.baseURL = path;
+
+
 import Sidebar from './components/Sidebar/Sidebar.js';
 import Topbar from './components/Topbar/Topbar.js';
+
 
 const App = () => {
   const location = useLocation();

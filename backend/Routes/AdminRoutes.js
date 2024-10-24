@@ -14,11 +14,12 @@ import {
     getAssistants,
     getVehicles,
     manager_login,
-    getQuarterlySales
-} from "../controllers/AdminController.js";
+    getQuarterlySales,
+    getAdminDetails
+} from "../Controllers/AdminController.js";
 
 // User authentication routes
-router.get("/login", manager_login);
+router.post("/login", manager_login);
 
 
 // Order-related routes
@@ -33,5 +34,7 @@ router.get("/drivers", authenticateToken, getDrivers);
 router.get("/assistants", authenticateToken, getAssistants);
 router.get("/vehicles", authenticateToken, getVehicles);
 router.get("/quarterlySales",authenticateToken,getQuarterlySales);
+router.get("/admindetails",authenticateToken,getAdminDetails);
+
 
 export default router;

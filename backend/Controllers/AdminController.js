@@ -1,5 +1,5 @@
 import Manager from '../Models/Manager.js';
-
+import jwt from "jsonwebtoken";
 // Controller to get incomplete train orders
 async function getIncompletedTrainOrders(req, res){
     try {
@@ -118,11 +118,13 @@ async function getVehicles(req, res){
 async function manager_login (req, res) {
     const { Username, Password } = req.body;
 
+
     // Find the manager by email
     const [manager] = await Manager.getManager(Username);
     console.log(manager);
 
     if (!manager) {
+
         return res.status(401).json({ message: 'Invalid credentials', success: false });
     }
 
@@ -134,10 +136,34 @@ async function manager_login (req, res) {
     }
 
     // Create a token
-    const token = jwt.sign({ id: manager.Manager_ID, username: manager.Username }, process.env.SECRET_KEY, { expiresIn: '1h' });
+    const token = jwt.sign({ id: manager.Manager_ID, username: manager.Name }, process.env.SECRET_KEY, { expiresIn: '1h' });
 
-    res.status(200).json({ token, success: true });
+    
+
+    res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      });
+
+     return res.status(200).json({ success: true, });
+
 }
+
+async function getAdminDetails(req, res){
+    const adminID = req.user.id;
+    console.log(`Fetching admin details for Admin ID: ${adminID}`);
+    try {
+        const result = await Manager.getAdminDetails(adminID);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching orders", error: error.message });
+    }
+};
+
+
+
+
 
 export{
     getIncompletedTrainOrders,
@@ -151,5 +177,6 @@ export{
     getAssistants,
     getVehicles,
     manager_login,
-    getQuarterlySales
+    getQuarterlySales,
+    getAdminDetails
 }

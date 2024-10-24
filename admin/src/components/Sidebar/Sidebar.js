@@ -6,22 +6,26 @@ import axios from 'axios';
 import './Sidebar.css';
 
 const Sidebar = () => {
-    const [admin, setAdmin] = useState({ name: '', email: '' });
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+
 
     useEffect(() => {
-        // Define an async function to fetch admin details
-        const fetchAdminData = async () => {
-            try {
-                const response = await axios.get('/api/admin'); 
-                setAdmin(response.data); 
-            } catch (error) {
-                console.error('Error fetching admin data:', error);
-            }
-        };
-
         // Call the async function inside useEffect
         fetchAdminData();
     }, []); 
+
+    // Define an async function to fetch admin details
+    const fetchAdminData = async () => {
+        try {
+            const res = await axios.get("/admin/admindetails", { withCredentials: true });
+          
+            setName(res.data.Name); // Set the name
+            setEmail(res.data.Email); // Set the email
+          } catch (error) {
+            console.error("Error getting admin details:", error);
+          }
+    };
 
     const menuItems = [
         { name: 'Dashboard', icon: <FaTachometerAlt />, path: '/admindashboard' },
@@ -35,8 +39,8 @@ const Sidebar = () => {
     return (
         <div className="sidebar">
             <div className="admin-info">
-                <h2>{admin.name}</h2>
-                <p>{admin.email}</p>
+            <h2>{name}</h2> {/* Display admin's name */}
+            <p>{email}</p>
             </div>
             <hr />
             <ul className="menu">

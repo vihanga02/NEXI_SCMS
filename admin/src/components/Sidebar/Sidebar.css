@@ -18,13 +18,19 @@
 }
 
 .admin-info h2 {
-    font-size: 18px;
+    font-size: 20px;        /* Increase font size for the name */
+    color: #1abc9c;         /* Set a unique color for the admin name */
+    font-weight: bold;      /* Make the admin name bold */
     margin: 0;
+    font-family: 'Roboto', sans-serif; /* Change the font style */
 }
 
 .admin-info p {
-    font-size: 14px;
+    font-size: 16px;        /* Set a font size for the email */
+    color: #ecf0f1;         /* Set the email text color */
+    font-style: italic;     /* Add italic style to the email */
     margin: 0;
+    font-family: 'Open Sans', sans-serif; /* Change the font style */
 }
 
 hr {
