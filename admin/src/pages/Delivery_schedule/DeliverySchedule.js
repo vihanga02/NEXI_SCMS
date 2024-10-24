@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import './Delivery_schedule.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Sidebar from '../../components/Sidebar/Sidebar.js'
+import Topbar from '../../components/Topbar/Topbar.js';
 
 
 function DeliverySchedule() {
@@ -9,7 +11,7 @@ function DeliverySchedule() {
   const navigate = useNavigate();
   const [date, setDate] = useState('');
   const [data, setData] = useState([]);
-  const [status, setStatus] = useState(null); 
+  const [status, setStatus] = useState([]); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,12 +26,12 @@ function DeliverySchedule() {
   }
 
     // Function to handle item selection
-    const handleSelect = async (item) => {
-      setStatus(item); // Update selected item in state
-  
+    const handleSelect = async (status) => {
+      setStatus(status); // Update selected item in state
+      
       // Sending the selected item to the backend
       try {
-        const response = await axios.post(`http://localhost:3001/nexi/admin/`, { selectedItem: item });
+        const response = await axios.post(`http://localhost:3001/nexi/admin/`, { status: status[0], Delivery_id: status[1] });
         console.log('Response from backend:', response.data);
       } catch (error) {
         console.error('Error sending request to backend:', error);
@@ -39,10 +41,12 @@ function DeliverySchedule() {
   return (
 
       <div className='DScontainer'>
+        <div><Sidebar/></div>
         <div className='dscontainer'>
+        <div><Topbar/></div>
         <h1>Delivery Schedule</h1>
         <form onSubmit={handleSubmit}>
-          <label className='p-3'>Select Date : </label>
+          <label className='p-3 m-8'>Select Date : </label>
           <input
             className='text-black p-2 rounded bg-yellow-500 m-2'
             type='date' name='date' placeholder='Enter date' value={date}
@@ -74,16 +78,16 @@ function DeliverySchedule() {
                 <td>{delivery.Assistant_id}</td>
                 <td>{delivery.Shipment_date}</td>
                 <td>{delivery.Vehicle_departure_time}</td>
-                <td>{delivery.Vehicle_arrival_time}</td>
+                <td>{delivery.Vehicle_arrivdelivery.Delivery_idal_time}</td>
                 <td>
-                  {setStatus(delivery.Delivery_status)}
-                  {status && <p>{status}</p>} {/* Display selected item */}
+                  {/* setStatus(delivery.Delivery_status) */}
+                  {status && <p>{status}</p>} 
                   <details className="dropdown">
                     <summary className="btn m-1">Change status</summary>
                     <ul className="menu dropdown-content bg-base-100 bg-green-400 rounded z-[1] w-52 p-2 shadow">
-                      <li><a onClick={() => handleSelect('On_Train')}>On Train</a></li>
-                      <li><a onClick={() => handleSelect('In_Truck')}>In Truck</a></li>
-                      <li><a onClick={() => handleSelect('Completed')}>Completed</a></li>
+                      <li><a onClick={() => handleSelect(['On_Train',delivery.Delivery_id])}>On Train</a></li>
+                      <li><a onClick={() => handleSelect(['In_Truck',delivery.Delivery_id])}>In Truck</a></li>
+                      <li><a onClick={() => handleSelect(['Completed',delivery.Delivery_id])}>Completed</a></li>
                     </ul>
                   </details>
                 </td>

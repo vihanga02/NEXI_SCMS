@@ -125,19 +125,11 @@ CREATE TABLE Orders (
 
 CREATE TABLE Delivery_Schedule (
   Delivery_id INT AUTO_INCREMENT,
-  Train_id TINYINT,
-  Truck_id TINYINT,
-  Driver_id TINYINT,
-  Assistant_id TINYINT,
   Shipment_date DATE,
   Vehicle_departure_time TIME,
   Vehicle_arrival_time TIME,
-  Delivery_status ENUM('On_Train', 'In_Truck','Completed'),
+  Delivery_status ENUM('Not_Yet', 'On_Train', 'In_Truck','Completed'),
   PRIMARY KEY (Delivery_id),
-  FOREIGN KEY (Driver_id) REFERENCES Driver(Driver_ID),
-  FOREIGN KEY (Assistant_id) REFERENCES Driver_Assistant(Assistant_ID),
-  FOREIGN KEY (Train_ID) REFERENCES Train(Train_ID),
-  FOREIGN KEY (Truck_ID) REFERENCES Truck(Truck_ID)
 );
 
 CREATE TABLE Order_Item (
@@ -161,6 +153,28 @@ CREATE TABLE ORDER_DELIVERY (
     FOREIGN KEY (Order_ID) REFERENCES Orders(Order_ID) ON DELETE CASCADE
 );
     
+CREATE TABLE Train_Delivery (
+	ID INT AUTO_INCREMENT,
+	Train_Del_ID INT,
+	Train_ID TINYINT,
+    PRIMARY KEY (ID),
+	FOREIGN KEY (Train_ID) REFERENCES Train(Train_ID),
+	FOREIGN KEY (Train_Del_ID) REFERENCES Delivery_Schedule(Delivery_id)
+);
+
+
+CREATE TABLE Truck_Delivery (
+	ID INT AUTO_INCREMENT,
+	Truck_Del_ID INT,
+	Truck_id TINYINT,
+	Driver_id TINYINT,
+	Assistant_id TINYINT,
+    PRIMARY KEY (ID),
+	FOREIGN KEY (Driver_id) REFERENCES Driver(Driver_ID),
+	FOREIGN KEY (Truck_id) REFERENCES Truck(Truck_ID),
+	FOREIGN KEY (Assistant_id) REFERENCES Driver_Assistant(Assistant_ID),
+	FOREIGN KEY (Truck_Del_ID) REFERENCES Delivery_Schedule(Delivery_id)
+);
 
 -- ----------------- Dummy values --------------------------------- --
 
@@ -368,15 +382,15 @@ INSERT INTO store_manager (Name, Email, Password, Store_ID) VALUES
 ('Hiruna Gimhana', 'gimhana23@gmail.com', 'Gimm#254', 7);
 
 
-INSERT INTO Train (Train_Name, Capacity) VALUES
-('Podi Menike', 500),
-('Udarata Menike', 450),
-('Night Mail', 600),
-('Express A', 400),
-('Express B', 400),
-('Intercity Express', 550),
-('Uthaya Devi (ICE)', 500),
-('Yal Devi (ICE)', 500);
+INSERT INTO Train (Train_Name, Capacity, Available_space) VALUES
+('Podi Menike', 500, 500),
+('Udarata Menike', 450, 450),
+('Night Mail', 600, 600),
+('Express A', 400, 400),
+('Express B', 400, 400),
+('Intercity Express', 550, 550),
+('Uthaya Devi (ICE)', 500, 500),
+('Yal Devi (ICE)', 500, 500);
 
 
 
