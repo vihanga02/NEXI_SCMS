@@ -48,10 +48,12 @@ const Sidebar = () => {
                     </li>
                 ))}
             </ul>
+            <hr />
+           
             <div className="admin-info">
-                <hr />
-                <h2>Nimal Bandara</h2> 
-                <p>vihangadsada@gmail.com</p>
+            
+                <h2>{name}</h2> 
+                <p>{email}</p>
             </div>
         </div>
     );
