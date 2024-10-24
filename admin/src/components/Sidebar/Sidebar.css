@@ -15,8 +15,8 @@
 .admin-info {
     margin-bottom: 20px;
     text-align: center;
-    position: relative;
-    top: 25vh;
+    position: absolute;
+    bottom: 0;
 }
 
 .admin-info h2 {
