@@ -44,8 +44,9 @@ async function getOrders(req, res){
 
 // Controller to get the delivery schedule
 async function getDeliverySchedule(req, res){
+    const date = req.params.date;
     try {
-        const result = await Manager.getDeliverySchedule(req);
+        const result = await Manager.getDeliverySchedule(date);
         res.status(200).json(result);
     } catch (error) {
         res.status(500).json({ message: "Error fetching delivery schedule", error: error.message });
