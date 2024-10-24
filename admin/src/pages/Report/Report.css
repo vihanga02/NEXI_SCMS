@@ -13,15 +13,28 @@
     gap: 20px; 
 }
 
-.chart-container {
+.button-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
     padding: 20px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    margin: 20px;
+    justify-content: space-around; /* Spread buttons across the container */
+    flex-grow: 1; /* Ensure the container takes up remaining space */
 }
 
-.chart-container h2 {
+.report-button {
+    flex: 1 1 calc(33.333% - 40px); /* Adjust width and spacing */
+    padding: 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
     text-align: center;
-    margin-bottom: 20px;
+    background-color: #3498db; /* Default button color */
+}
+
+.report-button:hover {
+    background-color: #2980b9; /* Hover color */
 }

@@ -1,69 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar/Sidebar.js';
 import Topbar from '../../components/Topbar/Topbar.js';
-import { Line } from 'react-chartjs-2';
-import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import axios from 'axios';
 import './Report.css';
 
-// Register the necessary components with Chart.js
-Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
-
 function Report() {
-    const [chartData, setChartData] = useState({
-        labels: [],
-        datasets: [
-            {
-                label: 'Total Sales',
-                data: [],
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1,
-            },
-        ],
-    });
-    const [startDate, setStartDate] = useState('2024-10-01'); // Default or user-selected date
-
-    useEffect(() => {
-        const fetchQuarterlySales = async () => {
-            try {
-              console.log('Starting date:', startDate);
-                const response = await axios.get(`/admin/quarterlySales?startDate=${startDate}`);
-                
-                const salesData = response.data;
-
-                const dates = salesData.map(item => item.Order_Date);
-                const totalOrders = salesData.map(item => item.Total_Orders);
-
-                setChartData({
-                    labels: dates,
-                    datasets: [
-                        {
-                            label: 'Total Orders',
-                            data: totalOrders,
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1,
-                        },
-                    ],
-                });
-            } catch (error) {
-                console.error('Error fetching quarterly sales data:', error);
-            }
-        };
-
-        fetchQuarterlySales();
-    }, [startDate]); // Dependency array includes startDate to re-fetch when it changes
+    const navigate = useNavigate();
 
     return (
         <div className='Rcontainer'>
             <Sidebar />
             <div className='rcontainer'>
                 <Topbar />
-                <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} />
-                <div className='chart-container'>
-                    <h2>Quarterly Sales Report</h2>
-                    {chartData.labels.length > 0 && <Line data={chartData} />}
+                <div className='button-container'>
+                    <button className='report-button' onClick={() => navigate('/report/quarterlysales')}>Quarterly Sales</button>
+                    <button className='report-button' onClick={() => navigate('/report/mostorders')}>Most Orders</button>
+                    <button className='report-button' onClick={() => navigate('/report/maincitiesreports')}>Main Cities Reports</button>
+                    <button className='report-button' onClick={() => navigate('/report/hoursofdrivers')}>Driver Working Hours</button>
+                    <button className='report-button' onClick={() => navigate('/report/hoursofassistants')}>Assistants Working Hours</button>
+                    <button className='report-button' onClick={() => navigate('/report/usedhoursoftrucks')}>Used Hours of Trucks</button>
+                    <button className='report-button' onClick={() => navigate('/report/customerorderreports')}>Customer Order Reports</button>
                 </div>
             </div>
         </div>

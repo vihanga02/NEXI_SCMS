@@ -2,13 +2,14 @@ import express from "express";
 import cors from "cors";
 import router from "./Routes/Index.js";
 import cookieParser from "cookie-parser";
+import pool from "./dbConfig.js";
 
 const port = 3001;
 const app = express();
 
 // CORS configuration to allow requests only from your frontend
 const corsOptions = {
-  origin: "http://localhost:3000", 
+  origin: ["http://localhost:3000", "http://localhost:3002"],
   methods: ["GET", "POST", "DELETE"], 
   credentials: true, 
 };
