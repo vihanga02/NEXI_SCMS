@@ -7,50 +7,41 @@ BEGIN
 	UPDATE driver d
     RIGHT JOIN Delivery_Schedule ds ON ds.Driver_ID = d.Driver_ID
     SET Availability = 'On_Trip'
-    WHERE NEW.delivery_ID = ds.delivery_ID;
+    WHERE NEW.Driver_ID = d.Driver_ID;
 	
     UPDATE truck t
     RIGHT JOIN Delivery_Schedule ds ON ds.truck_ID = t.truck_ID
     SET Availability = 0
-    WHERE NEW.delivery_ID = ds.delivery_ID;
+    WHERE NEW.truck_ID = t.truck_ID;
     
     UPDATE driver_assistant da
     RIGHT JOIN Delivery_Schedule ds ON ds.Assistant_ID = da.Assistant_ID
     SET Availability = 'On_Trip'
-    WHERE NEW.delivery_ID = ds.delivery_ID;
+    WHERE NEW.Assistant_ID = da.Assistant_ID;
 END $$
 DELIMITER ;
 
 
 
 
-DROP TRIGGER IF EXISTS capacity_decrease_after_order;
 DELIMITER $$
-CREATE TRIGGER capacity_decrease_after_order
-	AFTER INSERT ON order_delivery
+DROP TRIGGER IF EXISTS capacity_decrease_after_placement$$
+CREATE TRIGGER capacity_decrease_after_placement
+	AFTER INSERT ON order_delivery -- train_delivery
     FOR EACH ROW
 BEGIN
 	DECLARE capacity INT;
     DECLARE TrainID INT;
     
-    SELECT Total_capacity
+    SELECT SUM(o.Total_capacity)
     INTO capacity
     FROM orders
-    WHERE orders.Order_ID = NEW.Order_id;
+    WHERE NEW.Order_ID = orders.Order_ID;
 
-    -- Newly added -----------------------------------------------------------------------------------------
-
-    SELECT ds.Train_ID
-    INTO TrainID
-    FROM order_delivery 
-    JOIN delivery_schedule ds ON ds.Delivery_id = order_delivery.Delivery_ID
-
-    WHERE order_delivery.Order_ID = NEW.Order_id AND ds.Train_ID != NULL;
-    -- -----------------------------------------------------------------------------------------------------
-
-    UPDATE train
+    UPDATE train t
+    JOIN train_delivery td ON t.Train_ID = td.Train_ID
     SET Available_space = Available_space-capacity
-    WHERE train.Train_ID = TrainID;
+    WHERE NEW.Delivery_ID = td.Train_Del_ID;
 END$$
 DELIMITER ;
 

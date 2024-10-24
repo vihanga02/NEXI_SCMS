@@ -65,6 +65,7 @@ async function getOrders(req, res){
 
 // Controller to get the delivery schedule
 async function getDeliverySchedule(req, res){
+    console.log("In controller");
     const date = req.params.date;
     try {
         const result = await Manager.getDeliverySchedule(date);
@@ -73,6 +74,17 @@ async function getDeliverySchedule(req, res){
         res.status(500).json({ message: "Error fetching delivery schedule", error: error.message });
     }
 };
+
+async function setDeliveryStatus(req, res){
+    const st = req.body.status;
+    const delID = req.body.Delivery_id;
+    try {
+        const result = await Manager.setDeliveryStatus(st, delID);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error updating delivery status", error: error.message });
+    }
+}
 
 // Controller to add a new delivery schedule
 async function addDeliverySchedule(req, res){
