@@ -31,6 +31,7 @@ function Admindashboard() {
       { id: 1, customer: 'John Doe', status: 'Pending', routeId: 'R001', orderedDate: '2023-10-01' },
       { id: 2, customer: 'Jane Smith', status: 'In Progress', routeId: 'R002', orderedDate: '2023-10-02' },
       { id: 3, customer: 'Bob Johnson', status: 'Pending', routeId: 'R003', orderedDate: '2023-10-03' },
+      { id: 4, customer: 'Alice Brown', status: 'In Progress', routeId: 'R004', orderedDate: '2023-10-04' },
     ]);
   }, []);
 
