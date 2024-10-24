@@ -62,12 +62,11 @@ class Manager{
     }
 
     
-    static async getDeliverySchedule(req){
-        const {date} = req.body;
+    static async getDeliverySchedule(date){
         const query = `select * from Delivery_Schedule where shipment_date=?`;
         try{
             const result = await pool.query(query, date);
-            return result;
+            return result[0];
         }catch(error){
             throw error;
         }
