@@ -134,13 +134,18 @@
     transition: box-shadow 0.3s ease; 
 }
 
-.calendar-container:hover {
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3); 
-}
-
-.react-calendar {
+.calendar-container .react-calendar{
     width: 100%;
     border: none;
+    max-height: 30vh;
+}
+
+.calendar-container .react-calendar__navigation{
+    margin: 0;
+}
+
+.calendar-container:hover {
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3); 
 }
 
 
