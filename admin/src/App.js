@@ -18,8 +18,11 @@ import ManagerControl from './pages/ManagerControl/ManagerControl.js';
 
 import Sidebar from './components/Sidebar/Sidebar.js';
 import Topbar from './components/Topbar/Topbar.js';
+import QuarterlySales from './pages/QuarterlySales/QuarterlySales.js';
+import MostOrders from './pages/MostOrders/MostOrders.js';
 
 import data from './data.json';
+import DriverWorkedHours from './pages/DriverWorkedHours/DriverWorkedHours.js';
 const path = data.backend;
 axios.defaults.baseURL = path;
 
@@ -41,7 +44,14 @@ const App = () => {
         <Route path='/order' element={<Order />} />
         <Route path='/delivery_schedule' element={<DeliverySchedule />} />
         <Route path='/report' element={<Report />} />
+
+        <Route path='report/quarterlysales' element={<QuarterlySales/>}/>
+        <Route path='report/mostorders' element={<MostOrders/>}/>
+        <Route path='report/hoursofdrivers' element={<DriverWorkedHours/>}/>
+
+
         <Route path='/manager_control' element={<ManagerControl />} />
+
       </Routes>
     </>
   );

@@ -9,8 +9,29 @@ async function getIncompletedTrainOrders(req, res){
         res.status(500).json({ message: "Error fetching incomplete train orders", error: error.message });
     }
 };
+//controller to get hours of drivers
+async function getDriverWorkedHours(req, res){
+    try {
+        const result = await Manager.getDriverWorkedHours(req);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching driver worked hours", error: error.message });
+    }
+};
+
+//controller to get most orders
+async function getMostOrders(req, res){
+    try {
+        const result = await Manager.getMostOrders(req);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching most orders", error: error.message });
+    }
+};
+
 //controller to get quaterly sales
 async function getQuarterlySales(req, res){
+    console.log("In controller");
     try {
         console.log("In controller");
         //const startDate = req.query.startDate; // Ensure you are extracting the date from the request query
@@ -179,5 +200,7 @@ export{
     getVehicles,
     manager_login,
     getQuarterlySales,
-    getAdminDetails
+    getAdminDetails,
+    getMostOrders,
+    getDriverWorkedHours
 }
