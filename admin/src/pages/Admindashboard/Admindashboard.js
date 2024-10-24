@@ -8,26 +8,26 @@ import 'react-calendar/dist/Calendar.css'; // Default styles for the calendar
 import './Admindashboard.css';
 
 function Admindashboard() {
-  const [activeUsers, setActiveUsers] = useState(0);
-  const [incompleteOrders, setIncompleteOrders] = useState(0);
-  const [date, setDate] = useState(new Date());
+  // const [activeUsers, setActiveUsers] = useState(0);
+  // const [incompleteOrders, setIncompleteOrders] = useState(0);
+  // const [date, setDate] = useState(new Date());
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
         
-        const activeUsersResponse = await axios.get('/api/active-users'); // Replace with your actual API endpoint
-        setActiveUsers(activeUsersResponse.data.count);
+  //       const activeUsersResponse = await axios.get('/api/active-users'); // Replace with your actual API endpoint
+  //       setActiveUsers(activeUsersResponse.data.count);
 
-        const incompleteOrdersResponse = await axios.get('/api/incomplete-orders'); // Replace with your actual API endpoint
-        setIncompleteOrders(incompleteOrdersResponse.data.count);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+  //       const incompleteOrdersResponse = await axios.get('/api/incomplete-orders'); // Replace with your actual API endpoint
+  //       setIncompleteOrders(incompleteOrdersResponse.data.count);
+  //     } catch (error) {
+  //       console.error('Error fetching data:', error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   return (
     <div className='ADcontainer'>
@@ -35,7 +35,7 @@ function Admindashboard() {
       <div className='Acontainer'>
         <Topbar />
       
-        <div className='widgets-row'>
+        {/* <div className='widgets-row'>
           <div className='widget active-users'>
             <h3>Active Users</h3>
             <p>{activeUsers}</p>
@@ -55,7 +55,7 @@ function Admindashboard() {
        
         <div className='calendar-container'>
           <Calendar onChange={setDate} value={date} />
-        </div>
+        </div> */}
       </div>
     </div>
   );
