@@ -160,13 +160,12 @@ async function manager_login (req, res) {
 
         return res.status(401).json({ message: 'Invalid credentials', success: false });
     }
-    
+
     const match = Password === manager.Password;
     if (!match) {
         return res.status(401).json({ message: 'Invalid credentials', success: false });
     }
 
-    // Create a token
     const token = jwt.sign({ id: manager.Manager_ID, username: manager.Name }, process.env.SECRET_KEY, { expiresIn: '1h' });
 
     res.cookie("token", token, {
@@ -181,7 +180,7 @@ async function manager_login (req, res) {
 
 async function getAdminDetails(req, res){
     const adminID = req.user.id;
-    
+
     try {
         const result = await Manager.getAdminDetails(adminID);
         res.status(200).json(result);
@@ -190,8 +189,15 @@ async function getAdminDetails(req, res){
     }
 };
 
-
-
+async function getAdminStoreCity(req, res){
+    const storeID = req.user.id;
+    try {
+        const result = await Manager.getStoreCity(storeID)
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching orders", error: error.message });
+    }
+}
 
 
 export{
@@ -209,5 +215,7 @@ export{
     getQuarterlySales,
     getAdminDetails,
     getMostOrders,
-    getDriverWorkedHours
+    getDriverWorkedHours,
+    setDeliveryStatus,
+    getAdminStoreCity
 }

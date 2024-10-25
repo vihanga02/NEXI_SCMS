@@ -35,13 +35,7 @@ function DriverWorkedHours() {
 
     return (
         <div className="driver-work-hours-container">
-            {/* Sidebar */}
-            <Sidebar />
-
-            {/* Main content */}
             <div className="content">
-                <Topbar />
-
                 <div className="table-container">
                     <h2>Driver Work Hours</h2>
 
