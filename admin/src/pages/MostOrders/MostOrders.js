@@ -14,8 +14,6 @@ function MostOrders() {
         const fetchProductOrders = async () => {
             try {
                 const response = await axios.get('/admin/productOrders'); // Your backend API endpoint
-                console.log('below data is from MostOrders.js');
-                console.log(response.data);
                 setProducts(response.data); // Assuming API returns data in correct format
                 setLoading(false);
             } catch (error) {
