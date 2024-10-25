@@ -27,7 +27,6 @@ class Manager{
     //model for getting the quarterly sales
     static async getQuarterlySales(req) {
         const {startDate} = req.body;
-        console.log("Fetching quarterly sales starting from:", startDate);
         const query = `CALL Quarterly_sales_from(?)`;
         try {
             const [results] = await pool.query(query, [startDate]);
