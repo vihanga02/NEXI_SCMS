@@ -21,7 +21,10 @@ async function getDriverWorkedHours(req, res){
 
 //controller to get most orders
 async function getMostOrders(req, res){
+    
+    
     try {
+        
         const result = await Manager.getMostOrders(req);
         res.status(200).json(result);
     } catch (error) {
@@ -31,6 +34,7 @@ async function getMostOrders(req, res){
 
 //controller to get quaterly sales
 async function getQuarterlySales(req, res){
+
     try {
         const result = await Manager.getQuarterlySales(req);
         res.status(200).json(result);
@@ -150,6 +154,7 @@ async function manager_login (req, res) {
     const { Username, Password } = req.body;
 
     const [manager] = await Manager.getManager(Username);
+
     if (!manager) {
 
         return res.status(401).json({ message: 'Invalid credentials', success: false });
@@ -175,7 +180,7 @@ async function manager_login (req, res) {
 
 async function getAdminDetails(req, res){
     const adminID = req.user.id;
-    console.log(`Fetching admin details for Admin ID: ${adminID}`);
+    
     try {
         const result = await Manager.getAdminDetails(adminID);
         res.status(200).json(result);
