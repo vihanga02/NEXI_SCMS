@@ -1,9 +1,8 @@
 import pool from '../dbConfig.js'
 
 class Manager{
-
     static async getManager(Username) {
-        const query = `SELECT * FROM store_manager WHERE Username=?`;
+        const query = `SELECT * FROM store_manager WHERE Name=?`;
 
         try {
             const [results] = await pool.query(query, [Username]);
@@ -164,12 +163,10 @@ class Manager{
 
     static async getAdminDetails(adminID) { // Add adminId as a parameter
         
-        const query = `CALL GetAdminDetails(?)`; // Use the placeholder
-      
+        const query = `CALL GetAdminDetails(?)`;
     
         try {
-            const result = await pool.query(query, [adminID]); // Pass the adminId as the parameter
-            console.log(result);
+            const result = await pool.query(query, [adminID]); 
             return result[0][0][0]; 
         } catch (error) {
             throw error;
@@ -189,8 +186,15 @@ class Manager{
         }
     }
     
-    
-
+    static async getStoreCity(storeID){
+        const query = `select City from store where Store_ID=?`;
+        try{
+            const result = await pool.query(query, storeID);
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 export default Manager;

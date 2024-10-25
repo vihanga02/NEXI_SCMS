@@ -28,13 +28,7 @@ function MostOrders() {
 
     return (
         <div className="most-orders-container">
-            {/* Sidebar */}
-            <Sidebar />
-
-            {/* Main content */}
             <div className="content">
-                <Topbar />
-
                 <div className="table-container">
                     <h2>Products with Most Orders</h2>
 

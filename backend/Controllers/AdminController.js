@@ -175,7 +175,6 @@ async function manager_login (req, res) {
 
 async function getAdminDetails(req, res){
     const adminID = req.user.id;
-    console.log(`Fetching admin details for Admin ID: ${adminID}`);
     try {
         const result = await Manager.getAdminDetails(adminID);
         res.status(200).json(result);
@@ -183,6 +182,16 @@ async function getAdminDetails(req, res){
         res.status(500).json({ message: "Error fetching orders", error: error.message });
     }
 };
+
+async function getAdminStoreCity(req, res){
+    const storeID = req.user.id;
+    try {
+        const result = await Manager.getStoreCity(storeID)
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching orders", error: error.message });
+    }
+}
 
 
 
@@ -203,5 +212,7 @@ export{
     getQuarterlySales,
     getAdminDetails,
     getMostOrders,
-    getDriverWorkedHours
+    getDriverWorkedHours,
+    setDeliveryStatus,
+    getAdminStoreCity
 }
