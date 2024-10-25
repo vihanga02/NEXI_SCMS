@@ -1,15 +1,61 @@
-.AScontainer {
+@import url(../../Styles/Variables.css);
+
+.assistant-container {
     display: flex;
-    height: 100vh; /* Full viewport height */
+    flex-direction: column;
+    align-items: center;
+    padding: 13vh 3vw 3vh 21vw;
+    background-color: #f9f9f9;
 }
 
-.Ascontainer {
-    flex-grow: 1; /* Take up the remaining space */
-    margin-left: 250px; 
+.assistant-title {
+    font-size: 3.5em;
+    font-weight: bolder;
+    font-family: var(--heading);
+    margin-bottom: 20px;
+    text-align: center;
+    color: var(--color2);
+}
 
-    padding: 0 5px 5px;
-    background-color: #f5f5f58f; 
-    display: flex;
-    flex-direction: column; 
-    gap: 20px; 
+.assistant-content {
+    width: 100%;
+    max-width: 1200px;
+    overflow-x: auto;
+}
+
+.assistant-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.assistant-table-head {
+    background-color: var(--color3);
+    color: #fff;
+}
+
+.assistant-table-row {
+    border-bottom: 1px solid #ddd;
+}
+
+.assistant-table-row:hover:not(.assistant-table-head) {
+    background-color: #f2f2f2;
+}
+
+.assistant-table-header, .assistant-table-data {
+    padding: 15px;
+    text-align: left;
+}
+
+.assistant-table-header {
+    font-weight: bold;
+}
+
+.assistant-table-data {
+    color: #555;
+}
+
+.assistant-table-row:nth-child(even) {
+    background-color: #f2f2f2;
 }
