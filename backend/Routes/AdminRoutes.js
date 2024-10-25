@@ -18,7 +18,7 @@ import {
     getAdminDetails,
     getMostOrders,
     getDriverWorkedHours
-} from "../Controllers/AdminController.js";
+} from "../controllers/AdminController.js";
 
 // User authentication routes
 router.post("/login", manager_login);

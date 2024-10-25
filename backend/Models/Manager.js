@@ -17,7 +17,7 @@ class Manager{
         const query = `SELECT * FROM product_orders;`;
         try {
             const [rows] = await pool.query(query); // Only get the rows part
-            console.log(rows); // Print rows for debugging
+            // Print rows for debugging
             return rows; // Return only rows
         } catch (error) {
             throw error;
@@ -26,17 +26,18 @@ class Manager{
 
     //model for getting the quarterly sales
     static async getQuarterlySales(req) {
-        const {startDate} = req.body;
-
+        const { startDate } = req.query;
+        
         const query = `CALL Quarterly_sales_from(?)`;
         try {
-            const [results] = await pool.query(query, [startDate]);
-            return results;
+            const [rows] = await pool.query(query, [startDate]); // Get only the rows
+            return rows; // Return the rows to the controller
         } catch (error) {
             console.error("Error in getQuarterlySales:", error);
             throw error;
         }
     }
+    
     
     
     static async getIncompletedTrainOrders(req){
