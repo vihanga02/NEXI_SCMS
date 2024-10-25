@@ -21,7 +21,10 @@ async function getDriverWorkedHours(req, res){
 
 //controller to get most orders
 async function getMostOrders(req, res){
+    
+    
     try {
+        
         const result = await Manager.getMostOrders(req);
         res.status(200).json(result);
     } catch (error) {
@@ -31,9 +34,9 @@ async function getMostOrders(req, res){
 
 //controller to get quaterly sales
 async function getQuarterlySales(req, res){
-    console.log("In controller");
+    
     try {
-        console.log("In controller");
+        console.log(req);
         //const startDate = req.query.startDate; // Ensure you are extracting the date from the request query
         const result = await Manager.getQuarterlySales(req);
         res.status(200).json(result);
@@ -155,7 +158,7 @@ async function manager_login (req, res) {
 
     // Find the manager by email
     const [manager] = await Manager.getManager(Username);
-    console.log(manager);
+   
 
     if (!manager) {
 
@@ -186,7 +189,7 @@ async function manager_login (req, res) {
 
 async function getAdminDetails(req, res){
     const adminID = req.user.id;
-    console.log(`Fetching admin details for Admin ID: ${adminID}`);
+    
     try {
         const result = await Manager.getAdminDetails(adminID);
         res.status(200).json(result);
