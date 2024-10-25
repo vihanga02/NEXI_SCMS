@@ -36,13 +36,7 @@ function AssistantWorkedHours() {
 
     return (
         <div className="assistant-work-hours-container">
-            {/* Sidebar */}
-            <Sidebar />
-
-            {/* Main content */}
             <div className="content">
-                <Topbar />
-
                 <div className="table-container">
                     <h2>Assistant Work Hours</h2>
 

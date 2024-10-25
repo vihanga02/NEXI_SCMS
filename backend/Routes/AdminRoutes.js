@@ -17,7 +17,9 @@ import {
     getQuarterlySales,
     getAdminDetails,
     getMostOrders,
-    getDriverWorkedHours
+    getDriverWorkedHours,
+    setDeliveryStatus,
+    getAdminStoreCity
 } from "../Controllers/AdminController.js";
 
 // User authentication routes
@@ -40,6 +42,5 @@ router.get("/quarterlySales",getQuarterlySales);
 router.get("/admindetails",authenticateToken,getAdminDetails);
 router.get("/productOrders",getMostOrders);
 router.get("/hoursofdrivers",authenticateToken,getDriverWorkedHours);
-
 
 export default router;
