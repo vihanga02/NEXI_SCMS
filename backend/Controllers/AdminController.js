@@ -34,8 +34,9 @@ async function getMostOrders(req, res){
 
 //controller to get quaterly sales
 async function getQuarterlySales(req, res){
-
+    
     try {
+        
         const result = await Manager.getQuarterlySales(req);
         res.status(200).json(result);
     } catch (error) {

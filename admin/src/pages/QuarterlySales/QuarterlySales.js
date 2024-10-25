@@ -6,11 +6,11 @@ import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Title, To
 import axios from 'axios';
 import './QuarterlySales.css';  // Assuming you'll add some page-specific styles
 
-// Register Chart.js components
+// Register necessary Chart.js components
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 function QuarterlySales() {
-    const [startDate, setStartDate] = useState('2024-10-01'); 
+    const [startDate, setStartDate] = useState('2024-10-01');  // Default start date
     const [chartData, setChartData] = useState({
         labels: [],
         datasets: [
@@ -26,23 +26,27 @@ function QuarterlySales() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Fetch quarterly sales data
-    useEffect(() => {
-        const fetchQuarterlySales = async () => {
-            setLoading(true);
-            console.log(startDate);
-            try {
-                const response = await axios.get('/admin/quarterlySales', {
-                    params: { startDate: startDate },
-                    withCredentials: true
-                });
-                
+    // Function to fetch quarterly sales data
+    const fetchQuarterlySales = async () => {
+        setLoading(true);  // Set loading state to true
+        setError(null);    // Reset any previous errors
+
+        try {
+            const response = await axios.get('/admin/quarterlySales', {
+                params: { startDate },    // Pass startDate as a query parameter
+                withCredentials: true     // Include credentials in the request
+            });
+
+            // Validate if response data exists and is in correct format
+            if (response && response.data) {
                 const salesData = response.data;
-                console.log('Quarterly Sales Data:', salesData);
+                console.log('Quarterly Sales Data:', salesData);  // Debugging line
 
-                const dates = salesData.map(item => item.Order_Date); // X-axis
-                const totalOrders = salesData.map(item => item.Total_Orders); // Y-axis
+                // Map data to chart format
+                const dates = salesData.map(item => item.Order_Date);  // X-axis values
+                const totalOrders = salesData.map(item => item.Total_Orders);  // Y-axis values
 
+                // Update chart data state
                 setChartData({
                     labels: dates,
                     datasets: [
@@ -55,28 +59,30 @@ function QuarterlySales() {
                         },
                     ],
                 });
-                setLoading(false);
-            } catch (error) {
-                setError('Error fetching quarterly sales data');
-                console.error('Error:', error);
-                setLoading(false);
+            } else {
+                throw new Error('No data received');
             }
-        };
+        } catch (error) {
+            console.error('Error fetching quarterly sales data:', error);
+            setError('Error fetching quarterly sales data');
+        } finally {
+            setLoading(false);  // Set loading to false after request completion
+        }
+    };
 
-        fetchQuarterlySales();
-    }, [startDate]); // Re-fetch when the startDate changes
+    // Fetch quarterly sales data whenever startDate changes
+    useEffect(() => {
+        fetchQuarterlySales();  // Fetch data when the component mounts or startDate changes
+    }, [startDate]);  // Dependency array includes startDate
 
     return (
         <div className="Rcontainer">
-            {/* Sidebar */}
             <Sidebar />
 
-            {/* Main content */}
             <div className="rcontainer">
-                {/* Topbar */}
                 <Topbar />
 
-                {/* Input field for selecting the start date */}
+                {/* Date Picker for selecting the start date */}
                 <div className="date-picker">
                     <label htmlFor="startDate">Select Start Date:</label>
                     <input
@@ -87,7 +93,7 @@ function QuarterlySales() {
                     />
                 </div>
 
-                {/* Quarterly Sales Chart */}
+                {/* Display the Quarterly Sales Chart or Loading/Error Messages */}
                 <div className="chart-area">
                     {loading ? (
                         <p>Loading chart...</p>
