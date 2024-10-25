@@ -13,7 +13,7 @@ function MostOrders() {
     useEffect(() => {
         const fetchProductOrders = async () => {
             try {
-                const response = await axios.get('/admin/productOrders'); // Your backend API endpoint
+                const response = await axios.get('/admin/productOrders',{withCredentials:true}); // Your backend API endpoint
                 setProducts(response.data); // Assuming API returns data in correct format
                 setLoading(false);
             } catch (error) {

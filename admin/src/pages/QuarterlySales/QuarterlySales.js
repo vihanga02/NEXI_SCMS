@@ -10,7 +10,7 @@ import './QuarterlySales.css';  // Assuming you'll add some page-specific styles
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 function QuarterlySales() {
-    const [startDate, setStartDate] = useState('2024-10-01'); // Default date for the chart
+    const [startDate, setStartDate] = useState('2024-10-01'); 
     const [chartData, setChartData] = useState({
         labels: [],
         datasets: [
@@ -33,9 +33,10 @@ function QuarterlySales() {
             console.log(startDate);
             try {
                 const response = await axios.get('/admin/quarterlySales', {
-                    params: { startDate }, // Pass the start date as a query parameter
+                    params: { startDate: startDate },
+                    withCredentials: true
                 });
-
+                
                 const salesData = response.data;
                 console.log('Quarterly Sales Data:', salesData);
 

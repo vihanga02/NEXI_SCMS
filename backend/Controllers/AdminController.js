@@ -34,10 +34,8 @@ async function getMostOrders(req, res){
 
 //controller to get quaterly sales
 async function getQuarterlySales(req, res){
-    
+
     try {
-        console.log(req);
-        //const startDate = req.query.startDate; // Ensure you are extracting the date from the request query
         const result = await Manager.getQuarterlySales(req);
         res.status(200).json(result);
     } catch (error) {
@@ -155,18 +153,13 @@ async function getVehicles(req, res){
 async function manager_login (req, res) {
     const { Username, Password } = req.body;
 
-
-    // Find the manager by email
     const [manager] = await Manager.getManager(Username);
-   
 
     if (!manager) {
 
         return res.status(401).json({ message: 'Invalid credentials', success: false });
     }
-
-    // Check if the password is correct
-    // const match = await bcrypt.compare(Password, manager.Password);
+    
     const match = Password === manager.Password;
     if (!match) {
         return res.status(401).json({ message: 'Invalid credentials', success: false });
@@ -174,8 +167,6 @@ async function manager_login (req, res) {
 
     // Create a token
     const token = jwt.sign({ id: manager.Manager_ID, username: manager.Name }, process.env.SECRET_KEY, { expiresIn: '1h' });
-
-    
 
     res.cookie("token", token, {
         httpOnly: true,

@@ -13,19 +13,19 @@ function Admindashboard() {
   const [incompleteOrdersList, setIncompleteOrdersList] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try { 
-        await axios.get('/api/active-users'); 
+    // const fetchData = async () => {
+    //   try { 
+    //     await axios.get('/api/active-users'); 
 
-        const incompleteOrdersResponse = await axios.get('/api/incomplete-orders'); 
-        setIncompleteOrders(incompleteOrdersResponse.data.count);
-        setIncompleteOrdersList(incompleteOrdersResponse.data.orders);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+    //     const incompleteOrdersResponse = await axios.get('/api/incomplete-orders'); 
+    //     setIncompleteOrders(incompleteOrdersResponse.data.count);
+    //     setIncompleteOrdersList(incompleteOrdersResponse.data.orders);
+    //   } catch (error) {
+    //     console.error('Error fetching data:', error);
+    //   }
+    // };
 
-    fetchData();
+    // fetchData();
     setActiveUsers(50);
     setIncompleteOrders(20);
     setIncompleteOrdersList([
