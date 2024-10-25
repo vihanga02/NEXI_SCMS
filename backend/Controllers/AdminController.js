@@ -9,11 +9,29 @@ async function getIncompletedTrainOrders(req, res){
         res.status(500).json({ message: "Error fetching incomplete train orders", error: error.message });
     }
 };
+//controller to get hours of drivers
+async function getDriverWorkedHours(req, res){
+    try {
+        const result = await Manager.getDriverWorkedHours(req);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching driver worked hours", error: error.message });
+    }
+};
+
+//controller to get most orders
+async function getMostOrders(req, res){
+    try {
+        const result = await Manager.getMostOrders(req);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching most orders", error: error.message });
+    }
+};
+
 //controller to get quaterly sales
 async function getQuarterlySales(req, res){
     try {
-        console.log("In controller");
-        //const startDate = req.query.startDate; // Ensure you are extracting the date from the request query
         const result = await Manager.getQuarterlySales(req);
         res.status(200).json(result);
     } catch (error) {
@@ -44,6 +62,7 @@ async function getOrders(req, res){
 
 // Controller to get the delivery schedule
 async function getDeliverySchedule(req, res){
+    console.log("In controller");
     const date = req.params.date;
     try {
         const result = await Manager.getDeliverySchedule(date);
@@ -52,6 +71,17 @@ async function getDeliverySchedule(req, res){
         res.status(500).json({ message: "Error fetching delivery schedule", error: error.message });
     }
 };
+
+async function setDeliveryStatus(req, res){
+    const st = req.body.status;
+    const delID = req.body.Delivery_id;
+    try {
+        const result = await Manager.setDeliveryStatus(st, delID);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error updating delivery status", error: error.message });
+    }
+}
 
 // Controller to add a new delivery schedule
 async function addDeliverySchedule(req, res){
@@ -171,5 +201,7 @@ export{
     getVehicles,
     manager_login,
     getQuarterlySales,
-    getAdminDetails
+    getAdminDetails,
+    getMostOrders,
+    getDriverWorkedHours
 }
