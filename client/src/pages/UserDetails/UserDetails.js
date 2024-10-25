@@ -90,7 +90,6 @@ const UserDetails = () => {
         .then(response => {
             setCustomerData({ ...customerData, Phone_Number });
             setIsEditingPhone(false);
-            console.log('Phone number updated successfully.');
         })
         .catch(error => {
             setLoginStatus(false);
@@ -105,8 +104,7 @@ const UserDetails = () => {
         )
         .then(response => {
             setCustomerData({ ...customerData, Name });
-            setIsEditingName(false); // Exit edit mode
-            console.log('Name updated successfully.');
+            setIsEditingName(false);
         })
         .catch(error => {
             setLoginStatus(false);
@@ -117,7 +115,6 @@ const UserDetails = () => {
     const handleLogout = () => {
         axios.post('/customer/logout', {}, { withCredentials: true })
         .then((response) => {
-            console.log(response.data.message);
             navigate('/');  
         })
         .catch((error) => {

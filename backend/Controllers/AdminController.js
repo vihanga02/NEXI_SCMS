@@ -119,27 +119,19 @@ async function getVehicles(req, res){
 async function manager_login (req, res) {
     const { Username, Password } = req.body;
 
-
-    // Find the manager by email
     const [manager] = await Manager.getManager(Username);
-    console.log(manager);
 
     if (!manager) {
 
         return res.status(401).json({ message: 'Invalid credentials', success: false });
     }
 
-    // Check if the password is correct
-    // const match = await bcrypt.compare(Password, manager.Password);
     const match = Password === manager.Password;
     if (!match) {
         return res.status(401).json({ message: 'Invalid credentials', success: false });
     }
 
-    // Create a token
     const token = jwt.sign({ id: manager.Manager_ID, username: manager.Name }, process.env.SECRET_KEY, { expiresIn: '1h' });
-
-    
 
     res.cookie("token", token, {
         httpOnly: true,

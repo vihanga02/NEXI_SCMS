@@ -3,7 +3,7 @@ import pool from '../dbConfig.js'
 class Manager{
 
     static async getManager(Username) {
-        const query = `SELECT * FROM store_manager WHERE Name=?`;
+        const query = `SELECT * FROM store_manager WHERE Username=?`;
 
         try {
             const [results] = await pool.query(query, [Username]);

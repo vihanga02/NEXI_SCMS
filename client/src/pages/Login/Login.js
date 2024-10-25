@@ -29,7 +29,6 @@ const Login = () => {
         { withCredentials: true }
       )
       .then((res) => {
-        console.log(res.data);
         setSuccess(res.data.success);
         if (res.data.success) {
           // Show success toast notification
