@@ -38,9 +38,9 @@ router.get("/trains", authenticateToken, getTrains);
 router.get("/drivers", authenticateToken, getDrivers);
 router.get("/assistants", authenticateToken, getAssistants);
 router.get("/vehicles", authenticateToken, getVehicles);
-router.get("/quarterlySales",authenticateToken,getQuarterlySales);
+router.get("/quarterlySales",getQuarterlySales);
 router.get("/admindetails",authenticateToken,getAdminDetails);
-router.get("/mostOrders",authenticateToken,getMostOrders);
+router.get("/productOrders",getMostOrders);
 router.get("/hoursofdrivers",authenticateToken,getDriverWorkedHours);
 
 export default router;

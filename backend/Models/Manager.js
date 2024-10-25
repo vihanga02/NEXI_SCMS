@@ -2,7 +2,7 @@ import pool from '../dbConfig.js'
 
 class Manager{
     static async getManager(Username) {
-        const query = `SELECT * FROM store_manager WHERE Name=?`;
+        const query = `SELECT * FROM store_manager WHERE Username=?`;
 
         try {
             const [results] = await pool.query(query, [Username]);
@@ -12,13 +12,13 @@ class Manager{
         }
     }
     //model for getting the most orders
-    static async getMostOrders(req){
+    static async getMostOrders(req) {
         const query = `SELECT * FROM product_orders;`;
         try {
-            const result = await pool.query(query, null);
-            return result;
-        }
-        catch (error) {
+            const [rows] = await pool.query(query); // Only get the rows part
+            console.log(rows); // Print rows for debugging
+            return rows; // Return only rows
+        } catch (error) {
             throw error;
         }
     }
@@ -26,6 +26,7 @@ class Manager{
     //model for getting the quarterly sales
     static async getQuarterlySales(req) {
         const {startDate} = req.body;
+
         const query = `CALL Quarterly_sales_from(?)`;
         try {
             const [results] = await pool.query(query, [startDate]);
