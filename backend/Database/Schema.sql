@@ -372,14 +372,14 @@ INSERT INTO Truck (Reg_number, Store_ID, Used_Hours, Availability) VALUES
 ('021', 7, 0.0, TRUE);
 
 
-INSERT INTO store_manager (Name, Email, Password, Store_ID) VALUES 
-("Kasun Gayantha", "kasun342@gmail.com", "Gaya%&82", 1),
-('Nuwan Perera', 'nuwanp@gmail.com', 'Nuwa@#56', 2),
-('Saman Wijesinghe', 'samanw123@gmail.com', 'Sama$#45', 3),
-('Thilini Senarath', 'thilini.s@gmail.com', 'Thil*67!x', 4),
-('Amila Bandara', 'amila.ban@hotmail.com', 'Ami!d567', 5),
-('Dilanka Gunasekara', 'dilanka.gun@yahoo.com', 'Dila%88#$', 6),
-('Hiruna Gimhana', 'gimhana23@gmail.com', 'Gimm#254', 7);
+INSERT INTO store_manager (Name, Email, Username, Password, Store_ID) VALUES 
+("Kasun Gayantha", "kasun342@gmail.com", 'kasunG34', "Gaya%&82", 1),
+('Nuwan Perera', 'nuwanp@gmail.com', 'pereraNN2', 'Nuwa@#56', 2),
+('Saman Wijesinghe', 'samanw123@gmail.com', 'samanW650', 'Sama$#45', 3),
+('Thilini Senarath', 'thilini.s@gmail.com', 'senarath', 'Thil*67!x', 4),
+('Amila Bandara', 'amila.ban@hotmail.com', 'thilisenerath46', 'Ami!d567', 5),
+('Dilanka Gunasekara', 'dilanka.gun@yahoo.com', 'dilanka892', 'Dila%88#$', 6),
+('Hiruna Gimhana', 'gimhana23@gmail.com', 'hirugim28', 'Gimm#254', 7);
 
 
 INSERT INTO Train (Train_Name, Capacity, Available_space) VALUES

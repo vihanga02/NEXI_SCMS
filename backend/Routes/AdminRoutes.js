@@ -8,7 +8,9 @@ import {
     getOrders,
     getDeliverySchedule,
     addDeliverySchedule,
-    changeOrderStatusToIn_Truck,
+    getTruckDelivery,
+    addTruckDelivery,
+    changeOrderStatus,
     getTrains,
     getDrivers,
     getAssistants,
@@ -33,9 +35,12 @@ router.post("/login", manager_login);
 router.get("/incompletedTrainOrders", authenticateToken, getIncompletedTrainOrders);
 router.get("/incompletedTruckOrders", authenticateToken, getIncompletedTruckOrders);
 router.get("/orders", authenticateToken, getOrders);
-router.get("/deliverySchedule/:date", getDeliverySchedule);
+router.get("/deliverySchedule/:date", authenticateToken, getDeliverySchedule);
+router.get("/truckDelivery", authenticateToken, getTruckDelivery);
 router.post("/addDeliverySchedule", authenticateToken, addDeliverySchedule);
-router.post("/changeOrderStatusToIn_Truck", authenticateToken, changeOrderStatusToIn_Truck);
+router.post("/assignTruck", authenticateToken, addTruckDelivery);
+router.post("/setDeliveryStatus", authenticateToken, setDeliveryStatus);
+router.post("/changeOrderStatus", authenticateToken, changeOrderStatus);
 router.get("/trains", authenticateToken, getTrains);
 router.get("/drivers", authenticateToken, getDrivers);
 router.get("/assistants", authenticateToken, getAssistants);
