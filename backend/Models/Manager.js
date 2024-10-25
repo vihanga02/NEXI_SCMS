@@ -74,7 +74,37 @@ class Manager{
         }
     }
 
+    static async getTruckDelivery(storeID){
+        const query = 
+            `SELECT 
+                td.ID,
+                t.Truck_ID,
+                td.Driver_ID,
+                td.Assistant_ID
+            FROM truck_delivery td
+            LEFT JOIN truck t ON td.truck_ID = t.Truck_ID
+            WHERE t.Store_ID = ?;`;
+        try{
+            const result = await pool.query(query, [storeID]);
+            return result[0];
+        }
+        catch(error){
+            throw error;
+        }
+    }
     
+    static async addDeliverySchedule(){
+
+        const query = `INSERT INTO delivery_schedule(shipment_date,Delivery_status) VALUES (CURDATE(), 'Not_Yet');`;
+        try{
+            const result = await pool.query(query, NULL);
+            console.log(result);
+            return result;
+        }catch(error){
+            throw error;
+        }
+    }
+
     static async getDeliverySchedule(date){
         const query = `select * from Delivery_Schedule where shipment_date=?`;
         try{
@@ -85,26 +115,34 @@ class Manager{
         }
     }
     
-    static async addDeliverySchedule(req){
-        const {store_id} = req.body.store_id;
-        const query = 'call CreateDeliverySchedule(store_id)'
-        const values = [store_id];
+    static async addTruckDelivery(AdminID, delivery_id){
+        console.log("model",delivery_id,AdminID);
+        const query = 'call CreateTruckDelivery(?,?)';
         try {
-            const result = await pool.query(query, values);
+            const result = await pool.query(query, [AdminID, delivery_id]);
+            console.log(result);
             return result;
         } catch (error) {
             throw error;
         }
-
     }
 
-    static async changeOrderStatusToIn_Truck(req){
-        const { Delivery_id } = req.body;
-        const query = 
-            `update Delivery_Schedule set Delivery_status='In_Truck' where Delivery_id=?`;
-
+    static async setDeliveryStatus(status, Delivery_id){
+        const query = `update Delivery_Schedule set Delivery_status=? where Delivery_id=?`;
         try {
-            const result = await pool.query(query,[Delivery_id]);
+            const result = await pool.query(query, [status, Delivery_id]);
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async changeOrderStatus(status, orderID){
+        
+        const query = 
+            `update orders set Order_state=? where Order_id=?`;
+        try {
+            const result = await pool.query(query,[status,orderID]);
             return result;
         } catch (error) {
             throw error;

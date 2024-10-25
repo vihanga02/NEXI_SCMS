@@ -15,6 +15,7 @@ import Report from './pages/Report/Report.js';
 import Order from './pages/Order/Order.js';
 import DeliverySchedule from './pages/Delivery_schedule/DeliverySchedule.js';
 import ManagerControl from './pages/ManagerControl/ManagerControl.js';
+import TruckScheduler from './pages/TruckScheduler/TruckScheduler.js';
 
 import Sidebar from './components/Sidebar/Sidebar.js';
 import Topbar from './components/Topbar/Topbar.js';
@@ -44,6 +45,7 @@ const App = () => {
         <Route path='/assistant' element={<Assistant />} />
         <Route path='/order' element={<Order />} />
         <Route path='/delivery_schedule' element={<DeliverySchedule />} />
+        <Route path='/delivery_schedule/truckScheduler' element={<TruckScheduler />} />
         <Route path='/report' element={<Report />} />
 
         <Route path='report/quarterlysales' element={<QuarterlySales/>}/>

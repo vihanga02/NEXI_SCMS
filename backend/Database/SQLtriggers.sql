@@ -22,6 +22,25 @@ END $$
 DELIMITER ;
 
 
+DELIMITER $$
+DROP TRIGGER IF EXISTS driver_status_after_release;
+CREATE TRIGGER driver_status_after_release
+	AFTER DELETE ON Truck_Delivery
+    FOR EACH ROW
+BEGIN
+	UPDATE driver d
+    SET Availability = 'Rest'
+    WHERE OLD.Driver_ID = d.Driver_ID;
+	
+    UPDATE truck t
+    SET Availability = 1
+    WHERE OLD.truck_ID = t.truck_ID;
+    
+    UPDATE driver_assistant da
+    SET Availability = 'Rest'
+    WHERE OLD.Assistant_ID = da.Assistant_ID;
+END $$
+DELIMITER ;
 
 
 DELIMITER $$
