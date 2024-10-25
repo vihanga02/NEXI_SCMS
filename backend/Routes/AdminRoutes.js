@@ -16,7 +16,8 @@ import {
     manager_login,
     getQuarterlySales,
     getAdminDetails,
-    getMostOrders
+    getMostOrders,
+    getDriverWorkedHours
 } from "../Controllers/AdminController.js";
 
 // User authentication routes
