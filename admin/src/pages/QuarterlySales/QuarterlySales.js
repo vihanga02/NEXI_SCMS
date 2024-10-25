@@ -30,6 +30,7 @@ function QuarterlySales() {
     useEffect(() => {
         const fetchQuarterlySales = async () => {
             setLoading(true);
+            console.log(startDate);
             try {
                 const response = await axios.get('/admin/quarterlySales', {
                     params: { startDate: startDate },
@@ -37,6 +38,7 @@ function QuarterlySales() {
                 });
                 
                 const salesData = response.data;
+                console.log('Quarterly Sales Data:', salesData);
 
                 const dates = salesData.map(item => item.Order_Date); // X-axis
                 const totalOrders = salesData.map(item => item.Total_Orders); // Y-axis
