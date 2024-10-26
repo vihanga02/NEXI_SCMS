@@ -63,6 +63,25 @@ async function getTruckHours(req, res) {
         res.status(500).json({ message: "Error fetching truck hours", error: error.message });
     }
 }
+// Controller function to get sales by city
+
+async function getSalesByCity(req, res) {
+    try {
+        const result = await Manager.getSalesByCity();
+        res.status(200).json(result); // Send the retrieved data to the frontend
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching sales by city", error: error.message });
+    }
+}
+// Controller function to get sales by route
+async function getSalesByRoute(req, res) {
+    try {
+        const result = await Manager.getSalesByRoute();
+        res.status(200).json(result); // Send the retrieved data to the frontend
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching sales by route", error: error.message });
+    }
+}
 
 
 // Controller to get incomplete truck orders
@@ -266,5 +285,7 @@ export{
     getDriverWorkedHours,
     getAdminStoreCity,
     getAssistantWorkedHours,
-    getTruckHours
+    getTruckHours,
+    getSalesByCity,
+    getSalesByRoute
 }
