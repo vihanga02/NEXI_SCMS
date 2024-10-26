@@ -23,24 +23,37 @@
 }
 
 .report-button {
-    flex: 1 1 calc(33.333% - 40px); /* Adjust width and spacing */
+    flex: 1 1 calc(45% - 40px); /* Adjust width for two buttons per row */
     padding: 20px;
-    font-size: 18px;
-    border: none;
-    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
     color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
     text-align: center;
-    background-color: #3498db; /* Default button color */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for modern look */
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
+/* Specific colors for each button based on the image */
+.report-button:nth-child(1) { background-color: #e74c3c; } /* Red */
+.report-button:nth-child(2) { background-color: #3498db; } /* Blue */
+.report-button:nth-child(3) { background-color: #f39c12; } /* Orange */
+.report-button:nth-child(4) { background-color: #27ae60; } /* Green */
+.report-button:nth-child(5) { background-color: #8e44ad; } /* Purple */
+.report-button:nth-child(6) { background-color: #d35400; } /* Dark Orange */
+.report-button:nth-child(7) { background-color: #16a085; } /* Teal */
+.report-button:nth-child(8) { background-color: #2c3e50; } /* Dark Blue */
+
+/* Hover and active effects */
 .report-button:hover {
-    background-color: #2980b9; /* Hover color */
     transform: translateY(-5px); /* Lift button on hover */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* Darken shadow on hover */
+    filter: brightness(1.1); /* Slightly brighten color */
 }
 
 .report-button:active {
     transform: translateY(0); /* Reset transform on click */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
