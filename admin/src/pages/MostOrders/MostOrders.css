@@ -54,6 +54,13 @@
     border-bottom: 1px solid #ddd;
 }
 
+.product-image {
+    width: 50px; /* Adjust the size as needed */
+    height: 50px; /* Adjust the size as needed */
+    object-fit: cover;
+    border-radius: 5px;
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
     .content {

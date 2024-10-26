@@ -9,6 +9,7 @@
     margin-top: 10vh; /* Adjust for the topbar height */
     margin-left: 250px; /* Adjust for sidebar width */
     background-color: #f5f5f5; /* Light background */
+    overflow: auto; /* Allow scrolling within the content area */
 }
 
 .table-container {
@@ -20,7 +21,7 @@
     margin: auto;
 }
 
-.assistant-work-hours-container h2 {
+.table-container h2 {
     text-align: center;
     margin-bottom: 20px;
     color: #2c3e50;
