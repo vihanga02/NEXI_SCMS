@@ -4,28 +4,30 @@
 }
 
 .rcontainer {
-    flex-grow: 1; 
-    margin-left: 250px; 
-    padding: 0 5px 5px;
-    background-color: #f5f5f58f; 
+    flex-grow: 1;
+    margin-left: 250px;
+    padding: 20px;
+    background-color: #f5f5f58f;
     display: flex;
-    flex-direction: column; 
-    gap: 20px; 
+    flex-direction: column;
 }
 
 .button-container {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    grid-template-rows: repeat(4, 1fr); /* 4 rows */
     gap: 20px;
     padding: 20px;
-    justify-content: space-around; /* Spread buttons across the container */
-    flex-grow: 1; /* Ensure the container takes up remaining space */
+    flex-grow: 1;
 }
 
 .report-button {
-    flex: 1 1 calc(45% - 40px); /* Adjust width for two buttons per row */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Space between icon and text */
     padding: 20px;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     color: white;
     text-align: center;
@@ -34,9 +36,10 @@
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    background-color: #3498db; /* Default color */
 }
 
-/* Specific colors for each button based on the image */
+/* Specific colors for each button */
 .report-button:nth-child(1) { background-color: #e74c3c; } /* Red */
 .report-button:nth-child(2) { background-color: #3498db; } /* Blue */
 .report-button:nth-child(3) { background-color: #f39c12; } /* Orange */
@@ -56,4 +59,8 @@
 .report-button:active {
     transform: translateY(0); /* Reset transform on click */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.report-button i {
+    font-size: 24px; /* Icon size */
 }
