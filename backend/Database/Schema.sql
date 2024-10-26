@@ -129,7 +129,7 @@ CREATE TABLE Delivery_Schedule (
   Vehicle_departure_time TIME,
   Vehicle_arrival_time TIME,
   Delivery_status ENUM('Not_Yet', 'On_Train', 'In_Truck','Completed'),
-  PRIMARY KEY (Delivery_id),
+  PRIMARY KEY (Delivery_id)
 );
 
 CREATE TABLE Order_Item (
@@ -304,9 +304,9 @@ INSERT INTO Driver (Store_ID, Work_Hours, Availability) VALUES
 (7, 0.0, 'Not_Available'),
 (7, 0.0, 'Rest');
 
-INSERT INTO Driver_Assistant (Name, Username, Password, Store_ID, Work_Hours, Availability) VALUES
+INSERT INTO Driver_Assistant (Store_ID, Work_Hours,Availability) VALUES
 (1, 0.0, 'On_Trip'),
-(1, 0.0, 'Rest'),
+(2, 0.0, 'Rest'),
 (1, 0.0, 'Rest'),
 (1, 0.0, 'Rest'),
 (1, 0.0, 'Rest'),
