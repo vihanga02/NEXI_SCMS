@@ -6,7 +6,7 @@ BEGIN
       AND Order_state = 'Paid'
     GROUP BY DATE(Ordered_Date)
     ORDER BY Order_Date;
-END
+END;
 
 
 

@@ -22,6 +22,17 @@ class Manager{
             throw error;
         }
     }
+    //model for get the assistant worked hours
+    static async getAssistantWorkHours() {
+        const query = `SELECT * FROM assistant_work_hours`; // Query the view directly
+        try {
+            const [rows] = await pool.query(query); // Execute the query and return rows
+            return rows; // Return only rows
+        } catch (error) {
+            console.error("Error in getAssistantWorkHours:", error);
+            throw error;
+        }
+    }
 
     //model for getting the quarterly sales
     static async getQuarterlySales(req) {
@@ -30,13 +41,16 @@ class Manager{
         const query = `CALL Quarterly_sales_from(?)`;
         try {
             const [rows] = await pool.query(query, [startDate]); // Get only the rows
-            console.log("Data from stored procedure:", rows[0]); // Verify that this is the correct data
+             // Verify that this is the correct data
             return rows[0]; // Return only the first element of rows
         } catch (error) {
             console.error("Error in getQuarterlySales:", error);
             throw error;
         }
     }
+    //model for getting Assistants Work Hours
+    
+
     
     
     
@@ -216,16 +230,21 @@ class Manager{
 
 
     // Function to get the total hours worked by each driver
-    static async getDriverWorkedHours(req) {
-        const query = `SELECT * FROM driver_work_hours`;
+    static async getDriverWorkHours() {
+        const query = `SELECT * FROM driver_work_hours`; // Query the view directly
+        
+        
 
         try {
-            const result = await pool.query(query, null);
-            return result;
+            const [rows] = await pool.query(query); // Execute the query and return rows
+            console.log(rows);
+            return rows; // Return only rows
         } catch (error) {
+            console.error("Error in getDriverWorkHours:", error);
             throw error;
         }
     }
+    
     
     static async getStoreCity(storeID){
         const query = `select City from store where Store_ID=?`;

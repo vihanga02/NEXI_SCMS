@@ -11,10 +11,21 @@ async function getIncompletedTrainOrders(req, res){
         res.status(500).json({ message: "Error fetching incomplete train orders", error: error.message });
     }
 };
+//controller to get hours of assistants
+async function getAssistantWorkedHours(req, res){
+    try {
+        const result = await Manager.getAssistantWorkHours(req);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching assistant worked hours", error: error.message });
+    }
+};
+
+
 //controller to get hours of drivers
 async function getDriverWorkedHours(req, res){
     try {
-        const result = await Manager.getDriverWorkedHours(req);
+        const result = await Manager.getDriverWorkHours(req);
         res.status(200).json(result);
     } catch (error) {
         res.status(500).json({ message: "Error fetching driver worked hours", error: error.message });
@@ -23,10 +34,7 @@ async function getDriverWorkedHours(req, res){
 
 //controller to get most orders
 async function getMostOrders(req, res){
-    
-    
     try {
-        
         const result = await Manager.getMostOrders(req);
         res.status(200).json(result);
     } catch (error) {
@@ -246,5 +254,6 @@ export{
     getAdminDetails,
     getMostOrders,
     getDriverWorkedHours,
-    getAdminStoreCity
+    getAdminStoreCity,
+    getAssistantWorkedHours
 }
