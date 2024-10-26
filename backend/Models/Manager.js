@@ -30,7 +30,8 @@ class Manager{
         const query = `CALL Quarterly_sales_from(?)`;
         try {
             const [rows] = await pool.query(query, [startDate]); // Get only the rows
-            return rows; // Return the rows to the controller
+            console.log("Data from stored procedure:", rows[0]); // Verify that this is the correct data
+            return rows[0]; // Return only the first element of rows
         } catch (error) {
             console.error("Error in getQuarterlySales:", error);
             throw error;
