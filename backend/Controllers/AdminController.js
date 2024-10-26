@@ -54,6 +54,16 @@ async function getQuarterlySales(req, res){
     }
 }
 
+// Controller function to get truck hours
+async function getTruckHours(req, res) {
+    try {
+        const result = await Manager.getTruckHours();
+        res.status(200).json(result); // Send the retrieved data to the frontend
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching truck hours", error: error.message });
+    }
+}
+
 
 // Controller to get incomplete truck orders
 async function getIncompletedTruckOrders(req, res){
@@ -255,5 +265,6 @@ export{
     getMostOrders,
     getDriverWorkedHours,
     getAdminStoreCity,
-    getAssistantWorkedHours
+    getAssistantWorkedHours,
+    getTruckHours
 }
