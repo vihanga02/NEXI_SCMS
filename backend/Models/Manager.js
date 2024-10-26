@@ -114,24 +114,16 @@ class Manager{
         }
     }
 
-    static async getIncompletedTruckOrders(req){
-        // get the orders which does not have a train assigned the state is not delivered
-        const query = `Select *  from Delivery_Schedule where Delivery_status='In_Truck`;
-       
-        try{
-            const result = await pool.query(query, null);
-            return result;
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    static async getOrders(req){
-        const query = `select * from Orders`
-
+    static async getPaidOrders(id){
+        const query = 
+            `select *  
+            from Orders 
+            JOIN truck_route ON Orders.Route_ID = truck_route.Route_ID
+            WHERE 
+                Order_state='Paid' AND orders.Store_ID=?`; 
         try {
-            const result = await pool.query(query, null);
-            return result;
+            const result = await pool.query(query, id);
+            return result[0];
         } catch (error) {
             throw error;
         }
@@ -139,11 +131,7 @@ class Manager{
 
     static async getTruckDelivery(storeID){
         const query = 
-            `SELECT 
-                td.ID,
-                t.Truck_ID,
-                td.Driver_ID,
-                td.Assistant_ID
+            `SELECT *  
             FROM truck_delivery td
             LEFT JOIN truck t ON td.truck_ID = t.Truck_ID
             WHERE t.Store_ID = ?;`;
@@ -156,12 +144,20 @@ class Manager{
         }
     }
     
-    static async addDeliverySchedule(){
-
+    static async addDeliverySchedule(req){
         const query = `INSERT INTO delivery_schedule(shipment_date,Delivery_status) VALUES (CURDATE(), 'Not_Yet');`;
         try{
-            const result = await pool.query(query, NULL);
-            console.log(result);
+            const result = await pool.query(query);
+            return result;
+        }catch(error){
+            throw error;
+        }
+    }
+
+    static async deleteDelivery(delID){
+        const query = `DELETE FROM delivery_schedule WHERE Delivery_id = ?`;
+        try{
+            const result = await pool.query(query, delID);
             return result;
         }catch(error){
             throw error;
@@ -179,13 +175,31 @@ class Manager{
     }
     
     static async addTruckDelivery(AdminID, delivery_id){
-        console.log("model",delivery_id,AdminID);
         const query = 'call CreateTruckDelivery(?,?)';
         try {
             const result = await pool.query(query, [AdminID, delivery_id]);
-            console.log(result);
             return result;
         } catch (error) {
+            throw error;
+        }
+    }
+
+    static async addTrainDelivery(delivery_id, train_id){
+        const query = 'INSERT INTO train_delivery(Train_Del_ID, Train_ID) VALUES(?,?);';
+        try {
+            const result = await pool.query(query, [delivery_id, train_id]);
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async deleteTruck(delID){
+        const query = `DELETE FROM truck_delivery WHERE ID = ?`;
+        try{
+            const result = await pool.query(query, delID);
+            return result;
+        }catch(error){
             throw error;
         }
     }
@@ -201,7 +215,6 @@ class Manager{
     }
 
     static async changeOrderStatus(status, orderID){
-        
         const query = 
             `update orders set Order_state=? where Order_id=?`;
         try {
@@ -212,17 +225,61 @@ class Manager{
         }
     }
 
+    static async getCompletedOrders(storeID){
+        const query = 
+            `select *  
+            from Orders 
+            JOIN truck_route ON Orders.Route_ID = truck_route.Route_ID
+            WHERE 
+                Order_state='Completed' AND orders.Store_ID=?`;
+        try {
+            const result = await pool.query(query, storeID);
+            return result[0];
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async getReceivedOrders(storeID){
+        const query = 
+            `select *  
+            from Orders 
+            JOIN truck_route ON Orders.Route_ID = truck_route.Route_ID
+            WHERE 
+                Order_state='Received' AND orders.Store_ID=?;`;
+        try {
+            const result = await pool.query(query, storeID);
+            return result[0];
+        }catch(error){
+            throw error;
+        }
+    }
+
+    static async addToDeliveryQueue(orderList, delID){
+        const placeholders = orderList.map(() => '(?, ?)').join(', ');
+        const oList = orderList.map(str => parseInt(str));
+        const query = `INSERT INTO order_delivery (Delivery_ID, Order_ID) VALUES ${placeholders}`;
+
+        const values = oList.flatMap(e => [delID, e]);
+        try {
+            const result = await pool.query(query, values);
+            return result;
+        }catch(error){
+            throw error;
+        }
+    }
+
+
+
 // ----------------------------------------------------------------------
 
     // Function to get trains by Store_ID using the stored procedure
-    static async getTrains(req) {
-        const { Store_ID } = req.body;
+    static async getTrains(storeID) {
         const query = `CALL getTrainsByStoreID(?)`;
-        const values = [Store_ID];
-
+        const values = [storeID];
         try {
             const result = await pool.query(query, values);
-            return result[0]; // Stored procedure returns results as an array of arrays
+            return result[0][0]; // Stored procedure returns results as an array of arrays
         } catch (error) {
             throw error;
         }

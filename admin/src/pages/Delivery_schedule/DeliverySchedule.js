@@ -8,7 +8,6 @@ function DeliverySchedule() {
   const navigate = useNavigate();
   const [date, setDate] = useState('');
   const [data, setData] = useState([]);
-  const [vehicle, setVehicle] = useState('Not set');
   const [status, setStatus] = useState([]);
 
   const handleSubmit = async (e) => {
@@ -39,19 +38,28 @@ function DeliverySchedule() {
 
   const createSchedule = async () => {
     try {
-      const response = await axios.post(`/admin/addDeliverySchedule`,{ withCredentials: true });
+      const response = await axios.post(`/admin/addDeliverySchedule`,{},{ withCredentials: true });
       console.log('Response from backend:', response.data);
     } catch (error) {
       console.error('Error sending request to backend:', error);
     }
   };
 
-  const handleVehicle = async (e) => {
-    setVehicle(e[0]); // Update selected item in state
-    if(vehicle === 'Truck'){
-      navigate(`/delivery_schedule/truckScheduler/`, { 
-        state: { delivery_id: e[1] } 
+  const handleTracking = async (e) => {
+      navigate(`/order`, {
+        state: { delivery_id: e } 
       });
+  };
+
+  const handleDel = async (ID) => {
+    try {
+      const response = await axios.delete(`/admin/deleteSchedule`, { 
+        data: {deliveryID: ID },
+        withCredentials: true 
+      });
+      console.log('Response from backend:', response.data);
+    } catch (error) {
+      console.error('Error sending request to backend:', error);
     }
   };
 
@@ -79,6 +87,7 @@ function DeliverySchedule() {
               <th>Vehicle Arrival Time</th>
               <th>Delivery Status</th>
               <th>Truck or train</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -90,10 +99,10 @@ function DeliverySchedule() {
                 <td>{delivery.Vehicle_arrival_time}</td>
                 <td>
                   {/* setStatus(delivery.Delivery_status) */}
-                  <div>{delivery.Delivery_status}</div>
+                  <div className='btn m-0.5' onClick={() => window.location.reload()}>{delivery.Delivery_status}</div>
                   <details className="dropdown">
-                    <summary className="btn m-1 bg-green-500 hover:bg-gray-500">Change status</summary>
-                    <ul className="menu dropdown-content bg-base-100 bg-gray-400 rounded z-[1] w-52 p-2 shadow">
+                    <summary className="btn m-0.5 bg-green-500 hover:border-spacing-3">Change status</summary>
+                    <ul className="menu dropdown-content bg-base-100 bg-green-400 rounded z-[1] w-52 p-2 shadow">
                       <li><button onClick={() => handleSelect(['Not_Yet', delivery.Delivery_id])}>Not Yet</button></li>
                       <li><button onClick={() => handleSelect(['On_Train', delivery.Delivery_id])}>On Train</button></li>
                       <li><button onClick={() => handleSelect(['In_Truck', delivery.Delivery_id])}>In Truck</button></li>
@@ -102,15 +111,9 @@ function DeliverySchedule() {
                   </details>
                 </td>
                 <td>
-                
-                  <details className="dropdown">
-                    <summary className="btn m-1">Set vehicle</summary>
-                    <ul className="menu dropdown-content bg-base-100 bg-green-400 rounded z-[1] w-52 p-2 shadow">
-                      <li><a onClick={() => handleVehicle(['Truck', delivery.Delivery_id])}>Truck</a></li>
-                      <li><a onClick={() => handleVehicle(['Train', delivery.Delivery_id])}>Train</a></li>
-                    </ul>
-                  </details>
+                  <button className="btn m-0.5 btn-primary" onClick={() => handleTracking(delivery.Delivery_id)} >Track Orders</button>
                 </td>
+                <td><button className='btn btn-danger' onClick={() => handleDel(delivery.Delivery_id)}>Delete</button></td>
               </tr>
             ))}
           </tbody>

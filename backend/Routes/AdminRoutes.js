@@ -3,14 +3,20 @@ const router = express.Router();
 import authenticateToken from "../Middleware/Authentication.js";
 
 import {
-    getIncompletedTrainOrders,
-    getIncompletedTruckOrders,
-    getOrders,
+    getPaidOrders,
     getDeliverySchedule,
     addDeliverySchedule,
+    deleteDelivery,
     getTruckDelivery,
     addTruckDelivery,
+    addTrainDelivery,
+    deleteTruckDelivery,
     changeOrderStatus,
+    getCompletedOrders,
+    getReceivedOrders,
+
+    addToDeliveryQueue,
+
     getTrains,
     getDrivers,
     getAssistants,
@@ -36,15 +42,21 @@ router.post("/login", manager_login);
 
 
 // Order-related routes
-router.get("/incompletedTrainOrders", authenticateToken, getIncompletedTrainOrders);
-router.get("/incompletedTruckOrders", authenticateToken, getIncompletedTruckOrders);
-router.get("/orders", authenticateToken, getOrders);
+router.get("/paidOrders", authenticateToken, getPaidOrders);
 router.get("/deliverySchedule/:date", authenticateToken, getDeliverySchedule);
 router.get("/truckDelivery", authenticateToken, getTruckDelivery);
 router.post("/addDeliverySchedule", authenticateToken, addDeliverySchedule);
+router.delete("/deleteSchedule", authenticateToken, deleteDelivery);
 router.post("/assignTruck", authenticateToken, addTruckDelivery);
+router.post("/assignTrain", authenticateToken, addTrainDelivery);
+router.delete("/deleteTruck", authenticateToken, deleteTruckDelivery);
 router.post("/setDeliveryStatus", authenticateToken, setDeliveryStatus);
 router.post("/changeOrderStatus", authenticateToken, changeOrderStatus);
+router.get("/completedOrders", authenticateToken, getCompletedOrders);
+router.get("/receivedOrders", authenticateToken, getReceivedOrders);
+
+router.post("/queueForDelivery", authenticateToken, addToDeliveryQueue); 
+
 router.get("/trains", authenticateToken, getTrains);
 router.get("/drivers", authenticateToken, getDrivers);
 router.get("/assistants", authenticateToken, getAssistants);
