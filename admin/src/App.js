@@ -16,6 +16,7 @@ import Order from './pages/Order/Order.js';
 import DeliverySchedule from './pages/Delivery_schedule/DeliverySchedule.js';
 import ManagerControl from './pages/ManagerControl/ManagerControl.js';
 import TruckScheduler from './pages/TruckScheduler/TruckScheduler.js';
+import TrainScheduler from './pages/TrainScheduler/TrainScheduler.js';
 
 import Sidebar from './components/Sidebar/Sidebar.js';
 import Topbar from './components/Topbar/Topbar.js';
@@ -50,6 +51,7 @@ const App = () => {
         <Route path='/order' element={<Order />} />
         <Route path='/delivery_schedule' element={<DeliverySchedule />} />
         <Route path='/delivery_schedule/truckScheduler' element={<TruckScheduler />} />
+        <Route path='/delivery_schedule/trainScheduler' element={<TrainScheduler />} />
         <Route path='/report' element={<Report />} />
 
         <Route path='report/quarterlysales' element={<QuarterlySales/>}/>

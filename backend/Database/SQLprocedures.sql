@@ -481,7 +481,8 @@ BEGIN
         t.Train_ID,
         t.Train_Name,
         ts.Day,
-        ts.Start_Time
+        ts.Start_Time,
+        t.Available_space
     FROM 
         Train t
     JOIN 
