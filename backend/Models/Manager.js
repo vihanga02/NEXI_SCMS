@@ -98,7 +98,18 @@ class Manager{
         }
     }
     
+    // Model function to get order count by customer
+    static async getOrderCountByCustomer() {
+        const query = `CALL GetOrderCountByCustomer()`;
 
+        try {
+            const [rows] = await pool.query(query);
+            return rows[0]; // Return only the data portion of the result
+        } catch (error) {
+            console.error("Error in getOrderCountByCustomer:", error);
+            throw error;
+        }
+    }
     
     
     

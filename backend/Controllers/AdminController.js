@@ -82,6 +82,15 @@ async function getSalesByRoute(req, res) {
         res.status(500).json({ message: "Error fetching sales by route", error: error.message });
     }
 }
+// Controller function to get customer order count report
+async function getCustomerOrderReport(req, res) {
+    try {
+        const result = await Manager.getOrderCountByCustomer();
+        res.status(200).json(result); // Send the retrieved data to the frontend
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching customer order report", error: error.message });
+    }
+}
 
 
 
@@ -346,5 +355,6 @@ export{
     getAssistantWorkedHours,
     getTruckHours,
     getSalesByCity,
-    getSalesByRoute
+    getSalesByRoute,
+    getCustomerOrderReport
 }

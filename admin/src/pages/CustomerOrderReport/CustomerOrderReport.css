@@ -1,0 +1,43 @@
+.customer-order-report-container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh; /* Full screen height */
+    overflow: hidden; /* Prevent scrollbars */
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    margin-top: 10vh; /* Adjust for the topbar height */
+    margin-left: 250px; /* Adjust for sidebar width */
+    background-color: #f5f5f5; /* Light background */
+    overflow: auto; /* Allow scrolling within the content area */
+}
+
+.chart-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Prevent scrollbars within the chart area */
+    height: calc(100vh - 20vh); /* Adjust height to fit within the viewport */
+}
+
+.chart-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .content {
+        margin-left: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    .content {
+        margin-left: 150px;
+    }
+}

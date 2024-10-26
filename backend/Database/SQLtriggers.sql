@@ -44,7 +44,6 @@ DELIMITER ;
 
 
 DELIMITER $$
-
 DROP TRIGGER IF EXISTS capacity_decrease_after_placement$$
 CREATE TRIGGER capacity_decrease_after_placement
 	AFTER INSERT ON order_delivery -- train_delivery
@@ -55,8 +54,8 @@ BEGIN
     
     SELECT SUM(o.Total_capacity)
     INTO capacity
-    FROM orders
-    WHERE NEW.Order_ID = orders.Order_ID;
+    FROM orders o
+    WHERE NEW.Order_ID = o.Order_ID;
 
     -- Newly added -----------------------------------------------------------------------------------------
 
@@ -73,7 +72,7 @@ BEGIN
     SET Available_space = Available_space-capacity
     WHERE NEW.Delivery_ID = td.Train_Del_ID;
 END$$
-DELIMITER ;
+DELIMITER ;
 
 
 
