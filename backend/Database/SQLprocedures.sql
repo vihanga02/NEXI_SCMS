@@ -574,3 +574,24 @@ BEGIN
     WHERE Manager_ID = adminID;
 END //
 DELIMITER ;
+
+
+
+
+DROP PROCEDURE IF EXISTS `GetOrderCountByCustomer`;
+DELIMITER $$
+
+CREATE PROCEDURE GetOrderCountByCustomer()
+BEGIN
+    SELECT 
+        Customer_ID,
+        COUNT(Order_ID) AS Total_Orders
+    FROM 
+        Orders
+    WHERE 
+        Order_state = 'Paid'
+    GROUP BY 
+        Customer_ID;
+END$$
+
+DELIMITER ;

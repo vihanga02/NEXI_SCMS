@@ -26,8 +26,9 @@ import {
     getAssistantWorkedHours,
     getTruckHours,
     getSalesByCity,
-    getSalesByRoute
-} from "../Controllers/AdminController.js";
+    getSalesByRoute,
+    getCustomerOrderReport
+} from "../controllers/AdminController.js";
 
 
 // User authentication routes
@@ -59,5 +60,6 @@ router.get("/driverWorkHours",authenticateToken,getDriverWorkedHours);
 router.get("/truckHours",authenticateToken,getTruckHours);
 router.get("/salesByCity",authenticateToken,getSalesByCity);
 router.get("/salesByRoute",authenticateToken,getSalesByRoute);
+router.get("/customerOrderReport",authenticateToken,getCustomerOrderReport);
 
 export default router;
