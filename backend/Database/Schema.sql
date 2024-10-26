@@ -116,7 +116,7 @@ CREATE TABLE Orders (
   Expected_Date DATE,
   Total_Capacity INT DEFAULT 0,
   Total_Price DECIMAL(8,2) DEFAULT 0.00,
-  Order_state ENUM('Pending', 'Paid', 'Completed') DEFAULT 'Pending',
+  Order_state ENUM('Pending', 'Paid', 'Received', 'Completed') DEFAULT 'Pending',
   PRIMARY KEY (Order_ID),
   FOREIGN KEY (Store_ID) REFERENCES Store(Store_ID),
   FOREIGN KEY (Route_ID) REFERENCES Truck_Route(Route_ID),
