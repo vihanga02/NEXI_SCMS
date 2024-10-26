@@ -1,12 +1,12 @@
-DROP procedure IF EXISTS `Quarterly_sales_from`;
-DELIMITER $$
-CREATE PROCEDURE `Quarterly_sales_from` (start_date DATE)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Quarterly_sales_from`(start_date DATE)
 BEGIN
-	SELECT Ordered_date, Total_price 
-    FROM orders
-    WHERE Ordered_date BETWEEN start_date AND DATE_ADD(start_date, INTERVAL 3 MONTH);
-END$$
-DELIMITER ;
+    SELECT DATE(Ordered_Date) AS Order_Date, COUNT(*) AS Total_Orders
+    FROM Orders
+    WHERE Ordered_Date BETWEEN start_date AND DATE_ADD(start_date, INTERVAL 3 MONTH)
+      AND Order_state = 'Paid'
+    GROUP BY DATE(Ordered_Date)
+    ORDER BY Order_Date;
+END
 
 
 
