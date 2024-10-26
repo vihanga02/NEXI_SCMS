@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import Topbar from '../../components/Topbar/Topbar';
-import { Line } from 'react-chartjs-2';
-import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import { Bar } from 'react-chartjs-2';
+import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import axios from 'axios';
 import './QuarterlySales.css';
 
-Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 function QuarterlySales() {
     const [startDate, setStartDate] = useState('2024-10-01');
@@ -17,7 +17,7 @@ function QuarterlySales() {
             {
                 label: 'Total Orders',
                 data: [],
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1,
             },
@@ -48,7 +48,7 @@ function QuarterlySales() {
                         {
                             label: 'Total Orders',
                             data: totalOrders,
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            backgroundColor: 'rgba(75, 192, 192, 0.6)',
                             borderColor: 'rgba(75, 192, 192, 1)',
                             borderWidth: 1,
                         },
@@ -98,7 +98,7 @@ function QuarterlySales() {
                     ) : error ? (
                         <p>{error}</p>
                     ) : (
-                        <Line data={chartData} />
+                        <Bar data={chartData} options={{ responsive: true }} />
                     )}
                 </div>
             </div>

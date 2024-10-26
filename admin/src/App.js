@@ -26,6 +26,8 @@ import data from './data.json';
 import DriverWorkedHours from './pages/DriverWorkedHours/DriverWorkedHours.js';
 import AssistantWorkedHours from './pages/AssistentWorkedHours/AssistentWorkedHours.js';
 import UsedHoursOfTrucks from './pages/UsedHoursOfTrucks/UsedHoursOfTrucks.js';
+import ReportsOfMainCities from './pages/ReportsOfMainCities/ReportsOfMainCities.js';
+import ReportsOfRoutes from './pages/ReportsOfRoutes/ReportsOfRoutes.js';
 const path = data.backend;
 axios.defaults.baseURL = path;
 
@@ -54,6 +56,8 @@ const App = () => {
         <Route path='report/hoursofdrivers' element={<DriverWorkedHours/>}/>
         <Route path='report/hoursofassistants' element={<AssistantWorkedHours/>}/>
         <Route path='report/usedhoursoftrucks' element={<UsedHoursOfTrucks/>}/>
+        <Route path='report/maincitiesreports'element={<ReportsOfMainCities/>}/>
+        <Route path='report/reportsofroutes' element={<ReportsOfRoutes/>}/>
 
 
         <Route path='/manager_control' element={<ManagerControl />} />

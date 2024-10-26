@@ -60,22 +60,43 @@ class Manager{
             throw error;
         }
     }
-    
+
         // Function to get the total hours worked by each driver
         static async getDriverWorkHours() {
             const query = `SELECT * FROM driver_work_hours`; // Query the view directly
-            
-            
-    
             try {
                 const [rows] = await pool.query(query); // Execute the query and return rows
-                console.log(rows);
                 return rows; // Return only rows
             } catch (error) {
                 console.error("Error in getDriverWorkHours:", error);
                 throw error;
             }
         }
+// Model function to get sales by city
+        static async getSalesByCity() {
+            const query = `SELECT * FROM sales_by_city`; // Query the view directly
+    
+            try {
+                const [rows] = await pool.query(query); // Execute the query and return rows
+                return rows; // Return only rows
+            } catch (error) {
+                console.error("Error in getSalesByCity:", error);
+                throw error;
+            }
+        }
+
+    // Model function to get sales by route
+    static async getSalesByRoute() {
+        const query = `SELECT * FROM sales_by_route`; // Query the view directly
+
+        try {
+            const [rows] = await pool.query(query); // Execute the query and return rows
+            return rows; // Return only rows
+        } catch (error) {
+            console.error("Error in getSalesByRoute:", error);
+            throw error;
+        }
+    }
     
 
     
