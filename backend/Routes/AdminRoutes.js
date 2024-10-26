@@ -23,7 +23,8 @@ import {
     getDriverWorkedHours,
     setDeliveryStatus,
     getAdminStoreCity,
-    getAssistantWorkedHours
+    getAssistantWorkedHours,
+    getTruckHours
 } from "../Controllers/AdminController.js";
 
 
@@ -53,5 +54,6 @@ router.get("/quarterlySales",authenticateToken,getQuarterlySales);
 router.get("/productOrders",authenticateToken,getMostOrders);
 router.get("/assistantWorkHours",authenticateToken,getAssistantWorkedHours);
 router.get("/driverWorkHours",authenticateToken,getDriverWorkedHours);
+router.get("/truckHours",authenticateToken,getTruckHours);
 
 export default router;

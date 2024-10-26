@@ -48,7 +48,34 @@ class Manager{
             throw error;
         }
     }
-    //model for getting Assistants Work Hours
+       // Model function to get truck hours
+    static async getTruckHours() {
+        const query = `SELECT * FROM truck_hours`; // Query the view directly
+
+        try {
+            const [rows] = await pool.query(query); // Execute the query and return rows
+            return rows; // Return only rows
+        } catch (error) {
+            console.error("Error in getTruckHours:", error);
+            throw error;
+        }
+    }
+    
+        // Function to get the total hours worked by each driver
+        static async getDriverWorkHours() {
+            const query = `SELECT * FROM driver_work_hours`; // Query the view directly
+            
+            
+    
+            try {
+                const [rows] = await pool.query(query); // Execute the query and return rows
+                console.log(rows);
+                return rows; // Return only rows
+            } catch (error) {
+                console.error("Error in getDriverWorkHours:", error);
+                throw error;
+            }
+        }
     
 
     
@@ -229,21 +256,7 @@ class Manager{
     }
 
 
-    // Function to get the total hours worked by each driver
-    static async getDriverWorkHours() {
-        const query = `SELECT * FROM driver_work_hours`; // Query the view directly
-        
-        
 
-        try {
-            const [rows] = await pool.query(query); // Execute the query and return rows
-            console.log(rows);
-            return rows; // Return only rows
-        } catch (error) {
-            console.error("Error in getDriverWorkHours:", error);
-            throw error;
-        }
-    }
     
     
     static async getStoreCity(storeID){
