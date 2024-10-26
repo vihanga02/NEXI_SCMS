@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import Topbar from '../../components/Topbar/Topbar';
-import axios from 'axios';
-import './AssistantWorkedHours.css';  // Assuming you'll add some page-specific styles
+import './AssistantWorkedHours.css'; // Assuming you'll add some page-specific styles
 
 function AssistantWorkedHours() {
     const [assistantWorkHours, setAssistantWorkHours] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     // Fetch the assistant work hours data when the component mounts
     useEffect(() => {
@@ -26,17 +28,23 @@ function AssistantWorkedHours() {
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching assistant work hours:', error);
-                setError('Error fetching data. Please try again later.');
+                if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+                    navigate('/login'); // Redirect to login if unauthorized
+                } else {
+                    setError('Error fetching data. Please try again later.');
+                }
                 setLoading(false);
             }
         };
 
         fetchAssistantWorkHours();
-    }, []);
+    }, [navigate]);
 
     return (
         <div className="assistant-work-hours-container">
+            <Sidebar />
             <div className="content">
+                <Topbar />
                 <div className="table-container">
                     <h2>Assistant Work Hours</h2>
 

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import Topbar from '../../components/Topbar/Topbar';
 import { Line } from 'react-chartjs-2';
 import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import axios from 'axios';
-import './QuarterlySales.css';  // Assuming you'll add some page-specific styles
+import './QuarterlySales.css';
 
-// Register necessary Chart.js components
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 function QuarterlySales() {
-    const [startDate, setStartDate] = useState('2024-10-01');  // Default start date
+    const [startDate, setStartDate] = useState('2024-10-01');
     const [chartData, setChartData] = useState({
         labels: [],
         datasets: [
@@ -25,28 +25,23 @@ function QuarterlySales() {
     });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
-    // Function to fetch quarterly sales data
     const fetchQuarterlySales = async () => {
-        setLoading(true);  // Set loading state to true
-        setError(null);    // Reset any previous errors
+        setLoading(true);
+        setError(null);
 
         try {
             const response = await axios.get('/admin/quarterlySales', {
-                params: { startDate },    // Pass startDate as a query parameter
-                withCredentials: true     // Include credentials in the request
+                params: { startDate },
+                withCredentials: true // Include credentials (cookies with token)
             });
 
-            // Validate if response data exists and is in correct format
             if (response && response.data) {
                 const salesData = response.data;
-                console.log('Quarterly Sales Data:', salesData);  // Debugging line
+                const dates = salesData.map(item => item.Order_Date);
+                const totalOrders = salesData.map(item => item.Total_Orders);
 
-                // Map data to chart format
-                const dates = salesData.map(item => item.Order_Date);  // X-axis values
-                const totalOrders = salesData.map(item => item.Total_Orders);  // Y-axis values
-
-                // Update chart data state
                 setChartData({
                     labels: dates,
                     datasets: [
@@ -64,16 +59,21 @@ function QuarterlySales() {
             }
         } catch (error) {
             console.error('Error fetching quarterly sales data:', error);
-            setError('Error fetching quarterly sales data');
+
+            if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+                // Redirect to login if unauthorized
+                navigate('/');
+            } else {
+                setError('Error fetching quarterly sales data');
+            }
         } finally {
-            setLoading(false);  // Set loading to false after request completion
+            setLoading(false);
         }
     };
 
-    // Fetch quarterly sales data whenever startDate changes
     useEffect(() => {
-        fetchQuarterlySales();  // Fetch data when the component mounts or startDate changes
-    }, [startDate]);  // Dependency array includes startDate
+        fetchQuarterlySales();
+    }, [startDate]);
 
     return (
         <div className="Rcontainer">
@@ -82,7 +82,6 @@ function QuarterlySales() {
             <div className="rcontainer">
                 <Topbar />
 
-                {/* Date Picker for selecting the start date */}
                 <div className="date-picker">
                     <label htmlFor="startDate">Select Start Date:</label>
                     <input
@@ -93,7 +92,6 @@ function QuarterlySales() {
                     />
                 </div>
 
-                {/* Display the Quarterly Sales Chart or Loading/Error Messages */}
                 <div className="chart-area">
                     {loading ? (
                         <p>Loading chart...</p>
