@@ -42,6 +42,7 @@ CREATE TABLE Truck_Route (
 );
 
 CREATE TABLE Driver (
+  Name VARCHAR(50) NOT NULL,
   Driver_ID TINYINT AUTO_INCREMENT,
   Store_ID TINYINT ,
   Work_Hours DECIMAL(4,1) DEFAULT 0,
@@ -51,6 +52,7 @@ CREATE TABLE Driver (
 );
 
 CREATE TABLE Driver_Assistant (
+  Name VARCHAR(50) NOT NULL,
   Assistant_ID TINYINT AUTO_INCREMENT,
   Store_ID TINYINT NOT NULL,
   Work_Hours DECIMAL(4,1) DEFAULT 0,
@@ -59,12 +61,14 @@ CREATE TABLE Driver_Assistant (
   FOREIGN KEY (Store_ID) REFERENCES Store(Store_ID)
 );
 
+
 CREATE TABLE Store_Manager (
   Manager_ID TINYINT AUTO_INCREMENT,
   Name VARCHAR(50) NOT NULL,
   Username varchar(50) unique NOT NULL,
   Password VARCHAR(100) NOT NULL,
   Email VARCHAR(50) UNIQUE NOT NULL,
+  PhoneNumber VARCHAR(20) NOT NULL,
   Store_ID TINYINT NOT NULL,
   PRIMARY KEY (Manager_ID),
   FOREIGN KEY (Store_ID) REFERENCES Store(Store_ID)
@@ -261,91 +265,90 @@ INSERT INTO Truck_Route(Store_ID,Route,Time_Taken) VALUES
 (7, 'Kandy-Digana-Mahiyanganaya', 3),
 (7, 'Kandy-Matale-Dambulla', 2.5);
 
-INSERT INTO Driver (Store_ID, Work_Hours, Availability) VALUES
-(1, 0.0, 'On_Trip'),
-(1, 0.0, 'Rest'),
-(1, 0.0, 'Rest'),
-(1, 0.0, 'Rest'),
-(1, 0.0, 'Rest'),
+INSERT INTO Driver (Name, Store_ID, Work_Hours, Availability) VALUES
+('Vihanga Muthumala', 1, 0.0, 'On_Trip'),
+('Sahan Perera', 1, 0.0, 'Rest'),
+('Kasun Gayantha', 1, 0.0, 'Rest'),
+('Nuwan Perera', 1, 0.0, 'Rest'),
+('Saman Wijesinghe', 1, 0.0, 'Rest'),
 
-(2, 0.0, 'Rest'),
-(2, 0.0, 'Rest'),
-(2, 0.0, 'Rest'),
-(2, 0.0, 'Rest'),
-(2, 0.0, 'Not_Available'),
+('Thilina Senarath', 2, 0.0, 'Rest'),
+('Amila Bandara', 2, 0.0, 'Rest'),
+('Dilanka Gunasekara', 2, 0.0, 'Rest'),
+('Hiruna Gimhana', 2, 0.0, 'Rest'),
+('Kamal Perera', 2, 0.0, 'Not_Available'),
 
-(3, 0.0, 'Rest'),
-(3, 0.0, 'Rest'),
-(3, 0.0, 'Not_Available'),
-(3, 0.0, 'Rest'),
-(3, 0.0, 'Rest'),
+('Nimal Perera', 3, 0.0, 'Rest'),
+('Sunil Perera', 3, 0.0, 'Rest'),
+('Ruwan Perera', 3, 0.0, 'Not_Available'),
+('Gayan Perera', 3, 0.0, 'Rest'),
+('Suresh Perera', 3, 0.0, 'Rest'),
 
-(4, 0.0, 'Rest'),
-(4, 0.0, 'On_Trip'),
-(4, 0.0, 'Rest'),
-(4, 0.0, 'Rest'),
-(4, 0.0, 'Rest'),
+('Nishan Perera', 4, 0.0, 'Rest'),
+('Ruwan Wijesinghe', 4, 0.0, 'On_Trip'),
+('Suresh Wijesinghe', 4, 0.0, 'Rest'),
+('Nuwan Wijesinghe', 4, 0.0, 'Rest'),
+('Kasun Wijesinghe', 4, 0.0, 'Rest'),
 
-(5, 0.0, 'Rest'),
-(5, 0.0, 'On_Trip'),
-(5, 0.0, 'Rest'),
-(5, 0.0, 'Rest'),
-(5, 0.0, 'Rest'),
+('Thilina Wijesinghe', 5, 0.0, 'Rest'),
+('Amila Wijesinghe', 5, 0.0, 'On_Trip'),
+('Dilanka Wijesinghe', 5, 0.0, 'Rest'),
+('Hiruna Wijesinghe', 5, 0.0, 'Rest'),
+('Kamal Wijesinghe', 5, 0.0, 'Rest'),
 
-(6, 0.0, 'Rest'),
-(6, 0.0, 'On_Trip'),
-(6, 0.0, 'Rest'),
-(6, 0.0, 'Rest'),
-(6, 0.0, 'Rest'),
+('Nimal Wijesinghe', 6, 0.0, 'Rest'),
+('Sunil Wijesinghe', 6, 0.0, 'On_Trip'),
+('Ruwan Wijesinghe', 6, 0.0, 'Rest'),
+('Gayan Wijesinghe', 6, 0.0, 'Rest'),
+('Suresh Wijesinghe', 6, 0.0, 'Rest'),
 
-(7, 0.0, 'Rest'),
-(7, 0.0, 'On_Trip'),
-(7, 0.0, 'Rest'),
-(7, 0.0, 'Not_Available'),
-(7, 0.0, 'Rest');
+('Nishan Wijesinghe', 7, 0.0, 'Rest'),
+('Ruwan Perera', 7, 0.0, 'On_Trip'),
+('Suresh Perera', 7, 0.0, 'Rest'),
+('Nuwan Perera', 7, 0.0, 'Not_Available'),
+('Kasun Perera', 7, 0.0, 'Rest');
 
-INSERT INTO Driver_Assistant (Store_ID, Work_Hours,Availability) VALUES
-(1, 0.0, 'On_Trip'),
-(2, 0.0, 'Rest'),
-(1, 0.0, 'Rest'),
-(1, 0.0, 'Rest'),
-(1, 0.0, 'Rest'),
+INSERT INTO Driver_Assistant (Name, Store_ID, Work_Hours, Availability) VALUES
+('Tharindu Perera', 1, 0.0, 'On_Trip'),
+('Lakshan Perera', 2, 0.0, 'Rest'),
+('Ravindu Perera', 1, 0.0, 'Rest'),
+('Nuwan Bandara', 1, 0.0, 'Rest'),
+('Saman Gayantha', 1, 0.0, 'Rest'),
 
-(2, 0.0, 'Rest'),
-(2, 0.0, 'Rest'),
-(2, 0.0, 'Rest'),
-(2, 0.0, 'Rest'),
-(2, 0.0, 'Not_Available'),
+('Thilina Gunasekara', 2, 0.0, 'Rest'),
+('Amila Gimhana', 2, 0.0, 'Rest'),
+('Dilanka Senarath', 2, 0.0, 'Rest'),
+('Hiruna Wijesinghe', 2, 0.0, 'Rest'),
+('Kamal Wijesinghe', 2, 0.0, 'Not_Available'),
 
-(3, 0.0, 'Rest'),
-(3, 0.0, 'Rest'),
-(3, 0.0, 'Not_Available'),
-(3, 0.0, 'Rest'),
-(3, 0.0, 'Rest'),
+('Nimal Wijesinghe', 3, 0.0, 'Rest'),
+('Sunil Wijesinghe', 3, 0.0, 'Rest'),
+('Ruwan Wijesinghe', 3, 0.0, 'Not_Available'),
+('Gayan Wijesinghe', 3, 0.0, 'Rest'),
+('Suresh Wijesinghe', 3, 0.0, 'Rest'),
 
-(4, 0.0, 'Rest'),
-(4, 0.0, 'On_Trip'),
-(4, 0.0, 'Rest'),
-(4, 0.0, 'Rest'),
-(4, 0.0, 'Rest'),
+('Nishan Wijesinghe', 4, 0.0, 'Rest'),
+('Ruwan Wijesinghe', 4, 0.0, 'On_Trip'),
+('Suresh Wijesinghe', 4, 0.0, 'Rest'),
+('Nuwan Wijesinghe', 4, 0.0, 'Rest'),
+('Kasun Wijesinghe', 4, 0.0, 'Rest'),
 
-(5, 0.0, 'Rest'),
-(5, 0.0, 'On_Trip'),
-(5, 0.0, 'Rest'),
-(5, 0.0, 'Rest'),
-(5, 0.0, 'Rest'),
+('Thilina Wijesinghe', 5, 0.0, 'Rest'),
+('Amila Wijesinghe', 5, 0.0, 'On_Trip'),
+('Dilanka Wijesinghe', 5, 0.0, 'Rest'),
+('Hiruna Wijesinghe', 5, 0.0, 'Rest'),
+('Kamal Wijesinghe', 5, 0.0, 'Rest'),
 
-(6, 0.0, 'Rest'),
-(6, 0.0, 'On_Trip'),
-(6, 0.0, 'Rest'),
-(6, 0.0, 'Rest'),
-(6, 0.0, 'Rest'),
+('Nimal Wijesinghe', 6, 0.0, 'Rest'),
+('Sunil Wijesinghe', 6, 0.0, 'On_Trip'),
+('Ruwan Wijesinghe', 6, 0.0, 'Rest'),
+('Gayan Wijesinghe', 6, 0.0, 'Rest'),
+('Suresh Wijesinghe', 6, 0.0, 'Rest'),
 
-(7, 0.0, 'Rest'),
-(7, 0.0, 'On_Trip'),
-(7, 0.0, 'Rest'),
-(7, 0.0, 'Not_Available'),
-(7, 0.0, 'Rest');
+('Nishan Wijesinghe', 7, 0.0, 'On_Trip'),
+('Tharindu Perera', 7, 0.0, 'Rest'),
+('Lakshan Perera', 7, 0.0, 'Not_Available'),
+('Ravindu Perera', 7, 0.0, 'Rest');
 
 
 INSERT INTO Truck (Reg_number, Store_ID, Used_Hours, Availability) VALUES 
@@ -372,14 +375,14 @@ INSERT INTO Truck (Reg_number, Store_ID, Used_Hours, Availability) VALUES
 ('021', 7, 0.0, TRUE);
 
 
-INSERT INTO store_manager (Name, Email, Username, Password, Store_ID) VALUES 
-("Kasun Gayantha", "kasun342@gmail.com", 'kasunG34', "Gaya%&82", 1),
-('Nuwan Perera', 'nuwanp@gmail.com', 'pereraNN2', 'Nuwa@#56', 2),
-('Saman Wijesinghe', 'samanw123@gmail.com', 'samanW650', 'Sama$#45', 3),
-('Thilini Senarath', 'thilini.s@gmail.com', 'senarath', 'Thil*67!x', 4),
-('Amila Bandara', 'amila.ban@hotmail.com', 'thilisenerath46', 'Ami!d567', 5),
-('Dilanka Gunasekara', 'dilanka.gun@yahoo.com', 'dilanka892', 'Dila%88#$', 6),
-('Hiruna Gimhana', 'gimhana23@gmail.com', 'hirugim28', 'Gimm#254', 7);
+INSERT INTO store_manager (Name, Email, Username, Password, PhoneNumber, Store_ID) VALUES 
+("Kasun Gayantha", "kasun342@gmail.com", 'kasunG34', "Gaya%&82", '0771234567', 1),
+('Nuwan Perera', 'nuwanp@gmail.com', 'pereraNN2', 'Nuwa@#56', '0772345678', 2),
+('Saman Wijesinghe', 'samanw123@gmail.com', 'samanW650', 'Sama$#45', '0773456789', 3),
+('Thilini Senarath', 'thilini.s@gmail.com', 'senarath', 'Thil*67!x', '0774567890', 4),
+('Amila Bandara', 'amila.ban@hotmail.com', 'thilisenerath46', 'Ami!d567', '0775678901', 5),
+('Dilanka Gunasekara', 'dilanka.gun@yahoo.com', 'dilanka892', 'Dila%88#$', '0776789012', 6),
+('Hiruna Gimhana', 'gimhana23@gmail.com', 'hirugim28', 'Gimm#254', '0777890123', 7);
 
 
 INSERT INTO Train (Train_Name, Capacity, Available_space) VALUES

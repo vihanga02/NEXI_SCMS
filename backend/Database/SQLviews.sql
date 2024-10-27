@@ -90,7 +90,17 @@ GROUP BY Delivery_ID;
 
 
 
-
-    
-
-
+DROP view IF EXISTS store_manager_view;
+CREATE VIEW store_manager_view AS
+SELECT 
+    sm.Manager_ID,
+    sm.Name,
+    sm.Username,
+    sm.Email,
+    sm.PhoneNumber,
+    s.Store_ID,
+    s.City
+FROM 
+    store_manager sm
+JOIN 
+    store s ON sm.Store_id = s.Store_Id;

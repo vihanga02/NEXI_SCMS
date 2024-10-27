@@ -1,4 +1,6 @@
-CREATE DEFINER=`root`@`localhost` PROCEDURE `Quarterly_sales_from`(start_date DATE)
+DELIMITER $$
+DROP PROCEDURE IF EXISTS `Quarterly_sales_from`$$
+CREATE PROCEDURE `Quarterly_sales_from`(start_date DATE)
 BEGIN
     SELECT DATE(Ordered_Date) AS Order_Date, COUNT(*) AS Total_Orders
     FROM Orders
@@ -6,7 +8,8 @@ BEGIN
       AND Order_state = 'Paid'
     GROUP BY DATE(Ordered_Date)
     ORDER BY Order_Date;
-END;
+END$$
+DELIMITER ;
 
 
 
@@ -208,7 +211,7 @@ DELIMITER ;
 
 
 DELIMITER $$
-DROP procedure IF EXISTS `showTrainsTo`;
+DROP procedure IF EXISTS `showTrainsTo`$$
 CREATE PROCEDURE showTrainsTo(
 	storeID INT)
 BEGIN
@@ -227,7 +230,7 @@ DELIMITER ;
 
 
 
-DROP PROCEDURE IF EXISTS `products_in_order`$$
+DROP PROCEDURE IF EXISTS `products_in_order`;
 DELIMITER $$
 CREATE PROCEDURE `products_in_order`(id INT)
 BEGIN
@@ -594,5 +597,47 @@ BEGIN
     GROUP BY 
         Customer_ID;
 END$$
+
+DELIMITER ;
+
+
+DROP procedure IF EXISTS getManagerByStore;
+DELIMITER //
+
+CREATE PROCEDURE getManagerByStore(IN cityName VARCHAR(255))
+BEGIN
+    SELECT * 
+    FROM store_manager_view
+    WHERE City = cityName;
+END //
+
+DELIMITER ;
+
+
+
+DROP procedure IF EXISTS InsertManager;
+DELIMITER //
+
+CREATE PROCEDURE InsertManager(
+    IN managerName VARCHAR(255),
+    IN managerUsername VARCHAR(255),
+    IN managerPassword VARCHAR(255),
+    IN managerEmail VARCHAR(255),
+    IN managerPhoneNumber VARCHAR(20),
+    IN cityName VARCHAR(255)
+)
+BEGIN
+    DECLARE storeId INT;
+
+    -- Find the store ID based on the city name
+    SELECT Store_Id INTO storeId 
+    FROM store
+    WHERE City = cityName;
+
+    -- Insert the manager details into the store_manager table
+    INSERT INTO store_manager (Name, Username, Password, Email, PhoneNumber, Store_id)
+    VALUES (managerName, managerUsername, managerPassword, managerEmail, managerPhoneNumber, storeId);
+    
+END //
 
 DELIMITER ;

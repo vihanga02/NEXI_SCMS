@@ -88,10 +88,3 @@ BEGIN
 RETURN hours;
 END$$
 DELIMITER ;
-
-
-
-
-
-
-
