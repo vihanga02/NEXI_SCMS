@@ -2,6 +2,8 @@
 import './Delivery_schedule.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 import React, { useState, useEffect } from 'react';
@@ -57,6 +59,16 @@ function DeliverySchedule() {
   const createSchedule = async () => {
     try {
       const response = await axios.post(`/admin/addDeliverySchedule`,{},{ withCredentials: true });
+      toast.success("Schedule created!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
       console.log('Response from backend:', response.data);
     } catch (error) {
       console.error('Error sending request to backend:', error);
@@ -64,9 +76,23 @@ function DeliverySchedule() {
   };
 
   const handleTracking = async (e) => {
+    toast.success("Navigating to orders!", {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+
+    setTimeout(() => {
       navigate(`/order`, {
         state: { delivery_id: e } 
       });
+    }, 1000);
+
   };
 
   const handleDel = async (ID) => {
@@ -74,6 +100,16 @@ function DeliverySchedule() {
       const response = await axios.delete(`/admin/deleteSchedule`, { 
         data: {deliveryID: ID },
         withCredentials: true 
+      });
+      toast.success("Schedule deleted!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
       });
       console.log('Response from backend:', response.data);
     } catch (error) {
@@ -137,6 +173,7 @@ function DeliverySchedule() {
           </tbody>
         </table>
       </div>
+      <ToastContainer />
     </div>
   )
 
