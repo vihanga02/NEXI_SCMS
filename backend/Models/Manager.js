@@ -417,6 +417,29 @@ class Manager {
       throw error;
     }
   }
+
+  // Function to get availability counts by store ID using the stored procedure
+  static async getAvailabilityCounts(storeID) {
+    const query = `CALL GetAvailabilityCounts(?)`;
+
+    try {
+      const result = await pool.query(query, [storeID]);
+      return result[0][0][0];
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async IncompletedTrainOrders(storeID) {
+    const query = 'call GetIncompleteOrders(?)';
+    try {
+      const result = await pool.query(query, [storeID]);
+      return result[0];
+    } catch (error) {
+      throw error;
+    }
+  }
 }
+
 
 export default Manager;

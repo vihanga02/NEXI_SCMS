@@ -642,3 +642,24 @@ BEGIN
 END //
 
 DELIMITER ;
+
+
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS GetAvailabilityCounts//
+CREATE PROCEDURE GetAvailabilityCounts(IN input_store_id INT)
+BEGIN
+    SELECT 
+        (SELECT COUNT(Driver_ID) FROM Driver WHERE Store_ID = input_store_id) AS Total_Drivers,
+        (SELECT COUNT(Driver_ID) FROM Driver WHERE Availability = 'Rest' AND Store_ID = input_store_id) AS Available_Drivers,
+        
+        (SELECT COUNT(Assistant_ID) FROM Driver_Assistant WHERE Store_ID = input_store_id) AS Total_Assistants,
+        (SELECT COUNT(Assistant_ID) FROM Driver_Assistant WHERE Availability = 'Rest' AND Store_ID = input_store_id) AS Available_Assistants,
+        
+        (SELECT COUNT(Truck_ID) FROM Truck WHERE Store_ID = input_store_id) AS Total_Trucks,
+        (SELECT COUNT(Truck_ID) FROM Truck WHERE Availability = TRUE AND Store_ID = input_store_id) AS Available_Trucks
+    FROM DUAL;
+END //
+
+DELIMITER ;
+

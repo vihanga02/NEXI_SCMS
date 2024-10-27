@@ -41,6 +41,10 @@ import {
     getSalesByCity,
     getSalesByRoute,
     getCustomerOrderReport,
+    getAvailabilityCounts,
+    getIncompletedTrainOrders,
+    getIncompleteOrdersForStore
+
     
 } from "../Controllers/AdminController.js";
 
@@ -75,6 +79,9 @@ router.get("/assistants", authenticateToken, getAssistants);
 router.get("/vehicles", authenticateToken, getVehicles);
 router.get("/admindetails",authenticateToken,getAdminDetails);
 router.get('/profile', authenticateToken, getProfile);
+
+router.get("/availabilityCounts",authenticateToken,getAvailabilityCounts);
+router.get("/incompleteOrders",authenticateToken,getIncompleteOrdersForStore);
 
 router.get("/driversofstore", authenticateToken, getDriversOfStore);
 router.get("/assistantsofstore",authenticateToken, getAssistsantsOfStore);

@@ -6,16 +6,6 @@ import "slick-carousel/slick/slick-theme.css";
 import './Carousel.css';
 
 const Carousel = () => {
-    const [slidess, setProducts] = useState([]);
-
-    const getProducts = async () => {
-        try {
-            const result = await axios.get('/customer/products');
-            setProducts(result.data);
-        } catch (err) {
-            console.log(err);
-        }
-    };
 
     const slides = [
         '/assets/galaxy-s23.jpeg',
@@ -25,7 +15,6 @@ const Carousel = () => {
         '/assets/galaxy-s23-ultra.jpg',
     ]
 
-    getProducts();
 
     const settings = {
         infinite: true,
