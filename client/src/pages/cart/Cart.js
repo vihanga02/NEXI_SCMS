@@ -17,7 +17,7 @@ const Cart = () => {
     })
     .catch((error) => {
       navigate("/login"); 
-        console.error("Error fetching customer profile:", error);
+      console.error("Error fetching customer profile:", error);
     });
   }, []); 
 

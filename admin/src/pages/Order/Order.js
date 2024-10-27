@@ -1,10 +1,12 @@
-
-import './Order.css';
-import { useNavigate } from "react-router-dom";
-import React, { useState, useEffect } from 'react';
+import React,{useState, useEffect} from 'react';
 import axios from 'axios';
+import { useNavigate, useLocation } from 'react-router-dom';
+import './Order.css';
+
+
 
 function Order() {
+
   // Sample data for the table
 
   const navigate = useNavigate();
@@ -28,34 +30,280 @@ function Order() {
     // Add more sample data as needed
   ];
 
+  const location = useLocation();
+  const delivery_id = location.state || {};
+  const [selectedForTruck, setSelectedForTruck] = useState([]);
+  const [selectedForTrain, setSelectedForTrain] = useState([]);
+  const [compOrders, setCompOrders] = useState([]);
+  const [paidOrders, setPaidOrders] = useState([]);
+  const [trackedOrders, setTrackedOrders] = useState([]);
+  const [receivedOrders, setReceivedOrders] = useState([]);
+
+
+  const handleCheckboxTrain = (event) => {
+    const { value, checked } = event.target;
+
+    setSelectedForTrain((prevSelectedCheckboxes) => {
+      if (checked) {
+        // Add value only if it doesn't already exist
+        return prevSelectedCheckboxes.includes(value)
+          ? prevSelectedCheckboxes // Return existing state if already present
+          : [...prevSelectedCheckboxes, value]; // Add the value if not present
+      } else {
+        // Remove the value if unchecked
+        return prevSelectedCheckboxes.filter((item) => item !== value);
+      }
+    });
+
+    console.log(selectedForTrain);
+  };
+
+  const handleCheckboxTruck = (event) => {
+    const { value, checked } = event.target;
+
+    setSelectedForTruck((prevSelectedCheckboxes) => {
+      if (checked) {
+        // Add value only if it doesn't already exist
+        return prevSelectedCheckboxes.includes(value)
+          ? prevSelectedCheckboxes // Return existing state if already present
+          : [...prevSelectedCheckboxes, value]; // Add the value if not present
+      } else {
+        // Remove the value if unchecked
+        return prevSelectedCheckboxes.filter((item) => item !== value);
+      }
+    });
+
+    console.log(selectedForTruck);
+  };
+
+
+  const pOrders = async () => {
+    try {
+      const response = await axios.get('/admin/paidOrders', { withCredentials: true });
+      console.log('Response from backend:', response.data);
+      setPaidOrders(response.data);
+    } catch (error) {
+      console.error('Error getting orders', error.response ? error.response : error);
+    }
+  };
+
+  const handleStatus = async (status) => {
+    try {
+      const response = await axios.post('/admin/changeOrderStatus', { status: status[0], Order_ID: status[1] },{ withCredentials: true });
+      console.log('Response from backend:', response.data);
+    } catch (error) {
+      console.error('Error sending request to backend:', error);
+    }
+  };
+
+  const cOrders = async () => {
+    try {
+      const response = await axios.get('/admin/completedOrders', { withCredentials: true });
+      console.log('Response from backend:', response.data);
+      setCompOrders(response.data);
+    } catch (error) {
+      console.error('Error getting orders', error.response ? error.response : error);
+    }
+  };
+
+  const trackingToTruck = async () => {
+    try {
+      const response = await axios.post('/admin/queueForDelivery', { orderList:selectedForTruck, delID:delivery_id }, { withCredentials: true });
+      console.log('Response from backend:', response.data);
+      setTrackedOrders(response.data);
+      navigate(`/delivery_schedule/truckScheduler/`, { 
+        state: { delivery_id: delivery_id } 
+      });
+    } catch (error) {
+      console.error('Error getting orders', error.response ? error.response : error);
+    }
+  };
+
+  const trackingToTrain = async () => {
+    try {
+      const response = await axios.post('/admin/queueForDelivery', { orderList:selectedForTrain, delID:delivery_id }, { withCredentials: true });
+      console.log('Response from backend:', response.data);
+      setTrackedOrders(response.data);
+      navigate(`/delivery_schedule/trainScheduler/`, { 
+        state: { delivery_id: delivery_id } 
+      });
+    } catch (error) {
+      console.error('Error getting orders', error.response ? error.response : error);
+    }
+  };
+
+  const recOrders = async () => {
+    try {
+      const response = await axios.get('/admin/receivedOrders', { withCredentials: true });
+      console.log('Response from backend:', response.data);
+      setReceivedOrders(response.data);
+    } catch (error) {
+      console.error('Error getting orders', error.response ? error.response : error);
+    }
+  };
+
+  useEffect(() => {
+    pOrders();
+    cOrders();
+    recOrders();
+  }, []);
+
+
+
   return (
     <div className='ADcontainer'>
       <div className='Acontainer'>
+        {/* -----------Paid orders----------- */}
         <div className='order-content'>
-          <h2>Customer's Pending Orders</h2>
+          <h2>Paid Orders</h2>
           <table className='order-table'>
             <thead>
               <tr>
-                <th>Customer Username</th>
-                <th>Route Name</th>
-                <th>Ordered Day</th>
-                <th>Expected Day</th>
+                <th>Order ID</th>
+                <th>Customer_ID </th>
+                <th>Route</th>
+                <th>Ordered Date</th>
+                <th>Expected Date</th>
+                <th>Total Capacity</th>
                 <th>Total Price</th>
+                <th>Order State</th>
+                <th>Add to track</th> 
               </tr>
             </thead>
             <tbody>
-              {orders.map((order, index) => (
+              {paidOrders.map((order, index) => (
                 <tr key={index}>
-                  <td>{order.username}</td>
-                  <td>{order.route}</td>
-                  <td>{order.orderedDay}</td>
-                  <td>{order.expectedDay}</td>
-                  <td>{order.totalPrice}</td>
+                  <td>{order.Order_ID}</td>
+                  <td>{order.Customer_ID}</td>
+                  <td>{order.Route}</td>
+                  <td>{order.Ordered_Date}</td>
+                  <td>{order.Expected_Date}</td>
+                  <td>{order.Total_Capacity}</td>
+                  <td>{order.Total_Price}</td>
+                  <td>
+                    <div className='btn m-0.5' onClick={() => window.location.reload()}>{order.Order_state}</div>
+                    <details className="dropdown">
+                      <summary className="btn m-0.5 bg-green-500 hover:border-spacing-3">Change state</summary>
+                      <ul className="menu dropdown-content bg-base-100 bg-green-400 rounded z-[1] w-52 p-2 shadow">
+                        <li><button onClick={() => handleStatus(['Paid', order.Order_ID])}>Paid</button></li>
+                        <li><button onClick={() => handleStatus(['Received', order.Order_ID])}>Received</button></li>
+                        <li><button onClick={() => handleStatus(['Completed', order.Order_ID])}>Completed</button></li>
+                      </ul>
+                    </details>
+                  </td>
+                  <td>
+                    {/* <button className='btn btn-primary m-2 p-2' onClick={() => navigate(`/delivery_schedule/truckScheduler/`, { state: { delivery_id: order.Order_ID } })}>Track</button> */}
+                    <input
+                      type="checkbox"
+                      className="checkbox"
+                      value={order.Order_ID}
+                      checked={selectedForTrain.includes(order.Order_ID)}
+                      onChange={handleCheckboxTrain}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className='flex-row m-2'>
+            <h4>Selected orders :</h4>
+              {selectedForTrain.map((number) => (
+                <span key={number}>{number}</span> // Use the number as the key
+              ))}
+          </div>
+          <button className='btn btn-primary m-2 p-2' onClick={() => trackingToTrain()}>Track Orders to train</button>
+        </div>
+        {/* --------------Received orders-------------- */}
+        <div className='order-content'>
+        <h2>Received Orders</h2>
+          <table className='order-table'>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer_ID </th>
+                <th>Route</th>
+                <th>Ordered Date</th>
+                <th>Expected Date</th>
+                <th>Total Capacity</th>
+                <th>Total Price</th>
+                <th>Order State</th>
+                <th>Add to track</th>
+              </tr>
+            </thead>
+            <tbody>
+              {receivedOrders.map((order, index) => (
+                <tr key={index}>
+                  <td>{order.Order_ID}</td>
+                  <td>{order.Customer_ID}</td>
+                  <td>{order.Route}</td>
+                  <td>{order.Ordered_Date}</td>
+                  <td>{order.Expected_Date}</td>
+                  <td>{order.Total_Capacity}</td>
+                  <td>{order.Total_Price}</td>
+                  <td>
+                  <div className='btn m-0.5' onClick={() => window.location.reload()}>{order.Order_state}</div>
+                    <details className="dropdown">
+                      <summary className="btn m-0.5 bg-green-500 hover:border-spacing-3">Change state</summary>
+                      <ul className="menu dropdown-content bg-base-100 bg-green-400 rounded z-[1] w-52 p-2 shadow">
+                        <li><button onClick={() => handleStatus(['Received', order.Order_ID])}>Received</button></li>
+                        <li><button onClick={() => handleStatus(['Completed', order.Order_ID])}>Completed</button></li>
+                      </ul>
+                    </details>
+                  </td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      className="checkbox"
+                      value={order.Order_ID}
+                      checked={selectedForTruck.includes(order.Order_ID)}
+                      onChange={handleCheckboxTruck}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className='flex-row m-2'>
+            <h4>Selected orders :</h4>
+              {selectedForTruck.map((number) => (
+                <span key={number}>{number}</span> // Use the number as the key
+              ))}
+          </div>
+          <button className='btn btn-primary m-2 p-2' onClick={() => trackingToTruck()}>Track Orders to truck</button>
+        </div>
+        {/* --------------Completed orders-------------- */}
+        <div className='order-content'>
+        <h2>Completed Orders</h2>
+          <table className='order-table'>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer_ID </th>
+                <th>Route</th>
+                <th>Ordered Date</th>
+                <th>Expected Date</th>
+                <th>Total Capacity</th>
+                <th>Total Price</th>
+                <th>Order State</th>
+              </tr>
+            </thead>
+            <tbody>
+              {compOrders.map((order, index) => (
+                <tr key={index}>
+                  <td>{order.Order_ID}</td>
+                  <td>{order.Customer_ID}</td>
+                  <td>{order.Route}</td>
+                  <td>{order.Ordered_Date}</td>
+                  <td>{order.Expected_Date}</td>
+                  <td>{order.Total_Capacity}</td>
+                  <td>{order.Total_Price}</td>
+                  <td>{order.Order_state}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+        {/* ------------------------- */}
       </div>
     </div>
   );

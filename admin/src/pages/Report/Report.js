@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { Line } from 'react-chartjs-2';
-import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import axios from 'axios';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import Sidebar from '../../components/Sidebar/Sidebar.js';
+import Topbar from '../../components/Topbar/Topbar.js';
 import './Report.css';
-import { useNavigate } from "react-router-dom";
 
 
-// Register the necessary components with Chart.js
-Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 function Report() {
     const navigate = useNavigate();
+
     const [chartData, setChartData] = useState({
         labels: [],
         datasets: [
@@ -68,13 +66,37 @@ function Report() {
         fetchQuarterlySales();
     }, [startDate]); // Dependency array includes startDate to re-fetch when it changes
 
+
     return (
         <div className='Rcontainer'>
+            <Sidebar />
             <div className='rcontainer'>
-                <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} />
-                <div className='chart-container'>
-                    <h2>Quarterly Sales Report</h2>
-                    {chartData.labels.length > 0 && <Line data={chartData} />}
+                <Topbar />
+                <div className='button-container'>
+                    <button className='report-button' onClick={() => navigate('/report/quarterlysales')}>
+                        <i className="fas fa-chart-line"></i> Quarterly Sales
+                    </button>
+                    <button className='report-button' onClick={() => navigate('/report/mostorders')}>
+                        <i className="fas fa-box"></i> Most Orders
+                    </button>
+                    <button className='report-button' onClick={() => navigate('/report/maincitiesreports')}>
+                        <i className="fas fa-city"></i> Reports of Main Cities
+                    </button>
+                    <button className='report-button' onClick={() => navigate('/report/hoursofdrivers')}>
+                        <i className="fas fa-user-clock"></i> Driver Working Hours
+                    </button>
+                    <button className='report-button' onClick={() => navigate('/report/hoursofassistants')}>
+                        <i className="fas fa-user-friends"></i> Assistants Working Hours
+                    </button>
+                    <button className='report-button' onClick={() => navigate('/report/usedhoursoftrucks')}>
+                        <i className="fas fa-truck"></i> Used Hours of Trucks
+                    </button>
+                    <button className='report-button' onClick={() => navigate('/report/customerorderreports')}>
+                        <i className="fas fa-users"></i> Customer Order Reports
+                    </button>
+                    <button className='report-button' onClick={() => navigate('/report/reportsofroutes')}>
+                        <i className="fas fa-route"></i> Reports of Routes
+                    </button>
                 </div>
             </div>
         </div>

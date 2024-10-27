@@ -4,24 +4,63 @@
 }
 
 .rcontainer {
-    flex-grow: 1; 
-    margin-left: 250px; 
-    padding: 0 5px 5px;
-    background-color: #f5f5f58f; 
-    display: flex;
-    flex-direction: column; 
-    gap: 20px; 
-}
-
-.chart-container {
+    flex-grow: 1;
+    margin-left: 250px;
     padding: 20px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    margin: 20px;
+    background-color: #f5f5f58f;
+    display: flex;
+    flex-direction: column;
 }
 
-.chart-container h2 {
+.button-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    grid-template-rows: repeat(4, 1fr); /* 4 rows */
+    gap: 20px;
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.report-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Space between icon and text */
+    padding: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
     text-align: center;
-    margin-bottom: 20px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    background-color: #3498db; /* Default color */
+}
+
+/* Specific colors for each button */
+.report-button:nth-child(1) { background-color: #e74c3c; } /* Red */
+.report-button:nth-child(2) { background-color: #3498db; } /* Blue */
+.report-button:nth-child(3) { background-color: #f39c12; } /* Orange */
+.report-button:nth-child(4) { background-color: #27ae60; } /* Green */
+.report-button:nth-child(5) { background-color: #8e44ad; } /* Purple */
+.report-button:nth-child(6) { background-color: #d35400; } /* Dark Orange */
+.report-button:nth-child(7) { background-color: #16a085; } /* Teal */
+.report-button:nth-child(8) { background-color: #2c3e50; } /* Dark Blue */
+
+/* Hover and active effects */
+.report-button:hover {
+    transform: translateY(-5px); /* Lift button on hover */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* Darken shadow on hover */
+    filter: brightness(1.1); /* Slightly brighten color */
+}
+
+.report-button:active {
+    transform: translateY(0); /* Reset transform on click */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.report-button i {
+    font-size: 24px; /* Icon size */
 }

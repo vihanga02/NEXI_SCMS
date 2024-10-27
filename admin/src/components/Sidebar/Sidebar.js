@@ -11,7 +11,6 @@ const Sidebar = () => {
 
 
     useEffect(() => {
-        // Call the async function inside useEffect
         fetchAdminData();
     }, []); 
 
@@ -20,8 +19,8 @@ const Sidebar = () => {
         try {
             const res = await axios.get("/admin/admindetails", { withCredentials: true });
           
-            setName(res.data.Name); // Set the name
-            setEmail(res.data.Email); // Set the email
+            setName(res.data.Name); 
+            setEmail(res.data.Email);
           } catch (error) {
             console.error("Error getting admin details:", error);
           }
@@ -48,8 +47,11 @@ const Sidebar = () => {
                     </li>
                 ))}
             </ul>
-            <hr />    
-            <div className="admin-info">    
+
+
+            <div className="admin-info">
+                <hr />
+
                 <h2>{name}</h2> 
                 <p>{email}</p>
             </div>

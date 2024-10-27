@@ -1,19 +1,114 @@
-DROP procedure IF EXISTS `Quarterly_sales_from`;
-DELIMITER $$
-CREATE PROCEDURE `Quarterly_sales_from` (start_date DATE)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Quarterly_sales_from`(start_date DATE)
 BEGIN
-	SELECT Ordered_date, Total_price 
-    FROM orders
-    WHERE Ordered_date BETWEEN start_date AND DATE_ADD(start_date, INTERVAL 3 MONTH);
-END$$
-DELIMITER ;
+    SELECT DATE(Ordered_Date) AS Order_Date, COUNT(*) AS Total_Orders
+    FROM Orders
+    WHERE Ordered_Date BETWEEN start_date AND DATE_ADD(start_date, INTERVAL 3 MONTH)
+      AND Order_state = 'Paid'
+    GROUP BY DATE(Ordered_Date)
+    ORDER BY Order_Date;
+END;
 
 
 
 
-DROP procedure IF EXISTS `CreateDeliverySchedule`;
+-- DROP procedure IF EXISTS `CreateDeliverySchedule`;
+-- DELIMITER $$
+-- CREATE PROCEDURE CreateDeliverySchedule(managerID INT)
+-- BEGIN
+--     DECLARE selected_driver_id INT;
+--     DECLARE driver_hours INT;
+--     DECLARE selected_assistant_id INT;
+--     DECLARE assistant_hours INT;
+--     DECLARE selected_truck_id INT;
+--     DECLARE schedule_exists INT;
+--     DECLARE route_time INT;
+--     DECLARE manager_store_id INT;
+    
+-- 	-- Get the store_id associated with the manager
+--     SELECT store_id INTO manager_store_id
+--     FROM store_manager
+--     WHERE store_manager.manager_id = managerID;
+
+-- 	-- Select a random available truck
+--     SELECT t.truck_id INTO selected_truck_id
+--     FROM truck t
+--     WHERE t.Availability = '1' AND t.Store_ID = manager_store_id
+--     ORDER BY RAND() 
+--     LIMIT 1;
+
+--     -- Check if the delivery_schedule table has any records
+--     SELECT COUNT(Delivery_ID) 
+--     INTO schedule_exists
+--     FROM delivery_schedule;
+
+--     IF schedule_exists > 0 THEN
+--         -- Select a random driver who is available and not in the last schedule
+--         SELECT d.driver_id 
+--         INTO selected_driver_id
+--         FROM driver d
+
+--         WHERE 
+--         d.driver_id != 
+--         (
+--             SELECT ds.driver_id
+--             FROM delivery_schedule ds
+--             ORDER BY ds.delivery_id DESC
+--             LIMIT 1
+--         ) AND 
+--         d.work_hours < 40
+--         AND d.Availability = 'Rest' 
+--         AND d.Store_ID = manager_store_id
+--         ORDER BY RAND() 
+--         LIMIT 1;
+
+--         -- Select a random assistant who is available and not in the last two schedules
+--         SELECT a.assistant_id 
+--         INTO selected_assistant_id
+--         FROM driver_assistant a
+--         WHERE a.Assistant_ID != 
+--         (
+--             SELECT ds.assistant_id
+--             FROM delivery_schedule ds
+--             ORDER BY ds.delivery_id DESC
+--             LIMIT 1
+--         ) AND 
+-- 		a.work_hours < 60
+--         AND a.Availability = 'Rest' AND a.Store_ID = manager_store_id
+--         ORDER BY RAND() 
+--         LIMIT 1;
+--     ELSE
+--         -- If delivery_schedule is empty, randomly select a driver based on availability
+--         SELECT d.driver_id INTO selected_driver_id
+--         FROM driver d
+--         WHERE d.work_hours < 40
+-- 			AND d.Availability = 'Rest'
+-- 			AND d.Store_ID = manager_store_id
+--         ORDER BY RAND() 
+--         LIMIT 1;
+
+--         -- Randomly select an assistant based on availability
+--         SELECT a.assistant_id 
+--         INTO selected_assistant_id
+--         FROM driver_assistant a
+--         WHERE a.work_hours < 60
+--         AND a.Availability = 'Rest'
+--         AND a.Store_ID = manager_store_id
+--         ORDER BY RAND() 
+--         LIMIT 1;
+--     END IF;
+
+--     -- Insert the new delivery schedule into the table
+--     INSERT INTO delivery_schedule (truck_id, driver_id, assistant_id, vehicle_arrival_time, vehicle_departure_time, Shipment_date)
+--     VALUES (selected_truck_id, selected_driver_id, selected_assistant_id, DEFAULT, CURTIME() , CURDATE());
+-- END $$
+-- DELIMITER ;
+
+
 DELIMITER $$
-CREATE PROCEDURE CreateDeliverySchedule(managerID INT)
+DROP procedure IF EXISTS `CreateTruckDelivery`$$
+CREATE PROCEDURE CreateTruckDelivery(
+	managerID INT,
+    deliveryID INT)
 BEGIN
     DECLARE selected_driver_id INT;
     DECLARE driver_hours INT;
@@ -37,9 +132,9 @@ BEGIN
     LIMIT 1;
 
     -- Check if the delivery_schedule table has any records
-    SELECT COUNT(Delivery_ID) 
+    SELECT COUNT(Truck_Del_ID) 
     INTO schedule_exists
-    FROM delivery_schedule;
+    FROM Truck_Delivery;
 
     IF schedule_exists > 0 THEN
         -- Select a random driver who is available and not in the last schedule
@@ -50,9 +145,9 @@ BEGIN
         WHERE 
         d.driver_id != 
         (
-            SELECT ds.driver_id
-            FROM delivery_schedule ds
-            ORDER BY ds.delivery_id DESC
+            SELECT td.driver_id
+            FROM Truck_Delivery td
+            ORDER BY td.Truck_Del_ID DESC
             LIMIT 1
         ) AND 
         d.work_hours < 40
@@ -65,12 +160,12 @@ BEGIN
         SELECT a.assistant_id 
         INTO selected_assistant_id
         FROM driver_assistant a
-        WHERE a.Assistant_ID != 
+        WHERE a.Assistant_ID !=
         (
-            SELECT ds.assistant_id
-            FROM delivery_schedule ds
-            ORDER BY ds.delivery_id DESC
-            LIMIT 1
+            SELECT td.assistant_id
+            FROM Truck_Delivery td
+            ORDER BY td.Truck_Del_ID DESC
+            LIMIT 2
         ) AND 
 		a.work_hours < 60
         AND a.Availability = 'Rest' AND a.Store_ID = manager_store_id
@@ -98,9 +193,36 @@ BEGIN
     END IF;
 
     -- Insert the new delivery schedule into the table
-    INSERT INTO delivery_schedule (truck_id, driver_id, assistant_id, vehicle_arrival_time, vehicle_departure_time, Shipment_date)
-    VALUES (selected_truck_id, selected_driver_id, selected_assistant_id, DEFAULT, CURTIME() , CURDATE());
+    INSERT INTO Truck_Delivery (Truck_Del_ID, truck_id, driver_id, assistant_id)
+    VALUES (deliveryID, selected_truck_id, selected_driver_id, selected_assistant_id);
+    
+    UPDATE delivery_schedule ds
+    SET Shipment_Date = CURDATE(),
+		Vehicle_departure_time = CURTIME(),
+		Delivery_status = 'In_Truck'
+    WHERE Delivery_id = deliveryID;
+    
 END $$
+DELIMITER ;
+
+
+
+DELIMITER $$
+DROP procedure IF EXISTS `showTrainsTo`;
+CREATE PROCEDURE showTrainsTo(
+	storeID INT)
+BEGIN
+	SELECT 
+		ts.Day AS 'Date',
+        ts.Start_time AS 'Time',
+        t.Train_Name AS 'Train name',
+        t.capacity AS 'Train capacity'
+    FROM train_schedule ts
+    JOIN destination d ON ts.Trip_ID = d.Trip_ID
+    JOIN train t ON t.Train_ID = ts.Train_ID
+    WHERE d.Store_ID = storeID;
+
+END$$
 DELIMITER ;
 
 
@@ -359,7 +481,8 @@ BEGIN
         t.Train_ID,
         t.Train_Name,
         ts.Day,
-        ts.Start_Time
+        ts.Start_Time,
+        t.Available_space
     FROM 
         Train t
     JOIN 
@@ -451,4 +574,25 @@ BEGIN
     FROM store_manager
     WHERE Manager_ID = adminID;
 END //
+DELIMITER ;
+
+
+
+
+DROP PROCEDURE IF EXISTS `GetOrderCountByCustomer`;
+DELIMITER $$
+
+CREATE PROCEDURE GetOrderCountByCustomer()
+BEGIN
+    SELECT 
+        Customer_ID,
+        COUNT(Order_ID) AS Total_Orders
+    FROM 
+        Orders
+    WHERE 
+        Order_state = 'Paid'
+    GROUP BY 
+        Customer_ID;
+END$$
+
 DELIMITER ;

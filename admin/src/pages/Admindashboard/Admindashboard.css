@@ -59,12 +59,12 @@
 
 .widget h3 {
     font-size: 1.2em;
-    margin-top: -10px;
+    margin-top: 10px;
 }
 
 .incomplete-orders h3 {
     font-size: 1.1em;
-    margin-top: -10px;
+    margin-top: 5px;
 }
 
 

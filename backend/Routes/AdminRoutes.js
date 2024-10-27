@@ -3,12 +3,20 @@ const router = express.Router();
 import authenticateToken from "../Middleware/Authentication.js";
 
 import {
-    getIncompletedTrainOrders,
-    getIncompletedTruckOrders,
-    getOrders,
+    getPaidOrders,
     getDeliverySchedule,
     addDeliverySchedule,
-    changeOrderStatusToIn_Truck,
+    deleteDelivery,
+    getTruckDelivery,
+    addTruckDelivery,
+    addTrainDelivery,
+    deleteTruckDelivery,
+    changeOrderStatus,
+    getCompletedOrders,
+    getReceivedOrders,
+
+    addToDeliveryQueue,
+
     getTrains,
     getDrivers,
     getAssistants,
@@ -18,8 +26,22 @@ import {
     manager_logout,
     getQuarterlySales,
     getAdminDetails,
-    getProfile
-} from "../Controllers/AdminController.js";
+
+    getProfile,
+
+    getMostOrders,
+
+    getDriverWorkedHours,
+    setDeliveryStatus,
+    getAdminStoreCity,
+    getAssistantWorkedHours,
+    getTruckHours,
+    getSalesByCity,
+    getSalesByRoute,
+    getCustomerOrderReport
+} from "../controllers/AdminController.js";
+
+
 
 // User authentication routes
 router.post("/login", manager_login);
@@ -29,19 +51,36 @@ router.post("/logout", manager_logout)
 
 
 // Order-related routes
-router.get("/incompletedTrainOrders", authenticateToken, getIncompletedTrainOrders);
-router.get("/incompletedTruckOrders", authenticateToken, getIncompletedTruckOrders);
-router.get("/orders", authenticateToken, getOrders);
-router.get("/deliverySchedule/:date", getDeliverySchedule);
+router.get("/paidOrders", authenticateToken, getPaidOrders);
+router.get("/deliverySchedule/:date", authenticateToken, getDeliverySchedule);
+router.get("/truckDelivery", authenticateToken, getTruckDelivery);
 router.post("/addDeliverySchedule", authenticateToken, addDeliverySchedule);
-router.post("/changeOrderStatusToIn_Truck", authenticateToken, changeOrderStatusToIn_Truck);
+router.delete("/deleteSchedule", authenticateToken, deleteDelivery);
+router.post("/assignTruck", authenticateToken, addTruckDelivery);
+router.post("/assignTrain", authenticateToken, addTrainDelivery);
+router.delete("/deleteTruck", authenticateToken, deleteTruckDelivery);
+router.post("/setDeliveryStatus", authenticateToken, setDeliveryStatus);
+router.post("/changeOrderStatus", authenticateToken, changeOrderStatus);
+router.get("/completedOrders", authenticateToken, getCompletedOrders);
+router.get("/receivedOrders", authenticateToken, getReceivedOrders);
+
+router.post("/queueForDelivery", authenticateToken, addToDeliveryQueue); 
+
 router.get("/trains", authenticateToken, getTrains);
 router.get("/drivers", authenticateToken, getDrivers);
 router.get("/assistants", authenticateToken, getAssistants);
 router.get("/vehicles", authenticateToken, getVehicles);
-router.get("/quarterlySales",authenticateToken,getQuarterlySales);
 router.get("/admindetails",authenticateToken,getAdminDetails);
 router.get('/profile', authenticateToken, getProfile);
 
+//routs for get reports//
+router.get("/quarterlySales",authenticateToken,getQuarterlySales);
+router.get("/productOrders",authenticateToken,getMostOrders);
+router.get("/assistantWorkHours",authenticateToken,getAssistantWorkedHours);
+router.get("/driverWorkHours",authenticateToken,getDriverWorkedHours);
+router.get("/truckHours",authenticateToken,getTruckHours);
+router.get("/salesByCity",authenticateToken,getSalesByCity);
+router.get("/salesByRoute",authenticateToken,getSalesByRoute);
+router.get("/customerOrderReport",authenticateToken,getCustomerOrderReport);
 
 export default router;

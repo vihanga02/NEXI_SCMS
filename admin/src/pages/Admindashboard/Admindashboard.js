@@ -7,7 +7,12 @@ import './Admindashboard.css';
 import { useNavigate } from "react-router-dom";
 
 function Admindashboard() {
+
   const navigate = useNavigate();
+
+  const [storeID, setStoreID] = useState('');
+  const [storeCity, setStoreCity] = useState('');
+
   const [activeUsers, setActiveUsers] = useState(0);
   const [incompleteOrders, setIncompleteOrders] = useState(0);
   const [date, setDate] = useState(new Date());
@@ -27,11 +32,11 @@ function Admindashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try { 
-        await axios.get('/api/active-users'); 
-
-        const incompleteOrdersResponse = await axios.get('/api/incomplete-orders'); 
-        setIncompleteOrders(incompleteOrdersResponse.data.count);
-        setIncompleteOrdersList(incompleteOrdersResponse.data.orders);
+        await axios.get('admin/admindetails', { withCredentials: true })
+          .then((res) => {
+            setStoreID(res.data.Store_ID);
+          });
+  
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -54,31 +59,30 @@ function Admindashboard() {
       <div className='Acontainer'>
 
         <div className='store-info'>
-          <h2>Store ID: <span>12345</span></h2>
-          <h2>Store City: <span>New York</span> </h2>
+          <h2>Store ID: <span>{storeID}</span></h2>
+          <h2>Store City: <span>{storeCity}</span> </h2>
         </div>
         <div className='widgets-row'>
           <div className='widget available-drivers'>
-            <h3>Available Drivers</h3>
             <p>{activeUsers}%</p>
             <div className='progress-bar' style={{ width: '100%'}}>
-
               <div className='progress' style={{ width: `${(activeUsers / 100) * 100}%` }}></div>
             </div>
+            <h3>Available Drivers</h3>
           </div>
           <div className='widget available-assistants'>
-            <h3>Available Assistants</h3>
             <p>{incompleteOrders}%</p>
             <div className='progress-bar'>
               <div className='progress' style={{ width: `${(incompleteOrders / 100) * 100}%` }}></div>
             </div>
+            <h3>Available Assistants</h3>
           </div>
           <div className='widget available-trucks'>
-            <h3>Available Trucks</h3>
             <p>{incompleteOrders}%</p>
             <div className='progress-bar'>
               <div className='progress' style={{ width: `${(incompleteOrders / 100) * 100}%` }}></div>
             </div>
+            <h3>Available Trucks</h3>
           </div>
         </div>
         <div className='calender-order-container'>
@@ -87,11 +91,11 @@ function Admindashboard() {
           </div>
           <div className='incomplete-order-container'>
               <div className='incomplete-orders'>
-                <h3>Incomplete Orders</h3>
                 <p>{incompleteOrders}%</p>
                 <div className='progress-bar'>
                   <div className='progress' style={{ width: `${(incompleteOrders / 100) * 100}%` }}></div>
                 </div>
+                <h3>Incomplete Orders</h3>
             </div>
             <div className='incomplete-orders-table'>
               <table className='orders-table'>

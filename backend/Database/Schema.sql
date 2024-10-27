@@ -116,7 +116,7 @@ CREATE TABLE Orders (
   Expected_Date DATE,
   Total_Capacity INT DEFAULT 0,
   Total_Price DECIMAL(8,2) DEFAULT 0.00,
-  Order_state ENUM('Pending', 'Paid', 'Completed') DEFAULT 'Pending',
+  Order_state ENUM('Pending', 'Paid', 'Received', 'Completed') DEFAULT 'Pending',
   PRIMARY KEY (Order_ID),
   FOREIGN KEY (Store_ID) REFERENCES Store(Store_ID),
   FOREIGN KEY (Route_ID) REFERENCES Truck_Route(Route_ID),
@@ -125,19 +125,11 @@ CREATE TABLE Orders (
 
 CREATE TABLE Delivery_Schedule (
   Delivery_id INT AUTO_INCREMENT,
-  Train_id TINYINT,
-  Truck_id TINYINT,
-  Driver_id TINYINT,
-  Assistant_id TINYINT,
   Shipment_date DATE,
   Vehicle_departure_time TIME,
   Vehicle_arrival_time TIME,
-  Delivery_status ENUM('On_Train', 'In_Truck','Completed'),
-  PRIMARY KEY (Delivery_id),
-  FOREIGN KEY (Driver_id) REFERENCES Driver(Driver_ID),
-  FOREIGN KEY (Assistant_id) REFERENCES Driver_Assistant(Assistant_ID),
-  FOREIGN KEY (Train_ID) REFERENCES Train(Train_ID),
-  FOREIGN KEY (Truck_ID) REFERENCES Truck(Truck_ID)
+  Delivery_status ENUM('Not_Yet', 'On_Train', 'In_Truck','Completed'),
+  PRIMARY KEY (Delivery_id)
 );
 
 CREATE TABLE Order_Item (
@@ -161,6 +153,28 @@ CREATE TABLE ORDER_DELIVERY (
     FOREIGN KEY (Order_ID) REFERENCES Orders(Order_ID) ON DELETE CASCADE
 );
     
+CREATE TABLE Train_Delivery (
+	ID INT AUTO_INCREMENT,
+	Train_Del_ID INT,
+	Train_ID TINYINT,
+    PRIMARY KEY (ID),
+	FOREIGN KEY (Train_ID) REFERENCES Train(Train_ID),
+	FOREIGN KEY (Train_Del_ID) REFERENCES Delivery_Schedule(Delivery_id)
+);
+
+
+CREATE TABLE Truck_Delivery (
+	ID INT AUTO_INCREMENT,
+	Truck_Del_ID INT,
+	Truck_id TINYINT,
+	Driver_id TINYINT,
+	Assistant_id TINYINT,
+    PRIMARY KEY (ID),
+	FOREIGN KEY (Driver_id) REFERENCES Driver(Driver_ID),
+	FOREIGN KEY (Truck_id) REFERENCES Truck(Truck_ID),
+	FOREIGN KEY (Assistant_id) REFERENCES Driver_Assistant(Assistant_ID),
+	FOREIGN KEY (Truck_Del_ID) REFERENCES Delivery_Schedule(Delivery_id)
+);
 
 -- ----------------- Dummy values --------------------------------- --
 
@@ -290,9 +304,9 @@ INSERT INTO Driver (Store_ID, Work_Hours, Availability) VALUES
 (7, 0.0, 'Not_Available'),
 (7, 0.0, 'Rest');
 
-INSERT INTO Driver_Assistant (Name, Username, Password, Store_ID, Work_Hours, Availability) VALUES
+INSERT INTO Driver_Assistant (Store_ID, Work_Hours,Availability) VALUES
 (1, 0.0, 'On_Trip'),
-(1, 0.0, 'Rest'),
+(2, 0.0, 'Rest'),
 (1, 0.0, 'Rest'),
 (1, 0.0, 'Rest'),
 (1, 0.0, 'Rest'),
@@ -358,25 +372,25 @@ INSERT INTO Truck (Reg_number, Store_ID, Used_Hours, Availability) VALUES
 ('021', 7, 0.0, TRUE);
 
 
-INSERT INTO store_manager (Name, Email, Password, Store_ID) VALUES 
-("Kasun Gayantha", "kasun342@gmail.com", "Gaya%&82", 1),
-('Nuwan Perera', 'nuwanp@gmail.com', 'Nuwa@#56', 2),
-('Saman Wijesinghe', 'samanw123@gmail.com', 'Sama$#45', 3),
-('Thilini Senarath', 'thilini.s@gmail.com', 'Thil*67!x', 4),
-('Amila Bandara', 'amila.ban@hotmail.com', 'Ami!d567', 5),
-('Dilanka Gunasekara', 'dilanka.gun@yahoo.com', 'Dila%88#$', 6),
-('Hiruna Gimhana', 'gimhana23@gmail.com', 'Gimm#254', 7);
+INSERT INTO store_manager (Name, Email, Username, Password, Store_ID) VALUES 
+("Kasun Gayantha", "kasun342@gmail.com", 'kasunG34', "Gaya%&82", 1),
+('Nuwan Perera', 'nuwanp@gmail.com', 'pereraNN2', 'Nuwa@#56', 2),
+('Saman Wijesinghe', 'samanw123@gmail.com', 'samanW650', 'Sama$#45', 3),
+('Thilini Senarath', 'thilini.s@gmail.com', 'senarath', 'Thil*67!x', 4),
+('Amila Bandara', 'amila.ban@hotmail.com', 'thilisenerath46', 'Ami!d567', 5),
+('Dilanka Gunasekara', 'dilanka.gun@yahoo.com', 'dilanka892', 'Dila%88#$', 6),
+('Hiruna Gimhana', 'gimhana23@gmail.com', 'hirugim28', 'Gimm#254', 7);
 
 
-INSERT INTO Train (Train_Name, Capacity) VALUES
-('Podi Menike', 500),
-('Udarata Menike', 450),
-('Night Mail', 600),
-('Express A', 400),
-('Express B', 400),
-('Intercity Express', 550),
-('Uthaya Devi (ICE)', 500),
-('Yal Devi (ICE)', 500);
+INSERT INTO Train (Train_Name, Capacity, Available_space) VALUES
+('Podi Menike', 500, 500),
+('Udarata Menike', 450, 450),
+('Night Mail', 600, 600),
+('Express A', 400, 400),
+('Express B', 400, 400),
+('Intercity Express', 550, 550),
+('Uthaya Devi (ICE)', 500, 500),
+('Yal Devi (ICE)', 500, 500);
 
 
 

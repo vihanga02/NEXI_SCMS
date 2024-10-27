@@ -1,7 +1,9 @@
 import Manager from '../Models/Manager.js';
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 // Controller to get incomplete train orders
+
 async function getIncompletedTrainOrders(req, res){
     try {
         const result = await Manager.getIncompletedTrainOrders(req);
@@ -10,11 +12,42 @@ async function getIncompletedTrainOrders(req, res){
         res.status(500).json({ message: "Error fetching incomplete train orders", error: error.message });
     }
 };
+//controller to get hours of assistants
+async function getAssistantWorkedHours(req, res){
+    try {
+        const result = await Manager.getAssistantWorkHours(req);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching assistant worked hours", error: error.message });
+    }
+};
+
+
+//controller to get hours of drivers
+async function getDriverWorkedHours(req, res){
+    try {
+        const result = await Manager.getDriverWorkHours(req);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching driver worked hours", error: error.message });
+    }
+};
+
+//controller to get most orders
+async function getMostOrders(req, res){
+    try {
+        const result = await Manager.getMostOrders(req);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching most orders", error: error.message });
+    }
+};
+
 //controller to get quaterly sales
 async function getQuarterlySales(req, res){
+    
     try {
-        console.log("In controller");
-        //const startDate = req.query.startDate; // Ensure you are extracting the date from the request query
+        
         const result = await Manager.getQuarterlySales(req);
         res.status(200).json(result);
     } catch (error) {
@@ -22,24 +55,84 @@ async function getQuarterlySales(req, res){
     }
 }
 
-
-// Controller to get incomplete truck orders
-async function getIncompletedTruckOrders(req, res){
+// Controller function to get truck hours
+async function getTruckHours(req, res) {
     try {
-        const result = await Manager.getIncompletedTruckOrders(req);
-        res.status(200).json(result);
+        const result = await Manager.getTruckHours();
+        res.status(200).json(result); // Send the retrieved data to the frontend
     } catch (error) {
-        res.status(500).json({ message: "Error fetching incomplete truck orders", error: error.message });
+        res.status(500).json({ message: "Error fetching truck hours", error: error.message });
     }
-};
+}
+// Controller function to get sales by city
+
+async function getSalesByCity(req, res) {
+    try {
+        const result = await Manager.getSalesByCity();
+        res.status(200).json(result); // Send the retrieved data to the frontend
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching sales by city", error: error.message });
+    }
+}
+// Controller function to get sales by route
+async function getSalesByRoute(req, res) {
+    try {
+        const result = await Manager.getSalesByRoute();
+        res.status(200).json(result); // Send the retrieved data to the frontend
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching sales by route", error: error.message });
+    }
+}
+// Controller function to get customer order count report
+async function getCustomerOrderReport(req, res) {
+    try {
+        const result = await Manager.getOrderCountByCustomer();
+        res.status(200).json(result); // Send the retrieved data to the frontend
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching customer order report", error: error.message });
+    }
+}
+
+
 
 // Controller to get all orders
-async function getOrders(req, res){
+async function getPaidOrders(req, res){
+    const storeID = req.user.id;
     try {
-        const result = await Manager.getOrders(req);
+        const result = await Manager.getPaidOrders(storeID);
         res.status(200).json(result);
     } catch (error) {
         res.status(500).json({ message: "Error fetching orders", error: error.message });
+    }
+};
+
+async function getTruckDelivery(req, res){
+    const storeID = req.user.id;
+    try {
+        const result = await Manager.getTruckDelivery(storeID);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching truck delivery", error: error.message });
+    }
+};
+
+async function addDeliverySchedule(req, res){
+    const AdminID = req.user.id;
+    try {
+        const result = await Manager.addDeliverySchedule(req);
+        res.status(201).json({ message: "Delivery schedule added successfully", data: result });
+    } catch (error) {
+        res.status(500).json({ message: "Error adding delivery schedule", error: error.message });
+    }
+};
+
+async function deleteDelivery(req, res){
+    const delID = req.body.deliveryID;
+    try {
+        const result = await Manager.deleteDelivery(delID);
+        res.status(204).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error deleting delivery schedule", error: error.message });
     }
 };
 
@@ -54,30 +147,98 @@ async function getDeliverySchedule(req, res){
     }
 };
 
-// Controller to add a new delivery schedule
-async function addDeliverySchedule(req, res){
+async function setDeliveryStatus(req, res){
+    const status = req.body.status;
+    const delID = req.body.Delivery_id;
     try {
-        const result = await Manager.addDeliverySchedule(req);
+        const result = await Manager.setDeliveryStatus(status, delID);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error updating delivery status", error: error.message });
+    }
+}
+
+// Controller to add a new delivery schedule
+async function addTruckDelivery(req, res){
+    const AdminID = req.user.id;
+    const delID = req.body.delivery_id.delivery_id.delivery_id;
+    try {
+        const result = await Manager.addTruckDelivery(AdminID, delID);
         res.status(201).json({ message: "Delivery schedule added successfully", data: result });
     } catch (error) {
         res.status(500).json({ message: "Error adding delivery schedule", error: error.message });
     }
 };
 
-// Controller to change order status to "In Truck"
-async function changeOrderStatusToIn_Truck(req, res){
+async function addTrainDelivery(req, res){
+    const {trainID, delID} = req.body;
+    const deliveryID = delID.delivery_id.delivery_id;
     try {
-        const result = await Manager.changeOrderStatusToIn_Truck(req);
-        res.status(200).json({ message: "Order status changed to 'In Truck'", data: result });
+        const result = await Manager.addTrainDelivery(deliveryID, trainID);
+        res.status(201).json({ message: "Delivery schedule added successfully", data: result });
+    } catch (error) {
+        res.status(500).json({ message: "Error adding delivery schedule", error: error.message });
+    }
+};
+
+async function deleteTruckDelivery(req, res){
+    const delID = req.body.ID;
+    try {
+        const result = await Manager.deleteTruck(delID);
+        res.status(204).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error deleting delivery schedule", error: error.message });
+    }
+};
+
+// Controller to change order status to "In Truck"
+async function changeOrderStatus(req, res){
+    const { status, Order_ID} = req.body;
+    try {
+        const result = await Manager.changeOrderStatus(status, Order_ID);
+        res.status(200).json({ message: "Order status changed", data: result });
     } catch (error) {
         res.status(500).json({ message: "Error updating order status", error: error.message });
     }
 };
 
+async function getCompletedOrders(req, res){
+    const storeID = req.user.id;
+    try {
+        const result = await Manager.getCompletedOrders(storeID);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching orders", error: error.message });
+    }
+};
+
+async function getReceivedOrders(req, res){
+    const storeID = req.user.id;
+    try {
+        const result = await Manager.getReceivedOrders(storeID);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching orders", error: error.message });
+    }
+};
+
+async function addToDeliveryQueue(req, res){
+    const { orderList, delID } = req.body;
+    const deliveryID = delID.delivery_id;
+    try {
+        const result = await Manager.addToDeliveryQueue(orderList, deliveryID);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching orders", error: error.message });
+    }
+};
+
+
 // Controller to get trains for a specific store
 async function getTrains(req, res){
+    const storeID = req.user.id;
     try {
-        const result = await Manager.getTrains(req);
+        const result = await Manager.getTrains(storeID);
         res.status(200).json(result);
     } catch (error) {
         res.status(500).json({ message: "Error fetching trains", error: error.message });
@@ -133,13 +294,11 @@ async function getProfile(req, res) {
 async function manager_login (req, res) {
     const { Username, Password } = req.body;
 
-
-    // Find the manager by email
     const [manager] = await Manager.getManager(Username);
-   
 
 
     if (!manager) {
+
 
         return res.status(401).json({ message: 'Invalid credentials', success: false });
     }
@@ -155,6 +314,7 @@ async function manager_login (req, res) {
     const token = jwt.sign({ id: manager.Manager_ID, username: manager.Name }, process.env.SECRET_KEY, { expiresIn: '1h' });
 
   
+
 
     res.cookie("token", token, {
         httpOnly: true,
@@ -183,7 +343,7 @@ async function manager_logout(req, res) {
 
 async function getAdminDetails(req, res){
     const adminID = req.user.id;
- 
+
     try {
         const result = await Manager.getAdminDetails(adminID);
         res.status(200).json(result);
@@ -191,6 +351,7 @@ async function getAdminDetails(req, res){
         res.status(500).json({ message: "Error fetching orders", error: error.message });
     }
 };
+
 
 
 async function manager_signup(req, res) {
@@ -236,15 +397,34 @@ async function manager_signup(req, res) {
 }
 
 
+async function getAdminStoreCity(req, res){
+    const storeID = req.user.id;
+    try {
+        const result = await Manager.getStoreCity(storeID)
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching orders", error: error.message });
+    }
+}
+
 
 
 export{
-    getIncompletedTrainOrders,
-    getIncompletedTruckOrders,
-    getOrders,
-    getDeliverySchedule,
+    getPaidOrders,
+    getTruckDelivery,
     addDeliverySchedule,
-    changeOrderStatusToIn_Truck,
+    deleteDelivery,
+    getDeliverySchedule,
+    setDeliveryStatus,
+    addTruckDelivery,
+    addTrainDelivery,
+    deleteTruckDelivery,
+    changeOrderStatus,
+    getCompletedOrders,
+    getReceivedOrders,
+
+    addToDeliveryQueue,
+
     getTrains,
     getDrivers,
     getAssistants,
@@ -253,6 +433,17 @@ export{
     manager_signup,
     getQuarterlySales,
     getAdminDetails,
+
     manager_logout,
     getProfile
+
+    getMostOrders,
+    getDriverWorkedHours,
+    getAdminStoreCity,
+    getAssistantWorkedHours,
+    getTruckHours,
+    getSalesByCity,
+    getSalesByRoute,
+    getCustomerOrderReport
+
 }

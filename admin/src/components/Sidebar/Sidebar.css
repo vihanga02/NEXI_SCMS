@@ -7,7 +7,7 @@
     color: var(--white); /* Light text color */
     display: flex;
     flex-direction: column;
-    padding: 11vh 20px;
+    padding: 12vh 20px;
     position: fixed; /* Fixed position */
     transition: width 0.3s ease;
 }

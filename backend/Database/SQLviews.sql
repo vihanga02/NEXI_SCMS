@@ -43,38 +43,39 @@ GROUP BY Product_ID, Product_Name;
 CREATE OR REPLACE VIEW `Driver_work_hours` AS
 SELECT 
     WEEK(shipment_date) AS 'Week_number',
-    Driver_id,
+    td.Driver_id,
     SUM(ROUND(((TIME_TO_SEC(Vehicle_arrival_time)-TIME_TO_SEC(Vehicle_departure_time))/3600),1)) AS "Hours_worked"
-FROM delivery_schedule
-JOIN order_delivery ON delivery_schedule.Delivery_id = order_delivery.Delivery_ID
-JOIN orders ON order_delivery.Order_ID = orders.Order_ID
-GROUP BY WEEK(shipment_date), Driver_id;
+FROM truck_delivery td
+JOIN delivery_schedule ds ON ds.Delivery_id = td.Truck_Del_ID
+-- JOIN order_delivery od ON ds.Delivery_id = od.Delivery_ID
+-- JOIN orders ON od.Order_ID = orders.Order_ID
+GROUP BY WEEK(shipment_date), td.Driver_id;
 
 
 
 
 CREATE OR REPLACE VIEW `Assistant_work_hours` AS
 SELECT 
-    WEEK(shipment_date) AS 'Week_number',
-    Assistant_id,
+    WEEK(ds.shipment_date) AS 'Week_number',
+    td.Assistant_id,
     SUM(ROUND(((TIME_TO_SEC(Vehicle_arrival_time)-TIME_TO_SEC(Vehicle_departure_time))/3600),1)) AS "Hours_worked"
-FROM delivery_schedule
-JOIN order_delivery ON delivery_schedule.Delivery_id = order_delivery.Delivery_ID
-JOIN orders ON order_delivery.Order_ID = orders.Order_ID
-GROUP BY WEEK(shipment_date), Assistant_id;
+FROM truck_delivery td
+JOIN delivery_schedule ds ON ds.Delivery_id = td.Truck_Del_ID
+-- JOIN order_delivery od ON ds.Delivery_id = od.Delivery_ID
+-- JOIN orders ON od.Order_ID = orders.Order_ID
+GROUP BY WEEK(ds.shipment_date), td.Assistant_id;
 
 
 
 
 CREATE OR REPLACE VIEW `Truck_hours` AS
 SELECT 
-    WEEK(shipment_date) AS 'Week_number',
-    Truck_id,
+    WEEK(ds.shipment_date) AS 'Week_number',
+    td.Truck_id,
     SUM(ROUND(((TIME_TO_SEC(Vehicle_arrival_time)-TIME_TO_SEC(Vehicle_departure_time))/3600),1)) AS "Hours_worked"
-FROM delivery_schedule
-JOIN order_delivery ON delivery_schedule.Delivery_id = order_delivery.Delivery_ID
-JOIN orders ON order_delivery.Order_ID = orders.Order_ID
-GROUP BY WEEK(shipment_date), Truck_id;
+FROM truck_delivery td
+JOIN delivery_schedule ds ON ds.Delivery_id = td.Truck_Del_ID
+GROUP BY WEEK(ds.shipment_date), td.Truck_id;
 
 
 
