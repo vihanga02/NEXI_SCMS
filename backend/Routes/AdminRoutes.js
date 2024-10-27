@@ -27,6 +27,9 @@ import {
     getQuarterlySales,
     getAdminDetails,
 
+    getDriversOfStore,
+    getAssistsantsOfStore,
+
     getProfile,
 
     getMostOrders,
@@ -38,8 +41,9 @@ import {
     getTruckHours,
     getSalesByCity,
     getSalesByRoute,
-    getCustomerOrderReport
-} from "../controllers/AdminController.js";
+    getCustomerOrderReport,
+    
+} from "../Controllers/AdminController.js";
 
 
 
@@ -72,6 +76,9 @@ router.get("/assistants", authenticateToken, getAssistants);
 router.get("/vehicles", authenticateToken, getVehicles);
 router.get("/admindetails",authenticateToken,getAdminDetails);
 router.get('/profile', authenticateToken, getProfile);
+
+router.get("/driversofstore", authenticateToken, getDriversOfStore);
+router.get("/assistantsofstore",authenticateToken, getAssistsantsOfStore);
 
 //routs for get reports//
 router.get("/quarterlySales",authenticateToken,getQuarterlySales);
