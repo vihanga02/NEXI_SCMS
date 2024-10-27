@@ -22,8 +22,13 @@ import {
     getAssistants,
     getVehicles,
     manager_login,
+    manager_signup,
+    manager_logout,
     getQuarterlySales,
     getAdminDetails,
+
+    getProfile,
+
     getMostOrders,
 
     getDriverWorkedHours,
@@ -37,8 +42,11 @@ import {
 } from "../controllers/AdminController.js";
 
 
+
 // User authentication routes
 router.post("/login", manager_login);
+router.post("/signup",manager_signup);
+router.post("/logout", manager_logout)
 
 
 
@@ -63,6 +71,7 @@ router.get("/drivers", authenticateToken, getDrivers);
 router.get("/assistants", authenticateToken, getAssistants);
 router.get("/vehicles", authenticateToken, getVehicles);
 router.get("/admindetails",authenticateToken,getAdminDetails);
+router.get('/profile', authenticateToken, getProfile);
 
 //routs for get reports//
 router.get("/quarterlySales",authenticateToken,getQuarterlySales);

@@ -47,8 +47,11 @@ const Sidebar = () => {
                     </li>
                 ))}
             </ul>
+
+
             <div className="admin-info">
                 <hr />
+
                 <h2>{name}</h2> 
                 <p>{email}</p>
             </div>

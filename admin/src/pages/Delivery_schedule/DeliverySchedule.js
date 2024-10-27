@@ -1,7 +1,13 @@
-import React, { useState } from 'react'
+
 import './Delivery_schedule.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+
+
+import React, { useState, useEffect } from 'react';
+
+
+
 
 function DeliverySchedule() {
 
@@ -9,6 +15,18 @@ function DeliverySchedule() {
   const [date, setDate] = useState('');
   const [data, setData] = useState([]);
   const [status, setStatus] = useState([]);
+
+
+
+  useEffect(() => {
+    axios.get("/admin/profile",{withCredentials:true})
+    .then((response) => {
+    })
+    .catch((error) => {
+      navigate("/"); 
+        console.error("Error fetching customer profile:", error);
+    });
+  }, []); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();

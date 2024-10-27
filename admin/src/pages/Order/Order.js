@@ -3,9 +3,33 @@ import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './Order.css';
 
+
+
 function Order() {
-  
+
+  // Sample data for the table
+
   const navigate = useNavigate();
+
+
+  useEffect(() => {
+    axios.get("/admin/profile",{withCredentials:true})
+    .then((response) => {
+    })
+    .catch((error) => {
+      navigate("/"); 
+        console.error("Error fetching customer profile:", error);
+    });
+  }, []); 
+
+
+
+  const orders = [
+    { username: 'JohnDoe', route: 'Route 1', orderedDay: '2023-10-01', expectedDay: '2023-10-05', totalPrice: '$100' },
+    { username: 'JaneSmith', route: 'Route 2', orderedDay: '2023-10-02', expectedDay: '2023-10-06', totalPrice: '$150' },
+    // Add more sample data as needed
+  ];
+
   const location = useLocation();
   const delivery_id = location.state || {};
   const [selectedForTruck, setSelectedForTruck] = useState([]);
@@ -123,6 +147,7 @@ function Order() {
     cOrders();
     recOrders();
   }, []);
+
 
 
   return (

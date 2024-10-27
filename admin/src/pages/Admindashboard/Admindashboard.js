@@ -4,14 +4,30 @@ import axios from 'axios';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'; // Default styles for the calendar
 import './Admindashboard.css';
+import { useNavigate } from "react-router-dom";
 
 function Admindashboard() {
+
+  const navigate = useNavigate();
+
   const [storeID, setStoreID] = useState('');
   const [storeCity, setStoreCity] = useState('');
+
   const [activeUsers, setActiveUsers] = useState(0);
   const [incompleteOrders, setIncompleteOrders] = useState(0);
   const [date, setDate] = useState(new Date());
   const [incompleteOrdersList, setIncompleteOrdersList] = useState([]);
+
+
+  useEffect(() => {
+    axios.get("/admin/profile",{withCredentials:true})
+    .then((response) => {
+    })
+    .catch((error) => {
+      navigate("/"); 
+        console.error("Error fetching customer profile:", error);
+    });
+  }, []); 
 
   useEffect(() => {
     const fetchData = async () => {

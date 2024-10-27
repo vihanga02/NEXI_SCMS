@@ -11,6 +11,17 @@ class Manager{
             throw error;
         }
     }
+
+
+    static async getEmail(Email) {
+        const query = `SELECT * FROM store_manager WHERE Email=?`;
+
+
+        try {
+            const [results] = await pool.query(query, [Email]);
+          
+            return results;
+
     //model for getting the most orders
     static async getMostOrders(req) {
         const query = `SELECT * FROM product_orders;`;
@@ -18,10 +29,62 @@ class Manager{
             const [rows] = await pool.query(query); // Only get the rows part
             // Print rows for debugging
             return rows; // Return only rows
+
         } catch (error) {
             throw error;
         }
     }
+
+
+    static async getManagerByUsername(Username) {
+        const query = `SELECT * FROM store_manager WHERE Username=?`;
+    
+        try {
+          const [results] = await pool.query(query, [Username]);
+ 
+          return results;
+        } catch (error) {
+          throw error;
+        }
+      }
+    
+    static async getManagerByStore(City) {
+    const query = `CALL getManagerByStore(?)`;
+
+    try {
+        const [results] = await pool.query(query, [City]);
+       
+        return results[0];
+    } catch (error) {
+        throw error;
+    }
+    }
+    
+
+    static async createManager(req, hashedPassword) {
+    const { Name, Username,City, Password, Email, Phone_Number } = req.body;
+   
+    const query =
+        'CALL InsertManager(?, ?, ?, ?, ?, ?)';
+
+    try {
+        const [results] = await pool.query(query, [
+        Name,
+        Username,
+        hashedPassword,
+        Email,
+        Phone_Number,
+        City,
+        ]);
+       
+        return results;
+    } catch (error) {
+        throw error;
+    }
+    }
+
+
+
     //model for get the assistant worked hours
     static async getAssistantWorkHours() {
         const query = `SELECT * FROM assistant_work_hours`; // Query the view directly
@@ -35,6 +98,7 @@ class Manager{
     }
 
     //model for getting the quarterly sales
+
     static async getQuarterlySales(req) {
         const { startDate } = req.query;
         
@@ -337,7 +401,10 @@ class Manager{
         const query = `CALL GetAdminDetails(?)`;
     
         try {
+
+
             const result = await pool.query(query, [adminID]); 
+
             return result[0][0][0]; 
         } catch (error) {
             throw error;
