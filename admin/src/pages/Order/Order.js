@@ -2,6 +2,8 @@ import React,{useState, useEffect} from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './Order.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 
@@ -111,9 +113,24 @@ function Order() {
       const response = await axios.post('/admin/queueForDelivery', { orderList:selectedForTruck, delID:delivery_id }, { withCredentials: true });
       console.log('Response from backend:', response.data);
       setTrackedOrders(response.data);
-      navigate(`/delivery_schedule/truckScheduler/`, { 
-        state: { delivery_id: delivery_id } 
+
+      toast.success("Navigating to truck schedules!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
       });
+
+      setTimeout(() => {
+        navigate(`/delivery_schedule/truckScheduler/`, { 
+          state: { delivery_id: delivery_id } 
+        });
+      }, 1000);
+
     } catch (error) {
       console.error('Error getting orders', error.response ? error.response : error);
     }
@@ -124,9 +141,24 @@ function Order() {
       const response = await axios.post('/admin/queueForDelivery', { orderList:selectedForTrain, delID:delivery_id }, { withCredentials: true });
       console.log('Response from backend:', response.data);
       setTrackedOrders(response.data);
-      navigate(`/delivery_schedule/trainScheduler/`, { 
-        state: { delivery_id: delivery_id } 
+
+      toast.success("Navigating to truck schedules!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
       });
+
+      setTimeout(() => {
+        navigate(`/delivery_schedule/trainScheduler/`, { 
+          state: { delivery_id: delivery_id } 
+        });
+      }, 1000);
+
     } catch (error) {
       console.error('Error getting orders', error.response ? error.response : error);
     }
@@ -305,6 +337,7 @@ function Order() {
         </div>
         {/* ------------------------- */}
       </div>
+      <ToastContainer />
     </div>
   );
 }
