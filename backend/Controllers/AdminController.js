@@ -1,5 +1,6 @@
 import Manager from '../Models/Manager.js';
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 // Controller to get incomplete train orders
 async function getIncompletedTrainOrders(req, res){
     try {
@@ -116,30 +117,44 @@ async function getVehicles(req, res){
     }
 };
 
+async function getProfile(req, res) {
+    try {
+      req = req.user.username;
+      const profile = await Manager.getManager(req);
+      res.status(200).json(profile);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "server error" });
+    }
+  }
+
+
+
 async function manager_login (req, res) {
     const { Username, Password } = req.body;
 
 
     // Find the manager by email
     const [manager] = await Manager.getManager(Username);
-    console.log(manager);
+   
+
 
     if (!manager) {
 
         return res.status(401).json({ message: 'Invalid credentials', success: false });
     }
 
-    // Check if the password is correct
-    // const match = await bcrypt.compare(Password, manager.Password);
-    const match = Password === manager.Password;
-    if (!match) {
-        return res.status(401).json({ message: 'Invalid credentials', success: false });
-    }
-
+     // Check if the password is correct
+     const match = await bcrypt.compare(Password, manager.Password);
+     if (!match) {
+       return res
+         .status(401)
+         .json({ message: "Invalid credentials", success: false });
+     }
     // Create a token
     const token = jwt.sign({ id: manager.Manager_ID, username: manager.Name }, process.env.SECRET_KEY, { expiresIn: '1h' });
 
-    
+  
 
     res.cookie("token", token, {
         httpOnly: true,
@@ -151,9 +166,24 @@ async function manager_login (req, res) {
 
 }
 
+async function manager_logout(req, res) {
+    // Clear the token cookie
+
+    res.cookie("token", " ", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      expires: new Date(0), // Set to expire immediately
+    });
+    
+
+    
+    return res.status(200).json({ message: "Logout successful", success: true });
+  }   
+
 async function getAdminDetails(req, res){
     const adminID = req.user.id;
-    console.log(`Fetching admin details for Admin ID: ${adminID}`);
+ 
     try {
         const result = await Manager.getAdminDetails(adminID);
         res.status(200).json(result);
@@ -162,6 +192,48 @@ async function getAdminDetails(req, res){
     }
 };
 
+
+async function manager_signup(req, res) {
+   
+    const { Name, Username, City, Password, Email, Address, Phone_Number } = req.body;
+  
+    // Check if email or username already exists
+    const [existingEmail] = await Manager.getEmail(Email);
+
+    
+    const [existingUsername] = await Manager.getManagerByUsername(Username);
+
+
+    const [existingManager] = await Manager.getManagerByStore(City);
+
+   
+  
+    if (existingEmail) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
+
+    if (existingUsername) {
+       
+      return res.status(400).json({ message: "Username already exists" });
+    }
+
+
+
+    if (existingManager) {
+       
+        return res.status(400).json({ message: "Store Manager already exists" });
+      }
+     
+  
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(Password, 10);
+   
+  
+    // Insert new user into the database
+    Manager.createManager(req, hashedPassword);
+  
+    res.status(201).json({ message: "User registered successfully" });
+}
 
 
 
@@ -178,6 +250,9 @@ export{
     getAssistants,
     getVehicles,
     manager_login,
+    manager_signup,
     getQuarterlySales,
-    getAdminDetails
+    getAdminDetails,
+    manager_logout,
+    getProfile
 }

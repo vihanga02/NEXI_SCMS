@@ -3,7 +3,7 @@ import pool from '../dbConfig.js'
 class Manager{
 
     static async getManager(Username) {
-        const query = `SELECT * FROM store_manager WHERE Name=?`;
+        const query = `SELECT * FROM store_manager WHERE Username=?`;
 
         try {
             const [results] = await pool.query(query, [Username]);
@@ -12,6 +12,68 @@ class Manager{
             throw error;
         }
     }
+
+    static async getEmail(Email) {
+        const query = `SELECT * FROM store_manager WHERE Email=?`;
+
+
+        try {
+            const [results] = await pool.query(query, [Email]);
+          
+            return results;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async getManagerByUsername(Username) {
+        const query = `SELECT * FROM store_manager WHERE Username=?`;
+    
+        try {
+          const [results] = await pool.query(query, [Username]);
+ 
+          return results;
+        } catch (error) {
+          throw error;
+        }
+      }
+    
+    static async getManagerByStore(City) {
+    const query = `CALL getManagerByStore(?)`;
+
+    try {
+        const [results] = await pool.query(query, [City]);
+       
+        return results[0];
+    } catch (error) {
+        throw error;
+    }
+    }
+    
+
+    static async createManager(req, hashedPassword) {
+    const { Name, Username,City, Password, Email, Phone_Number } = req.body;
+   
+    const query =
+        'CALL InsertManager(?, ?, ?, ?, ?, ?)';
+
+    try {
+        const [results] = await pool.query(query, [
+        Name,
+        Username,
+        hashedPassword,
+        Email,
+        Phone_Number,
+        City,
+        ]);
+       
+        return results;
+    } catch (error) {
+        throw error;
+    }
+    }
+
+
     static async getQuarterlySales(req) {
         const {startDate} = req.body;
         console.log("Fetching quarterly sales starting from:", startDate);
@@ -157,7 +219,7 @@ class Manager{
     
         try {
             const result = await pool.query(query, [adminID]); // Pass the adminId as the parameter
-            console.log(result);
+         
             return result[0][0][0]; 
         } catch (error) {
             throw error;

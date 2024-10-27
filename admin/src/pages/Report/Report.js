@@ -3,11 +3,14 @@ import { Line } from 'react-chartjs-2';
 import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import axios from 'axios';
 import './Report.css';
+import { useNavigate } from "react-router-dom";
+
 
 // Register the necessary components with Chart.js
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 function Report() {
+    const navigate = useNavigate();
     const [chartData, setChartData] = useState({
         labels: [],
         datasets: [
@@ -21,6 +24,18 @@ function Report() {
         ],
     });
     const [startDate, setStartDate] = useState('2024-10-01'); // Default or user-selected date
+
+    useEffect(() => {
+        axios.get("/admin/profile",{withCredentials:true})
+        .then((response) => {
+        })
+        .catch((error) => {
+          navigate("/"); 
+            console.error("Error fetching customer profile:", error);
+        });
+      }, []); 
+
+
 
     useEffect(() => {
         const fetchQuarterlySales = async () => {
