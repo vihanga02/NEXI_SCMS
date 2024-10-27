@@ -1,7 +1,7 @@
 import Manager from '../Models/Manager.js';
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
+
 // Controller to get incomplete train orders
 
 async function getIncompletedTrainOrders(req, res){
@@ -435,7 +435,7 @@ export{
     getAdminDetails,
 
     manager_logout,
-    getProfile
+    getProfile,
 
     getMostOrders,
     getDriverWorkedHours,

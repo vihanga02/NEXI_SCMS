@@ -1,8 +1,11 @@
-import React from 'react';
+
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar/Sidebar.js';
 import Topbar from '../../components/Topbar/Topbar.js';
 import './Report.css';
+
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 
 

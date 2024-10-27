@@ -21,6 +21,10 @@ class Manager{
             const [results] = await pool.query(query, [Email]);
           
             return results;
+        } catch (error) {
+            throw error;
+          }
+        }
 
     //model for getting the most orders
     static async getMostOrders(req) {
