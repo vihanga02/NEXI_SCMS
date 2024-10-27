@@ -412,18 +412,7 @@ class Manager {
 
     try {
       const result = await pool.query(query, [adminID]);
-
       return result[0][0][0];
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  static async getStoreCity(storeID) {
-    const query = `select City from store where Store_ID=?`;
-    try {
-      const result = await pool.query(query, storeID);
-      return result;
     } catch (error) {
       throw error;
     }

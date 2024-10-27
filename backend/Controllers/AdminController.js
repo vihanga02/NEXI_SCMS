@@ -419,17 +419,6 @@ async function manager_signup(req, res) {
 }
 
 
-async function getAdminStoreCity(req, res){
-    const storeID = req.user.id;
-    try {
-        const result = await Manager.getStoreCity(storeID)
-        res.status(200).json(result);
-    } catch (error) {
-        res.status(500).json({ message: "Error fetching orders", error: error.message });
-    }
-}
-
-
 
 export{
     getPaidOrders,
@@ -464,7 +453,6 @@ export{
 
     getMostOrders,
     getDriverWorkedHours,
-    getAdminStoreCity,
     getAssistantWorkedHours,
     getTruckHours,
     getSalesByCity,

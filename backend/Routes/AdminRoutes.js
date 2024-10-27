@@ -36,7 +36,6 @@ import {
 
     getDriverWorkedHours,
     setDeliveryStatus,
-    getAdminStoreCity,
     getAssistantWorkedHours,
     getTruckHours,
     getSalesByCity,

@@ -573,9 +573,10 @@ DROP procedure IF EXISTS `GetAdminDetails`;
 DELIMITER //
 CREATE PROCEDURE GetAdminDetails(IN adminID INT)
 BEGIN
-    SELECT Name, Email
-    FROM store_manager
-    WHERE Manager_ID = adminID;
+    SELECT sm.Name, sm.Email,sm.Store_ID, s.City
+    FROM store_manager sm
+    JOIN store s ON sm.Store_ID = s.Store_ID
+    WHERE sm.Manager_ID = adminID;
 END //
 DELIMITER ;
 

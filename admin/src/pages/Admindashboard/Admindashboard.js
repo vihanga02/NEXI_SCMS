@@ -35,12 +35,14 @@ function Admindashboard() {
         await axios.get('admin/admindetails', { withCredentials: true })
           .then((res) => {
             setStoreID(res.data.Store_ID);
+            setStoreCity(res.data.City);
           });
   
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
+
 
     fetchData();
     setActiveUsers(50);
