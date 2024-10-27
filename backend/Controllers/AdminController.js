@@ -256,6 +256,17 @@ async function getDrivers(req, res){
     }
 };
 
+async function getDriversOfStore(req, res){
+    const storeID = req.user.store;
+
+    try{
+        const result = await Manager.getDriversbyStore(storeID);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: `Error fetching drivers for store: ${storeID}`, error: error.message });
+    }
+};
+
 // Controller to get assistant drivers for a specific city
 async function getAssistants(req, res){
     const { city } = req.params;
@@ -264,6 +275,17 @@ async function getAssistants(req, res){
         res.status(200).json(result);
     } catch (error) {
         res.status(500).json({ message: `Error fetching assistants for city: ${city}`, error: error.message });
+    }
+};
+
+async function getAssistsantsOfStore(req, res){
+    const storeID = req.user.store;
+
+    try{
+        const result = await Manager.getAssistantsbyStore(storeID);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: `Error fetching Assistants for store: ${storeID}`, error: error.message });
     }
 };
 
@@ -311,7 +333,7 @@ async function manager_login (req, res) {
          .json({ message: "Invalid credentials", success: false });
      }
     // Create a token
-    const token = jwt.sign({ id: manager.Manager_ID, username: manager.Name }, process.env.SECRET_KEY, { expiresIn: '1h' });
+    const token = jwt.sign({ id: manager.Manager_ID, username: manager.Name, store: manager.Store_id}, process.env.SECRET_KEY, { expiresIn: '1h' });
 
   
 
@@ -433,6 +455,9 @@ export{
     manager_signup,
     getQuarterlySales,
     getAdminDetails,
+
+    getDriversOfStore,
+    getAssistsantsOfStore,
 
     manager_logout,
     getProfile,
