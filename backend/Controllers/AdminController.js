@@ -333,7 +333,7 @@ async function manager_login (req, res) {
          .json({ message: "Invalid credentials", success: false });
      }
     // Create a token
-    const token = jwt.sign({ id: manager.Manager_ID, username: manager.Name, store: manager.Store_id}, process.env.SECRET_KEY, { expiresIn: '1h' });
+    const token = jwt.sign({ id: manager.Manager_ID, username: manager.Name, store: manager.Store_ID}, process.env.SECRET_KEY, { expiresIn: '1h' });
 
   
 

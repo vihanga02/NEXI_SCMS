@@ -15,7 +15,6 @@ function Driver() {
     axios
       .get("/admin/driversofstore", { withCredentials: true })
       .then((response) => {
-        // Set the fetched data to the drivers state
         console.log(response.data);
         setDrivers(response.data);
         
