@@ -198,12 +198,22 @@ class Manager {
   }
 
   static async getTruckDelivery(storeID) {
-    const query = `SELECT *  
+    const query = `SELECT 
+              td.ID AS ID,
+              td.Truck_Del_ID AS Truck_Del_ID,
+              td.Truck_id AS Truck_id,
+              td.Driver_id AS Driver_id,
+              d.Driver_Name AS Driver_name,
+              td.Assistant_id AS Assistant_id,
+              da.Assistant_Name AS Assistant_name
             FROM truck_delivery td
-            LEFT JOIN truck t ON td.truck_ID = t.Truck_ID
-            WHERE t.Store_ID = ?;`;
+            INNER JOIN Driver_Assistant da ON td.Assistant_id = da.Assistant_id
+            INNER JOIN Driver d ON td.Driver_id = d.Driver_ID
+            WHERE da.Store_ID = ? AND d.Store_ID = ?;`;
     try {
-      const result = await pool.query(query, [storeID]);
+      console.log('controller');
+      const result = await pool.query(query, [storeID,storeID]);
+      console.log(result);
       return result[0];
     } catch (error) {
       throw error;
