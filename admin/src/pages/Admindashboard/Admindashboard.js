@@ -37,7 +37,7 @@ function Admindashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try { 
-        await axios.get('admin/admindetails', { withCredentials: true })
+        await axios.get('/admin/admindetails', { withCredentials: true })
           .then((res) => {
             setStoreID(res.data.Store_ID);
             setStoreCity(res.data.City);
@@ -96,7 +96,7 @@ function Admindashboard() {
 
 
   return (
-    <div className='ADcontainer'>
+    <div className='ADcontainer-dashboard'>
       <div className='Acontainer'>
 
         <div className='store-info'>
@@ -132,7 +132,7 @@ function Admindashboard() {
           </div>
           <div className='incomplete-order-container'>
               <div className='incomplete-orders'>
-                <p>{Math.floor(incompleteOrders/totalOrders)}%</p>
+                <p>{Math.floor(incompleteOrders/totalOrders)*100}%</p>
                 <div className='progress-bar'>
                   <div className='progress' style={{ width: `${Math.floor((incompleteOrders / totalOrders) * 100)}%` }}></div>
                 </div>

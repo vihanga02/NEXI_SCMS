@@ -90,8 +90,7 @@ GROUP BY Delivery_ID;
 
 
 
-DROP view IF EXISTS store_manager_view;
-CREATE VIEW store_manager_view AS
+CREATE OR REPLACE VIEW store_manager_view AS
 SELECT 
     sm.Manager_ID,
     sm.Name,

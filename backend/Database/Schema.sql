@@ -46,7 +46,7 @@ CREATE TABLE Driver (
   Driver_Name VARCHAR(50) NOT NULL,
   Store_ID TINYINT ,
   Work_Hours DECIMAL(4,1) DEFAULT 0,
-  Availability ENUM('On_Trip','Rest','Not_Available'),
+  Availability ENUM('On_Trip','Rest','Not_Available') DEFAULT 'Rest',
   PRIMARY KEY (Driver_ID),
   FOREIGN KEY (Store_ID) REFERENCES Store(Store_ID)
 );
@@ -56,7 +56,7 @@ CREATE TABLE Driver_Assistant (
   Assistant_Name VARCHAR(50) NOT NULL,
   Store_ID TINYINT NOT NULL,
   Work_Hours DECIMAL(4,1) DEFAULT 0,
-  Availability ENUM('On_Trip','Rest','Not_Available'),
+  Availability ENUM('On_Trip','Rest','Not_Available') DEFAULT 'Rest',
   PRIMARY KEY (Assistant_ID),
   FOREIGN KEY (Store_ID) REFERENCES Store(Store_ID)
 );
@@ -64,10 +64,10 @@ CREATE TABLE Driver_Assistant (
 
 CREATE TABLE Store_Manager (
   Manager_ID TINYINT AUTO_INCREMENT,
-  Name VARCHAR(50) NOT NULL,
-  Username varchar(50) unique NOT NULL,
-  Password VARCHAR(100) NOT NULL,
-  Email VARCHAR(50) UNIQUE NOT NULL,
+  Name VARCHAR(255) NOT NULL,
+  Username varchar(255) unique NOT NULL,
+  Password VARCHAR(255) NOT NULL,
+  Email VARCHAR(255) UNIQUE NOT NULL,
   PhoneNumber VARCHAR(20) NOT NULL,
   Store_ID TINYINT NOT NULL,
   PRIMARY KEY (Manager_ID),

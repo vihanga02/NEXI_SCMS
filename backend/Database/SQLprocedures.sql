@@ -287,49 +287,112 @@ DELIMITER ;
 
 
 
+-- --------------------------------------------------------------
 
-DROP EVENT IF EXISTS daily_add_work_hours;
 DELIMITER $$
-CREATE EVENT daily_add_work_hours
-ON SCHEDULE
-	EVERY 1 DAY STARTS '2024-10-26'
-DO BEGIN
-	-- DECLARE dr_id INT;
--- 	DECLARE as_id INT;
-    
-	UPDATE driver d
-    SET d.work_hours = CASE
-		WHEN d.Driver_ID = 1 THEN d.work_hours + driver_hours_worked(CURDATE(),1)
-        WHEN d.Driver_ID = 2 THEN d.work_hours + driver_hours_worked(CURDATE(),2)
-        WHEN d.Driver_ID = 3 THEN d.work_hours + driver_hours_worked(CURDATE(),3)
-        WHEN d.Driver_ID = 4 THEN d.work_hours + driver_hours_worked(CURDATE(),4)
-        WHEN d.Driver_ID = 5 THEN d.work_hours + driver_hours_worked(CURDATE(),5)
-        WHEN d.Driver_ID = 6 THEN d.work_hours + driver_hours_worked(CURDATE(),6)
-        WHEN d.Driver_ID = 7 THEN d.work_hours + driver_hours_worked(CURDATE(),7)
-        WHEN d.Driver_ID = 8 THEN d.work_hours + driver_hours_worked(CURDATE(),8)
-        WHEN d.Driver_ID = 9 THEN d.work_hours + driver_hours_worked(CURDATE(),9)
-        WHEN d.Driver_ID = 10 THEN d.work_hours + driver_hours_worked(CURDATE(),10)
-        WHEN d.Driver_ID = 11 THEN d.work_hours + driver_hours_worked(CURDATE(),11)
-        ELSE d.work_hours
-	END;
-    
-    UPDATE driver_assistant a
-    SET a.work_hours = CASE
-		WHEN a.Assistant_ID = 1 THEN a.work_hours + assistant_hours_worked(CURDATE(), 1)
-        WHEN a.Assistant_ID = 2 THEN a.work_hours + assistant_hours_worked(CURDATE(), 2)
-        WHEN a.Assistant_ID = 3 THEN a.work_hours + assistant_hours_worked(CURDATE(), 3)
-        WHEN a.Assistant_ID = 4 THEN a.work_hours + assistant_hours_worked(CURDATE(), 4)
-        WHEN a.Assistant_ID = 5 THEN a.work_hours + assistant_hours_worked(CURDATE(), 5)
-        WHEN a.Assistant_ID = 6 THEN a.work_hours + assistant_hours_worked(CURDATE(), 6)
-        WHEN a.Assistant_ID = 7 THEN a.work_hours + assistant_hours_worked(CURDATE(), 7)
-        WHEN a.Assistant_ID = 8 THEN a.work_hours + assistant_hours_worked(CURDATE(), 8)
-        WHEN a.Assistant_ID = 9 THEN a.work_hours + assistant_hours_worked(CURDATE(), 9)
-        WHEN a.Assistant_ID = 8 THEN a.work_hours + assistant_hours_worked(CURDATE(), 10)
-        WHEN a.Assistant_ID = 11 THEN a.work_hours + assistant_hours_worked(CURDATE(), 11)
-        ELSE a.work_hours
-	END;
+DROP PROCEDURE IF EXISTS UpdateDailyWorkHours$$
+CREATE PROCEDURE UpdateDailyWorkHours()
+BEGIN
+    DECLARE done INT DEFAULT 0;
+    DECLARE driver_id INT;
+    DECLARE assistant_id INT;
+
+    -- Declare cursors to fetch each driver and assistant ID
+    DECLARE cur_driver CURSOR FOR SELECT Driver_ID FROM driver;
+    DECLARE cur_assistant CURSOR FOR SELECT Assistant_ID FROM driver_assistant;
+
+    -- Handlers for when cursors finish
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+    -- Open the driver cursor and loop through each driver
+    OPEN cur_driver;
+    SET done = 0;
+    REPEAT
+        FETCH cur_driver INTO driver_id;
+        
+        IF NOT done THEN
+            UPDATE driver 
+            SET work_hours = work_hours + driver_hours_worked(CURDATE(), driver_id)
+            WHERE Driver_ID = driver_id;
+        END IF;
+    UNTIL done END REPEAT;
+    CLOSE cur_driver;
+
+    -- Open the assistant cursor and loop through each assistant
+    OPEN cur_assistant;
+    SET done = 0;
+    REPEAT
+        FETCH cur_assistant INTO assistant_id;
+        
+        IF NOT done THEN
+            UPDATE driver_assistant 
+            SET work_hours = work_hours + assistant_hours_worked(CURDATE(), assistant_id)
+            WHERE Assistant_ID = assistant_id;
+        END IF;
+    UNTIL done END REPEAT;
+    CLOSE cur_assistant;
 END$$
 DELIMITER ;
+
+
+
+
+DELIMITER $$
+CREATE EVENT daily_add_work_hours
+ON SCHEDULE EVERY 1 DAY
+STARTS '2024-10-26'
+DO
+    CALL UpdateDailyWorkHours();
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------------
+
+
+
+
+-- DROP EVENT IF EXISTS daily_add_work_hours;
+-- DELIMITER $$
+-- CREATE EVENT daily_add_work_hours
+-- ON SCHEDULE
+-- 	EVERY 1 DAY STARTS '2024-10-26'
+-- DO BEGIN
+-- 	-- DECLARE dr_id INT;
+-- -- 	DECLARE as_id INT;
+    
+-- 	UPDATE driver d
+--     SET d.work_hours = CASE
+-- 		WHEN d.Driver_ID = 1 THEN d.work_hours + driver_hours_worked(CURDATE(),1)
+--         WHEN d.Driver_ID = 2 THEN d.work_hours + driver_hours_worked(CURDATE(),2)
+--         WHEN d.Driver_ID = 3 THEN d.work_hours + driver_hours_worked(CURDATE(),3)
+--         WHEN d.Driver_ID = 4 THEN d.work_hours + driver_hours_worked(CURDATE(),4)
+--         WHEN d.Driver_ID = 5 THEN d.work_hours + driver_hours_worked(CURDATE(),5)
+--         WHEN d.Driver_ID = 6 THEN d.work_hours + driver_hours_worked(CURDATE(),6)
+--         WHEN d.Driver_ID = 7 THEN d.work_hours + driver_hours_worked(CURDATE(),7)
+--         WHEN d.Driver_ID = 8 THEN d.work_hours + driver_hours_worked(CURDATE(),8)
+--         WHEN d.Driver_ID = 9 THEN d.work_hours + driver_hours_worked(CURDATE(),9)
+--         WHEN d.Driver_ID = 10 THEN d.work_hours + driver_hours_worked(CURDATE(),10)
+--         WHEN d.Driver_ID = 11 THEN d.work_hours + driver_hours_worked(CURDATE(),11)
+--         ELSE d.work_hours
+-- 	END;
+    
+--     UPDATE driver_assistant a
+--     SET a.work_hours = CASE
+-- 		WHEN a.Assistant_ID = 1 THEN a.work_hours + assistant_hours_worked(CURDATE(), 1)
+--         WHEN a.Assistant_ID = 2 THEN a.work_hours + assistant_hours_worked(CURDATE(), 2)
+--         WHEN a.Assistant_ID = 3 THEN a.work_hours + assistant_hours_worked(CURDATE(), 3)
+--         WHEN a.Assistant_ID = 4 THEN a.work_hours + assistant_hours_worked(CURDATE(), 4)
+--         WHEN a.Assistant_ID = 5 THEN a.work_hours + assistant_hours_worked(CURDATE(), 5)
+--         WHEN a.Assistant_ID = 6 THEN a.work_hours + assistant_hours_worked(CURDATE(), 6)
+--         WHEN a.Assistant_ID = 7 THEN a.work_hours + assistant_hours_worked(CURDATE(), 7)
+--         WHEN a.Assistant_ID = 8 THEN a.work_hours + assistant_hours_worked(CURDATE(), 8)
+--         WHEN a.Assistant_ID = 9 THEN a.work_hours + assistant_hours_worked(CURDATE(), 9)
+--         WHEN a.Assistant_ID = 8 THEN a.work_hours + assistant_hours_worked(CURDATE(), 10)
+--         WHEN a.Assistant_ID = 11 THEN a.work_hours + assistant_hours_worked(CURDATE(), 11)
+--         ELSE a.work_hours
+-- 	END;
+-- END$$
+-- DELIMITER ;
 
 
 
@@ -397,8 +460,8 @@ DELIMITER ;
 
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS ⁠ GetCartOf ⁠ $$
-CREATE PROCEDURE ⁠ GetCartOf ⁠(IN customer_id INT)
+DROP PROCEDURE IF EXISTS GetCartOf $$
+CREATE PROCEDURE GetCartOf (IN customer_id INT)
 BEGIN
 	SELECT 
 		product.product_id as product_id,
@@ -663,6 +726,7 @@ END //
 
 DELIMITER ;
 
+
 DELIMITER //
 DROP PROCEDURE IF EXISTS GetIncompleteOrders//
 CREATE PROCEDURE `GetIncompleteOrders`(IN store_id_ INT)
@@ -678,7 +742,9 @@ BEGIN
     SELECT Order_ID, Customer_ID, Route_ID, Order_state
     FROM Orders
     WHERE Order_state != 'Complete' AND Order_state != 'Pending' and Store_ID = store_id_;
+
 END //
 
 DELIMITER ;
+
 
