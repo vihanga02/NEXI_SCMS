@@ -32,10 +32,8 @@ function DeliverySchedule() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(date);
       const schedules = await axios.get(`/manager/deliverySchedule/${date}`,{ withCredentials: true });
       setData(schedules.data);
-      console.log(schedules.data);
     } catch (error) {
       console.error('Error getting schedules', error.response ? error.response : error);
     };
@@ -48,7 +46,7 @@ function DeliverySchedule() {
     // Sending the selected item to the backend
     try {
       const response = await axios.post(`/manager/setDeliveryStatus`, { status: status[0], Delivery_id: status[1] },{ withCredentials: true });
-      console.log('Response from backend:', response.data);
+
     } catch (error) {
       console.error('Error sending request to backend:', error);
     }

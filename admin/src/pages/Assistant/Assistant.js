@@ -16,7 +16,6 @@ function Assistant() {
     axios
       .get("/manager/assistantsofstore", { withCredentials: true })
       .then((response) => {
-        console.log(response.data);
         setAssistants(response.data); // Set the fetched data to the assistants state
       })
       .catch((error) => {
