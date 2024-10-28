@@ -10,21 +10,43 @@ function Driver() {
 
   // State to store driver data
   const [drivers, setDrivers] = useState([]);
+  const [newDriverName, setNewDriverName] = useState("");
 
   useEffect(() => {
     axios
       .get("/admin/driversofstore", { withCredentials: true })
       .then((response) => {
-        // Set the fetched data to the drivers state
         console.log(response.data);
         setDrivers(response.data);
-        
       })
       .catch((error) => {
         console.error("Error fetching driver data:", error);
         navigate("/");
       });
   }, []);
+
+  const removeDriver = (driverId) => {
+    axios
+      .delete(`/admin/driver/${driverId}`, { withCredentials: true })
+      .then(() => {
+        setDrivers(drivers.filter(driver => driver.Driver_ID !== driverId));
+      })
+      .catch((error) => {
+        console.error("Error removing driver:", error);
+      });
+  };
+
+  const addDriver = () => {
+    axios
+      .post("/admin/driver", { name: newDriverName }, { withCredentials: true })
+      .then((response) => {
+        setDrivers([...drivers, response.data]);
+        setNewDriverName("");
+      })
+      .catch((error) => {
+        console.error("Error adding driver:", error);
+      });
+  };
 
   return (
     <div className="driver-container">
@@ -37,6 +59,7 @@ function Driver() {
               <th className="driver-table-header">Driver Name</th>
               <th className="driver-table-header">Total Work Hours</th>
               <th className="driver-table-header">Driver Status</th>
+              <th className="driver-table-header">Actions</th>
             </tr>
           </thead>
           <tbody className="driver-table-body">
@@ -46,10 +69,22 @@ function Driver() {
                 <td className="driver-table-data">{driver.Driver_Name}</td>
                 <td className="driver-table-data">{driver.Work_Hours}</td>
                 <td className="driver-table-data">{driver.Availability}</td>
+                <td className="driver-table-data">
+                  <button className="remove-button" onClick={() => removeDriver(driver.Driver_ID)}>Remove</button>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
+      </div>
+      <div className="add-driver">
+        <input
+          type="text"
+          value={newDriverName}
+          onChange={(e) => setNewDriverName(e.target.value)}
+          placeholder="Enter driver name"
+        />
+        <button className="add-driver-button" onClick={addDriver}>Add Driver</button>
       </div>
     </div>
   );

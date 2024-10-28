@@ -42,8 +42,8 @@ CREATE TABLE Truck_Route (
 );
 
 CREATE TABLE Driver (
-  Name VARCHAR(50) NOT NULL,
   Driver_ID TINYINT AUTO_INCREMENT,
+  Driver_Name VARCHAR(50) NOT NULL,
   Store_ID TINYINT ,
   Work_Hours DECIMAL(4,1) DEFAULT 0,
   Availability ENUM('On_Trip','Rest','Not_Available'),
@@ -52,8 +52,8 @@ CREATE TABLE Driver (
 );
 
 CREATE TABLE Driver_Assistant (
-  Name VARCHAR(50) NOT NULL,
   Assistant_ID TINYINT AUTO_INCREMENT,
+  Assistant_Name VARCHAR(50) NOT NULL,
   Store_ID TINYINT NOT NULL,
   Work_Hours DECIMAL(4,1) DEFAULT 0,
   Availability ENUM('On_Trip','Rest','Not_Available'),
@@ -302,12 +302,6 @@ INSERT INTO Driver (Name, Store_ID, Work_Hours, Availability) VALUES
 ('Gayan Wijesinghe', 6, 0.0, 'Rest'),
 ('Suresh Wijesinghe', 6, 0.0, 'Rest'),
 
-('Nishan Wijesinghe', 7, 0.0, 'Rest'),
-('Ruwan Perera', 7, 0.0, 'On_Trip'),
-('Suresh Perera', 7, 0.0, 'Rest'),
-('Nuwan Perera', 7, 0.0, 'Not_Available'),
-('Kasun Perera', 7, 0.0, 'Rest');
-
 INSERT INTO Driver_Assistant (Name, Store_ID, Work_Hours, Availability) VALUES
 ('Tharindu Perera', 1, 0.0, 'On_Trip'),
 ('Lakshan Perera', 2, 0.0, 'Rest'),
@@ -345,11 +339,6 @@ INSERT INTO Driver_Assistant (Name, Store_ID, Work_Hours, Availability) VALUES
 ('Gayan Wijesinghe', 6, 0.0, 'Rest'),
 ('Suresh Wijesinghe', 6, 0.0, 'Rest'),
 
-('Nishan Wijesinghe', 7, 0.0, 'On_Trip'),
-('Tharindu Perera', 7, 0.0, 'Rest'),
-('Lakshan Perera', 7, 0.0, 'Not_Available'),
-('Ravindu Perera', 7, 0.0, 'Rest');
-
 
 INSERT INTO Truck (Reg_number, Store_ID, Used_Hours, Availability) VALUES 
 ('001', 1, 0.0, TRUE),
@@ -374,15 +363,6 @@ INSERT INTO Truck (Reg_number, Store_ID, Used_Hours, Availability) VALUES
 ('020', 7, 0.0, TRUE),
 ('021', 7, 0.0, TRUE);
 
-
-INSERT INTO store_manager (Name, Email, Username, Password, PhoneNumber, Store_ID) VALUES 
-("Kasun Gayantha", "kasun342@gmail.com", 'kasunG34', "Gaya%&82", '0771234567', 1),
-('Nuwan Perera', 'nuwanp@gmail.com', 'pereraNN2', 'Nuwa@#56', '0772345678', 2),
-('Saman Wijesinghe', 'samanw123@gmail.com', 'samanW650', 'Sama$#45', '0773456789', 3),
-('Thilini Senarath', 'thilini.s@gmail.com', 'senarath', 'Thil*67!x', '0774567890', 4),
-('Amila Bandara', 'amila.ban@hotmail.com', 'thilisenerath46', 'Ami!d567', '0775678901', 5),
-('Dilanka Gunasekara', 'dilanka.gun@yahoo.com', 'dilanka892', 'Dila%88#$', '0776789012', 6),
-('Hiruna Gimhana', 'gimhana23@gmail.com', 'hirugim28', 'Gimm#254', '0777890123', 7);
 
 
 INSERT INTO Train (Train_Name, Capacity, Available_space) VALUES

@@ -1,5 +1,5 @@
 DELIMITER $$
-DROP TRIGGER IF EXISTS driver_status_after_assign;
+DROP TRIGGER IF EXISTS driver_status_after_assign$$
 CREATE TRIGGER driver_status_after_assign
 	AFTER INSERT ON Truck_Delivery
     FOR EACH ROW
@@ -20,9 +20,9 @@ END $$
 DELIMITER ;
 
 
-
-DELIMITER $$
+										 
 DROP TRIGGER IF EXISTS driver_status_after_release;
+DELIMITER $$
 CREATE TRIGGER driver_status_after_release
 	AFTER DELETE ON Truck_Delivery
     FOR EACH ROW

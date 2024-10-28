@@ -5,7 +5,6 @@ dotenv.config();
 
 function authenticateToken(req, res, next) {
   const token = req.cookies.token;
-
   if (!token) {
     return res.status(401).json({
       message: "No token provided, authorization denied",
@@ -19,7 +18,6 @@ function authenticateToken(req, res, next) {
         .status(403)
         .json({ message: "Token is not valid", success: false });
     }
-
     req.user = user; 
     next(); 
   });

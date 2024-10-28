@@ -419,16 +419,26 @@ async function manager_signup(req, res) {
 }
 
 
-async function getAdminStoreCity(req, res){
-    const storeID = req.user.id;
+// Controller to get availability counts by store ID
+async function getAvailabilityCounts(req, res) {
+    const storeID = req.user.store;
     try {
-        const result = await Manager.getStoreCity(storeID)
+        const result = await Manager.getAvailabilityCounts(storeID);
         res.status(200).json(result);
     } catch (error) {
-        res.status(500).json({ message: "Error fetching orders", error: error.message });
+        res.status(500).json({ message: "Error fetching availability counts", error: error.message });
     }
 }
 
+async function getIncompleteOrdersForStore(req, res) {
+    const storeID = req.user.store;
+    try {
+        const result = await Manager.IncompletedTrainOrders(storeID);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching incomplete orders", error: error.message });
+    }
+}
 
 
 export{
@@ -464,11 +474,13 @@ export{
 
     getMostOrders,
     getDriverWorkedHours,
-    getAdminStoreCity,
     getAssistantWorkedHours,
     getTruckHours,
     getSalesByCity,
     getSalesByRoute,
-    getCustomerOrderReport
+    getCustomerOrderReport,
+    getAvailabilityCounts,
+    getIncompletedTrainOrders,
+    getIncompleteOrdersForStore
 
 }

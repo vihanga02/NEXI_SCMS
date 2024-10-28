@@ -52,3 +52,43 @@
 .driver-table-data {
     color: #555;
 }
+.remove-button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.remove-button:hover {
+    background-color: #ff1a1a;
+}
+
+.add-driver{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.add-driver input{
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.add-driver-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-driver-button:hover {
+    background-color: #45a049;
+}
