@@ -233,6 +233,16 @@ async function addToDeliveryQueue(req, res){
     }
 };
 
+async function updateArrivalTime(req, res){
+    const { deliveryID } = req.body;
+    try {
+        const result = await Manager.updateArrivalTime(deliveryID);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching orders", error: error.message });
+    }
+};
+
 
 // Controller to get trains for a specific store
 async function getTrains(req, res){
@@ -456,6 +466,7 @@ export{
     getReceivedOrders,
 
     addToDeliveryQueue,
+    updateArrivalTime,
 
     getTrains,
     getDrivers,

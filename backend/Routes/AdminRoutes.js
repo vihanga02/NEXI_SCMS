@@ -16,6 +16,7 @@ import {
     getReceivedOrders,
 
     addToDeliveryQueue,
+    updateArrivalTime,
 
     getTrains,
     getDrivers,
@@ -72,6 +73,7 @@ router.get("/completedOrders", authenticateToken, getCompletedOrders);
 router.get("/receivedOrders", authenticateToken, getReceivedOrders);
 
 router.post("/queueForDelivery", authenticateToken, addToDeliveryQueue); 
+router.post("/updateArrivalTime", authenticateToken, updateArrivalTime);
 
 router.get("/trains", authenticateToken, getTrains);
 router.get("/drivers", authenticateToken, getDrivers);

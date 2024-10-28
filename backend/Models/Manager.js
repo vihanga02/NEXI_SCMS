@@ -220,6 +220,16 @@ class Manager {
     }
   }
 
+  static async updateArrivalTime(deliveryID) {
+    const query = `CALL Update_arrival_time(?);`;
+    try {
+      const result = await pool.query(query, deliveryID);
+      return result;
+    }catch (error) {
+      throw error;
+    }
+  }
+
   static async deleteDelivery(delID) {
     const query = `DELETE FROM delivery_schedule WHERE Delivery_id = ?`;
     try {

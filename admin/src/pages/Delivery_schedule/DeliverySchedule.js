@@ -1,4 +1,3 @@
-
 import './Delivery_schedule.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -95,6 +94,25 @@ function DeliverySchedule() {
 
   };
 
+  const updateArrival = async (ID) => {
+    try {
+      const response = await axios.post(`/admin/updateArrivalTime`, { deliveryID: ID }, { withCredentials: true });
+      toast.success("Arrival time updated!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      console.log('Response from backend:', response.data);
+    } catch (error) {
+      console.error('Error sending request to backend:', error);
+    }
+  };
+
   const handleDel = async (ID) => {
     try {
       const response = await axios.delete(`/admin/deleteSchedule`, { 
@@ -148,9 +166,12 @@ function DeliverySchedule() {
             {data.map((delivery, index) => (
               <tr key={index}>
                 <td>{delivery.Delivery_id}</td>
-                <td>{delivery.Shipment_Date}</td>
+                <td>{new Date(delivery.Shipment_Date).toLocaleDateString()}</td>
                 <td>{delivery.Vehicle_departure_time}</td>
-                <td>{delivery.Vehicle_arrival_time}</td>
+                <td>
+                  {delivery.Vehicle_arrival_time}
+                  <button className='btn m-0.5 btn-primary' onClick={() => updateArrival(delivery.Delivery_id)}>Update Arrival Time</button>
+                </td>
                 <td>
                   {/* setStatus(delivery.Delivery_status) */}
                   <div className='btn m-0.5' onClick={() => window.location.reload()}>{delivery.Delivery_status}</div>

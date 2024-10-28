@@ -46,7 +46,7 @@ CREATE TABLE Driver (
   Driver_Name VARCHAR(50) NOT NULL,
   Store_ID TINYINT ,
   Work_Hours DECIMAL(4,1) DEFAULT 0,
-  Availability ENUM('On_Trip','Rest','Not_Available'),
+  Availability ENUM('On_Trip','Rest','Not_Available') DEFAULT 'Rest',
   PRIMARY KEY (Driver_ID),
   FOREIGN KEY (Store_ID) REFERENCES Store(Store_ID)
 );
@@ -56,7 +56,7 @@ CREATE TABLE Driver_Assistant (
   Assistant_Name VARCHAR(50) NOT NULL,
   Store_ID TINYINT NOT NULL,
   Work_Hours DECIMAL(4,1) DEFAULT 0,
-  Availability ENUM('On_Trip','Rest','Not_Available'),
+  Availability ENUM('On_Trip','Rest','Not_Available') DEFAULT 'Rest',
   PRIMARY KEY (Assistant_ID),
   FOREIGN KEY (Store_ID) REFERENCES Store(Store_ID)
 );
@@ -64,10 +64,10 @@ CREATE TABLE Driver_Assistant (
 
 CREATE TABLE Store_Manager (
   Manager_ID TINYINT AUTO_INCREMENT,
-  Name VARCHAR(50) NOT NULL,
-  Username varchar(50) unique NOT NULL,
-  Password VARCHAR(100) NOT NULL,
-  Email VARCHAR(50) UNIQUE NOT NULL,
+  Name VARCHAR(255) NOT NULL,
+  Username varchar(255) unique NOT NULL,
+  Password VARCHAR(255) NOT NULL,
+  Email VARCHAR(255) UNIQUE NOT NULL,
   PhoneNumber VARCHAR(20) NOT NULL,
   Store_ID TINYINT NOT NULL,
   PRIMARY KEY (Manager_ID),
@@ -265,7 +265,7 @@ INSERT INTO Truck_Route(Store_ID,Route,Time_Taken) VALUES
 (7, 'Kandy-Digana-Mahiyanganaya', 3),
 (7, 'Kandy-Matale-Dambulla', 2.5);
 
-INSERT INTO Driver (Name, Store_ID, Work_Hours, Availability) VALUES
+INSERT INTO Driver (Driver_Name, Store_ID, Work_Hours, Availability) VALUES
 ('Vihanga Muthumala', 1, 0.0, 'On_Trip'),
 ('Sahan Perera', 1, 0.0, 'Rest'),
 ('Kasun Gayantha', 1, 0.0, 'Rest'),
@@ -300,9 +300,9 @@ INSERT INTO Driver (Name, Store_ID, Work_Hours, Availability) VALUES
 ('Sunil Wijesinghe', 6, 0.0, 'On_Trip'),
 ('Ruwan Wijesinghe', 6, 0.0, 'Rest'),
 ('Gayan Wijesinghe', 6, 0.0, 'Rest'),
-('Suresh Wijesinghe', 6, 0.0, 'Rest'),
+('Suresh Wijesinghe', 6, 0.0, 'Rest');
 
-INSERT INTO Driver_Assistant (Name, Store_ID, Work_Hours, Availability) VALUES
+INSERT INTO Driver_Assistant (Assistant_Name, Store_ID, Work_Hours, Availability) VALUES
 ('Tharindu Perera', 1, 0.0, 'On_Trip'),
 ('Lakshan Perera', 2, 0.0, 'Rest'),
 ('Ravindu Perera', 1, 0.0, 'Rest'),
@@ -337,7 +337,7 @@ INSERT INTO Driver_Assistant (Name, Store_ID, Work_Hours, Availability) VALUES
 ('Sunil Wijesinghe', 6, 0.0, 'On_Trip'),
 ('Ruwan Wijesinghe', 6, 0.0, 'Rest'),
 ('Gayan Wijesinghe', 6, 0.0, 'Rest'),
-('Suresh Wijesinghe', 6, 0.0, 'Rest'),
+('Suresh Wijesinghe', 6, 0.0, 'Rest');
 
 
 INSERT INTO Truck (Reg_number, Store_ID, Used_Hours, Availability) VALUES 
