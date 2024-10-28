@@ -1,13 +1,13 @@
 @import url(../../Styles/Variables.css);
 
-.ADcontainer {
-    display: flex;
+.ADcontainer-dashboard {
     height: 100vh; 
-    padding: 13.5vh 3vw 0 3vw;
+    width: 90vw;
+    padding: 13.5vh 2vw 0 2vw;
     background-color: var(--white);
 }
 
-.ADcontainer .Acontainer {
+.ADcontainer-dashboard .Acontainer {
     flex-grow: 1; 
     display: flex;
     flex-direction: column; 
@@ -114,7 +114,7 @@
     display: flex;
     gap: 20px;
     justify-content: space-between;
-    padding-top: 4vh;
+    padding-top: 1vh;
 }
 
 .incomplete-order-container .incomplete-orders .progress-bar{
@@ -127,7 +127,8 @@
 
 .calendar-container {
     width: 30vw;
-    padding: 20px;
+    min-height:43vh;
+    padding: 10px;
     background: white;
     border-radius: 10px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); 
