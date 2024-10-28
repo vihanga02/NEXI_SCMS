@@ -200,8 +200,8 @@ function Order() {
                   <td>{order.Order_ID}</td>
                   <td>{order.Customer_ID}</td>
                   <td>{order.Route}</td>
-                  <td>{order.Ordered_Date}</td>
-                  <td>{order.Expected_Date}</td>
+                  <td>{new Date(order.Ordered_Date).toLocaleDateString()}</td>
+                  <td>{new Date(order.Expected_Date).toLocaleDateString()}</td>
                   <td>{order.Total_Capacity}</td>
                   <td>{order.Total_Price}</td>
                   <td>
@@ -219,7 +219,7 @@ function Order() {
                     {/* <button className='btn btn-primary m-2 p-2' onClick={() => navigate(`/delivery_schedule/truckScheduler/`, { state: { delivery_id: order.Order_ID } })}>Track</button> */}
                     <input
                       type="checkbox"
-                      className="checkbox"
+                      className="toggle toggle-primary"
                       value={order.Order_ID}
                       checked={selectedForTrain.includes(order.Order_ID)}
                       onChange={handleCheckboxTrain}
@@ -260,8 +260,8 @@ function Order() {
                   <td>{order.Order_ID}</td>
                   <td>{order.Customer_ID}</td>
                   <td>{order.Route}</td>
-                  <td>{order.Ordered_Date}</td>
-                  <td>{order.Expected_Date}</td>
+                  <td>{new Date(order.Ordered_Date).toLocaleDateString()}</td>
+                  <td>{new Date(order.Expected_Date).toLocaleDateString()}</td>
                   <td>{order.Total_Capacity}</td>
                   <td>{order.Total_Price}</td>
                   <td>
@@ -278,6 +278,7 @@ function Order() {
                     <input
                       type="checkbox"
                       className="checkbox"
+                      class="toggle toggle-primary" 
                       value={order.Order_ID}
                       checked={selectedForTruck.includes(order.Order_ID)}
                       onChange={handleCheckboxTruck}
@@ -317,8 +318,8 @@ function Order() {
                   <td>{order.Order_ID}</td>
                   <td>{order.Customer_ID}</td>
                   <td>{order.Route}</td>
-                  <td>{order.Ordered_Date}</td>
-                  <td>{order.Expected_Date}</td>
+                  <td>{new Date(order.Ordered_Date).toLocaleDateString()}</td>
+                  <td>{new Date(order.Expected_Date).toLocaleDateString()}</td>
                   <td>{order.Total_Capacity}</td>
                   <td>{order.Total_Price}</td>
                   <td>{order.Order_state}</td>
