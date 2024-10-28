@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from "react";
 import "./Cart.css";
 import { FaTrash } from "react-icons/fa";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import StoreRouteSelector from "../../components/StoreRouteSelector/StoreRouteSelector";
 import { useNavigate } from "react-router-dom";
+import Alert from "../../components/Alert/Alert"; // Import Alert component
 
 const Cart = () => {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
   const [selectedStore, setSelectedStore] = useState(""); 
   const [selectedRoute, setSelectedRoute] = useState(""); 
+
+  const [showCheckoutAlert, setShowCheckoutAlert] = useState(false); // State for checkout alert
 
   useEffect(() => {
     axios.get("/customer/profile",{withCredentials:true})
@@ -49,6 +52,10 @@ const Cart = () => {
 
   // Handle checkout
   const handleCheckout = async () => {
+    setShowCheckoutAlert(true); // Show the checkout alert
+  };
+
+  const confirmCheckout = async () => {
     try {
       // Send POST request to backend to checkout with store_id and route_id
       await axios.post(
@@ -59,9 +66,15 @@ const Cart = () => {
       setCartItems([]);
       setSelectedStore(""); 
       setSelectedRoute(""); 
+      setShowCheckoutAlert(false); // Hide the checkout alert
     } catch (error) {
       console.error("Error checking out:", error);
+      setShowCheckoutAlert(false); // Hide the checkout alert
     }
+  };
+
+  const cancelCheckout = () => {
+    setShowCheckoutAlert(false); // Hide the checkout alert
   };
 
   // Function to handle store and route selection
@@ -122,10 +135,21 @@ const Cart = () => {
           </p>
         </div>
         <StoreRouteSelector onStoreRouteChange={handleStoreRouteChange} />
-        <button className="checkout-btn" onClick={handleCheckout}>
+        <button
+          className="checkout-btn"
+          onClick={handleCheckout}
+          disabled={!selectedStore || !selectedRoute} // Disable button if no store or route is selected
+        >
           Checkout Now
         </button>
       </div>
+      {showCheckoutAlert && (
+        <Alert
+          message="Are you sure you want to proceed to checkout?"
+          onConfirm={confirmCheckout}
+          onCancel={cancelCheckout}
+        />
+      )}
     </div>
   );
 };

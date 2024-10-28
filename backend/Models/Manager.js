@@ -198,22 +198,12 @@ class Manager {
   }
 
   static async getTruckDelivery(storeID) {
-    const query = `SELECT 
-              td.ID AS ID,
-              td.Truck_Del_ID AS Truck_Del_ID,
-              td.Truck_id AS Truck_id,
-              td.Driver_id AS Driver_id,
-              d.Driver_Name AS Driver_name,
-              td.Assistant_id AS Assistant_id,
-              da.Assistant_Name AS Assistant_name
+    const query = `SELECT *  
             FROM truck_delivery td
-            INNER JOIN Driver_Assistant da ON td.Assistant_id = da.Assistant_id
-            INNER JOIN Driver d ON td.Driver_id = d.Driver_ID
-            WHERE da.Store_ID = ? AND d.Store_ID = ?;`;
+            LEFT JOIN truck t ON td.truck_ID = t.Truck_ID
+            WHERE t.Store_ID = ?;`;
     try {
-      console.log('controller');
-      const result = await pool.query(query, [storeID,storeID]);
-      console.log(result);
+      const result = await pool.query(query, [storeID]);
       return result[0];
     } catch (error) {
       throw error;
@@ -451,7 +441,7 @@ class Manager {
   }
 
   static async IncompletedTrainOrders(storeID) {
-    const query = "call GetIncompleteOrders(?)";
+    const query = 'call GetIncompleteOrders(?)';
     try {
       const result = await pool.query(query, [storeID]);
       return result[0];
@@ -459,28 +449,7 @@ class Manager {
       throw error;
     }
   }
-
-  static async insertDrivers(Driver_Name, Store_ID) {
-    const query = "INSERT INTO driver (Driver_Name, Store_ID) VALUES (?,?)";
-    try {
-      const [results] = await pool.query(query, [Driver_Name, Store_ID]);
-      return results;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  static async removeDriver(Driver_ID) {
-    const query = "DELETE FROM driver WHERE Driver_ID = ?";
-    try {
-      const [results] = await pool.query(query, [Driver_ID]);
-      return results;
-    } catch (error) {
-      throw error;
-    }
-  }
 }
-
 
 
 export default Manager;

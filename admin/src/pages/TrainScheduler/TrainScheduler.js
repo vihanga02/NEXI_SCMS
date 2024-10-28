@@ -14,7 +14,6 @@ const TrainScheduler = () => {
     const getTrains = async () => {
         try {
             const response = await axios.get('/manager/trains', { withCredentials: true });
-            console.log('Response from backend:', response.data);
             setTrains(response.data);
         } catch (error) {
             console.error('Error getting trains', error.response ? error.response : error);
@@ -58,7 +57,7 @@ const TrainScheduler = () => {
                         <tr key={index}>
                             <td>{train.Train_ID}</td>
                             <td>{train.Train_Name}</td>
-                            <td>{train.Day}</td>
+                            <td>{new Date(train.Day).toLocaleDateString()}</td>
                             <td>{train.Start_Time}</td>
                             <td>{train.Available_space}</td>
                             <td>

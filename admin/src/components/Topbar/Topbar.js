@@ -10,7 +10,6 @@ const Topbar = () => {
   const handleLogout = () => {
     axios.post('/manager/logout', {}, { withCredentials: true })
     .then((response) => {
-        console.log(response.data.message);
         navigate('/');  
     })
     .catch((error) => {

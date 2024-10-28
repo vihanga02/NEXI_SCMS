@@ -16,7 +16,7 @@ function MostOrders() {
         const fetchProductOrders = async () => {
             try {
                 const response = await axios.get('/manager/productOrders', {
-                    withCredentials: true // Include credentials (cookies with token)
+                    withCredentials: true 
                 });
                 
                 setProducts(response.data); // Assuming API returns data in correct format

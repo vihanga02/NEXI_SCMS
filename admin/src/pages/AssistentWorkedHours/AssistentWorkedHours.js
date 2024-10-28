@@ -15,13 +15,8 @@ function AssistantWorkedHours() {
     useEffect(() => {
         const fetchAssistantWorkHours = async () => {
             try {
-                const token = localStorage.getItem('token'); // Retrieve the token from localStorage
-
                 const response = await axios.get('/manager/assistantWorkHours', {
-                    headers: {
-                        'Authorization': `Bearer ${token}` // Pass token in the Authorization header
-                    },
-                    withCredentials: true // Allow sending cookies and credentials if needed
+                    withCredentials: true // Send request with credentials (cookies with token)
                 });
 
                 setAssistantWorkHours(response.data); // Set the fetched assistant work hours data

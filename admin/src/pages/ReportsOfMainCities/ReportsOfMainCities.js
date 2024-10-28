@@ -19,13 +19,8 @@ function ReportsOfMainCities() {
     useEffect(() => {
         const fetchSalesByCity = async () => {
             try {
-                const token = localStorage.getItem('token'); // Retrieve the token from localStorage
-
                 const response = await axios.get('/manager/salesByCity', {
-                    headers: {
-                        'Authorization': `Bearer ${token}` // Pass token in the Authorization header
-                    },
-                    withCredentials: true // Allow sending cookies and credentials if needed
+                    withCredentials: true 
                 });
 
                 setSalesByCity(response.data); // Set the fetched sales by city data

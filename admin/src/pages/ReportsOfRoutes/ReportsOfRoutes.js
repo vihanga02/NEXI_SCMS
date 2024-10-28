@@ -19,13 +19,8 @@ function ReportsOfRoutes() {
     useEffect(() => {
         const fetchSalesByRoute = async () => {
             try {
-                const token = localStorage.getItem('token'); // Retrieve token from localStorage
-
                 const response = await axios.get('/manager/salesByRoute', {
-                    headers: {
-                        'Authorization': `Bearer ${token}` // Pass token in the Authorization header
-                    },
-                    withCredentials: true // Allow sending cookies and credentials if needed
+                    withCredentials: true 
                 });
 
                 setSalesByRoute(response.data); // Set the fetched sales by route data

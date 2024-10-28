@@ -1,6 +1,8 @@
 import React, { useEffect,useState } from 'react'
 import './TruckScheduler.css';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from 'axios';
 
 function TruckScheduler() {
@@ -21,15 +23,24 @@ function TruckScheduler() {
 
     useEffect(() => {
         fetchDeliveries();
-    }, []);
+    }, [deliveries]);
 
     const handleAssign = async () => {
         // Send request to backend to assign truck
         try {
-            console.log('Assign Truck');
             const response = await axios.post(`/manager/assignTruck`, { delivery_id },{ withCredentials: true });
             console.log('Response from backend:', response.data);
-            navigate('/delivery_schedule');
+            toast.success("Truck schedule assigned!", {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+              });
+            // navigate('/delivery_schedule');
         } catch (error) {
             console.error('Error assigning truck:', error);
         }
@@ -42,6 +53,16 @@ function TruckScheduler() {
                 data: { ID: id },
                 withCredentials: true
             });
+            toast.success("Schedule deleted!", {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+              });
             console.log('Response from backend:', response.data);
         } catch (error) {
             console.error('Error deleting truck:', error);
@@ -60,7 +81,9 @@ function TruckScheduler() {
                         <th>Delivery ID</th>
                         <th>Truck_ID</th>
                         <th>Driver_ID</th>
+                        <th>Driver Name</th>
                         <th>Assistant_ID</th>
+                        <th>Assistant Name</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -68,9 +91,11 @@ function TruckScheduler() {
                     {deliveries.map((delivery, index) => (
                         <tr key={index}>
                             <td>{delivery.Truck_Del_ID}</td>
-                            <td>{delivery.Truck_ID}</td>
-                            <td>{delivery.Driver_ID}</td>
-                            <td>{delivery.Assistant_ID}</td>
+                            <td>{delivery.Truck_id}</td>
+                            <td>{delivery.Driver_id}</td>
+                            <td>{delivery.Driver_name}</td>
+                            <td>{delivery.Assistant_id}</td>
+                            <td>{delivery.Assistant_name}</td>
                             <td>
                                 <button className='btn btn-danger' onClick={() => handleDelete(delivery.ID)}>DELETE</button>
                             </td>
@@ -80,6 +105,7 @@ function TruckScheduler() {
                 </table>
             </div>
         </div>
+        <ToastContainer/>
     </div>
   )
 }

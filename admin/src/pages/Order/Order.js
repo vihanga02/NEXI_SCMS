@@ -57,7 +57,6 @@ function Order() {
       }
     });
 
-    console.log(selectedForTrain);
   };
 
   const handleCheckboxTruck = (event) => {
@@ -75,14 +74,12 @@ function Order() {
       }
     });
 
-    console.log(selectedForTruck);
   };
 
 
   const pOrders = async () => {
     try {
       const response = await axios.get('/manager/paidOrders', { withCredentials: true });
-      console.log('Response from backend:', response.data);
       setPaidOrders(response.data);
     } catch (error) {
       console.error('Error getting orders', error.response ? error.response : error);
@@ -92,7 +89,6 @@ function Order() {
   const handleStatus = async (status) => {
     try {
       const response = await axios.post('/manager/changeOrderStatus', { status: status[0], Order_ID: status[1] },{ withCredentials: true });
-      console.log('Response from backend:', response.data);
     } catch (error) {
       console.error('Error sending request to backend:', error);
     }
@@ -101,7 +97,6 @@ function Order() {
   const cOrders = async () => {
     try {
       const response = await axios.get('/manager/completedOrders', { withCredentials: true });
-      console.log('Response from backend:', response.data);
       setCompOrders(response.data);
     } catch (error) {
       console.error('Error getting orders', error.response ? error.response : error);
@@ -111,7 +106,6 @@ function Order() {
   const trackingToTruck = async () => {
     try {
       const response = await axios.post('/manager/queueForDelivery', { orderList:selectedForTruck, delID:delivery_id }, { withCredentials: true });
-      console.log('Response from backend:', response.data);
       setTrackedOrders(response.data);
 
       toast.success("Navigating to truck schedules!", {
@@ -139,7 +133,6 @@ function Order() {
   const trackingToTrain = async () => {
     try {
       const response = await axios.post('/manager/queueForDelivery', { orderList:selectedForTrain, delID:delivery_id }, { withCredentials: true });
-      console.log('Response from backend:', response.data);
       setTrackedOrders(response.data);
 
       toast.success("Navigating to truck schedules!", {
@@ -167,7 +160,6 @@ function Order() {
   const recOrders = async () => {
     try {
       const response = await axios.get('/manager/receivedOrders', { withCredentials: true });
-      console.log('Response from backend:', response.data);
       setReceivedOrders(response.data);
     } catch (error) {
       console.error('Error getting orders', error.response ? error.response : error);
@@ -208,8 +200,8 @@ function Order() {
                   <td>{order.Order_ID}</td>
                   <td>{order.Customer_ID}</td>
                   <td>{order.Route}</td>
-                  <td>{order.Ordered_Date}</td>
-                  <td>{order.Expected_Date}</td>
+                  <td>{new Date(order.Ordered_Date).toLocaleDateString()}</td>
+                  <td>{new Date(order.Expected_Date).toLocaleDateString()}</td>
                   <td>{order.Total_Capacity}</td>
                   <td>{order.Total_Price}</td>
                   <td>
@@ -227,7 +219,7 @@ function Order() {
                     {/* <button className='btn btn-primary m-2 p-2' onClick={() => navigate(`/delivery_schedule/truckScheduler/`, { state: { delivery_id: order.Order_ID } })}>Track</button> */}
                     <input
                       type="checkbox"
-                      className="checkbox"
+                      className="toggle toggle-primary"
                       value={order.Order_ID}
                       checked={selectedForTrain.includes(order.Order_ID)}
                       onChange={handleCheckboxTrain}
@@ -268,8 +260,8 @@ function Order() {
                   <td>{order.Order_ID}</td>
                   <td>{order.Customer_ID}</td>
                   <td>{order.Route}</td>
-                  <td>{order.Ordered_Date}</td>
-                  <td>{order.Expected_Date}</td>
+                  <td>{new Date(order.Ordered_Date).toLocaleDateString()}</td>
+                  <td>{new Date(order.Expected_Date).toLocaleDateString()}</td>
                   <td>{order.Total_Capacity}</td>
                   <td>{order.Total_Price}</td>
                   <td>
@@ -286,6 +278,7 @@ function Order() {
                     <input
                       type="checkbox"
                       className="checkbox"
+                      class="toggle toggle-primary" 
                       value={order.Order_ID}
                       checked={selectedForTruck.includes(order.Order_ID)}
                       onChange={handleCheckboxTruck}
@@ -325,8 +318,8 @@ function Order() {
                   <td>{order.Order_ID}</td>
                   <td>{order.Customer_ID}</td>
                   <td>{order.Route}</td>
-                  <td>{order.Ordered_Date}</td>
-                  <td>{order.Expected_Date}</td>
+                  <td>{new Date(order.Ordered_Date).toLocaleDateString()}</td>
+                  <td>{new Date(order.Expected_Date).toLocaleDateString()}</td>
                   <td>{order.Total_Capacity}</td>
                   <td>{order.Total_Price}</td>
                   <td>{order.Order_state}</td>

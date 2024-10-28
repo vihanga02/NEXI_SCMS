@@ -3,11 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-
 import React, { useState, useEffect } from 'react';
-
-
 
 
 function DeliverySchedule() {
@@ -27,15 +23,13 @@ function DeliverySchedule() {
       navigate("/"); 
         console.error("Error fetching customer profile:", error);
     });
-  }, []); 
+  }, [data]); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(date);
       const schedules = await axios.get(`/manager/deliverySchedule/${date}`,{ withCredentials: true });
       setData(schedules.data);
-      console.log(schedules.data);
     } catch (error) {
       console.error('Error getting schedules', error.response ? error.response : error);
     };
@@ -48,7 +42,7 @@ function DeliverySchedule() {
     // Sending the selected item to the backend
     try {
       const response = await axios.post(`/manager/setDeliveryStatus`, { status: status[0], Delivery_id: status[1] },{ withCredentials: true });
-      console.log('Response from backend:', response.data);
+
     } catch (error) {
       console.error('Error sending request to backend:', error);
     }
@@ -150,6 +144,8 @@ function DeliverySchedule() {
           <button className='btn btn-primary m-2 p-2' type='submit'>Submit</button>
         </form>
         <button className='btn btn-primary m-2 p-2' onClick={() => createSchedule()}>Create new empty schedule</button>
+        <button className='btn btn-secondary m-1' onClick={() => navigate(`/delivery_schedule/truckScheduler/`)}>Truck Schedules</button>
+        <button className='btn btn-secondary m-1' onClick={() => navigate(`/delivery_schedule/trainScheduler/`)}>Train Schedules</button>
         <table className='order-table'>
           <thead>
             <tr>
@@ -166,7 +162,7 @@ function DeliverySchedule() {
             {data.map((delivery, index) => (
               <tr key={index}>
                 <td>{delivery.Delivery_id}</td>
-                <td>{new Date(delivery.Shipment_Date).toLocaleDateString()}</td>
+                <td>{new Date(delivery.Shipment_date).toLocaleDateString()}</td>
                 <td>{delivery.Vehicle_departure_time}</td>
                 <td>
                   {delivery.Vehicle_arrival_time}
