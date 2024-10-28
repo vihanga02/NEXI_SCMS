@@ -137,15 +137,22 @@ const Signup = () => {
 
             <div className="form-group">
               <label htmlFor="city">City:</label>
-              <input
-                type="text"
+              <select
                 id="city"
                 name="City"
                 value={formData.City}
                 onChange={handleChange}
-                placeholder="Enter City"
                 required
-              />
+              >
+                <option value="">Select a city</option>
+                <option value="Colombo">Colombo</option>
+                <option value="Negambo">Negambo</option>
+                <option value="Galle">Galle</option>
+                <option value="Matara">Matara</option>
+                <option value="Jaffna">Jaffna</option>
+                <option value="Trinco">Trinco</option>
+                <option value="Kandy">Kandy</option>
+              </select>
               {errors.City && <span className="error">{errors.City}</span>}
             </div>
 

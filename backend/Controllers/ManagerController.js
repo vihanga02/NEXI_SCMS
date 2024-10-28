@@ -505,7 +505,7 @@ export{
 
     manager_logout,
     getProfile,
-
+    
     getMostOrders,
     getDriverWorkedHours,
     getAssistantWorkedHours,
