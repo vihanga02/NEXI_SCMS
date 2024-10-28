@@ -24,14 +24,6 @@ function Order() {
     });
   }, []); 
 
-
-
-  const orders = [
-    { username: 'JohnDoe', route: 'Route 1', orderedDay: '2023-10-01', expectedDay: '2023-10-05', totalPrice: '$100' },
-    { username: 'JaneSmith', route: 'Route 2', orderedDay: '2023-10-02', expectedDay: '2023-10-06', totalPrice: '$150' },
-    // Add more sample data as needed
-  ];
-
   const location = useLocation();
   const delivery_id = location.state || {};
   const [selectedForTruck, setSelectedForTruck] = useState([]);

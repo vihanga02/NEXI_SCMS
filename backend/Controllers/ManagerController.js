@@ -125,7 +125,7 @@ async function getCustomerOrderReport(req, res) {
 
 // Controller to get all orders
 async function getPaidOrders(req, res) {
-  const storeID = req.user.id;
+  const storeID = req.user.store;
   try {
     const result = await Manager.getPaidOrders(storeID);
     res.status(200).json(result);
