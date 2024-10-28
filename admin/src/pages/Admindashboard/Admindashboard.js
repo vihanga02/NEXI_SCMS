@@ -37,7 +37,7 @@ function Admindashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try { 
-        await axios.get('admin/admindetails', { withCredentials: true })
+        await axios.get('/admin/admindetails', { withCredentials: true })
           .then((res) => {
             setStoreID(res.data.Store_ID);
             setStoreCity(res.data.City);
