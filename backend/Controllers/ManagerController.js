@@ -543,6 +543,38 @@ async function getAvailabilityCounts(req, res) {
 }
 
 async function getIncompleteOrdersForStore(req, res) {
+
+    const storeID = req.user.store;
+    try {
+        const result = await Manager.IncompletedTrainOrders(storeID);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching incomplete orders", error: error.message });
+    }
+}
+
+async function insertDriver(req, res){
+    const {Driver_Name} = req.body;
+    const Store_ID =  req.user.store;
+    try {
+        const result = await Manager.insertDrivers(Driver_Name, Store_ID);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error inserting drivers", error: error.message });
+    }
+}
+
+async function removeDriver(req, res){
+    const {Driver_ID} = req.params;
+    try {
+        const result = await Manager.removeDriver(Driver_ID);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error removing drivers", error: error.message });
+    }
+}
+
+
   const storeID = req.user.store;
   try {
     const result = await Manager.IncompletedTrainOrders(storeID);
@@ -622,3 +654,4 @@ export {
   getIncompletedTrainOrders,
   getIncompleteOrdersForStore,
 };
+
