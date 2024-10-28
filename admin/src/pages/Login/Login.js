@@ -25,7 +25,7 @@ const Login = () => {
     }
 
     axios
-      .post("/admin/login", {Username: username, Password:password },{ withCredentials: true })
+      .post("/manager/login", {Username: username, Password:password },{ withCredentials: true })
       .then((res) => {
         
         setStatus(res.data.status);

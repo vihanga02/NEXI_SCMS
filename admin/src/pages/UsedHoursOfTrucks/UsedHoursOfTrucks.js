@@ -17,6 +17,7 @@ function UsedHoursOfTrucks() {
             try {
                 const response = await axios.get('/admin/truckHours', {
                     withCredentials: true // Include credentials (cookie with token)
+
                 });
 
                 setTruckHours(response.data); // Set the fetched truck hours data

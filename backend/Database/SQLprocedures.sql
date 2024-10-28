@@ -742,7 +742,8 @@ BEGIN
     SELECT Order_ID, Customer_ID, Route_ID, Order_state
     FROM Orders
     WHERE Order_state != 'Complete' AND Order_state != 'Pending' and Store_ID = store_id_;
-END
+
+END //
 
 DELIMITER ;
 

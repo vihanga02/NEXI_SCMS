@@ -16,7 +16,7 @@ function DriverWorkedHours() {
         const fetchDriverWorkHours = async () => {
             try {
                 const response = await axios.get('/admin/driverWorkHours', {
-                    withCredentials: true // Allow sending cookies (token) along with the request
+                    withCredentials: true 
                 });
 
                 setDriverWorkHours(response.data); // Set the fetched driver work hours data

@@ -27,7 +27,7 @@ function Report() {
     const [startDate, setStartDate] = useState('2024-10-01'); // Default or user-selected date
 
     useEffect(() => {
-        axios.get("/admin/profile",{withCredentials:true})
+        axios.get("/manager/profile",{withCredentials:true})
         .then((response) => {
         })
         .catch((error) => {
@@ -41,8 +41,8 @@ function Report() {
     useEffect(() => {
         const fetchQuarterlySales = async () => {
             try {
-              console.log('Starting date:', startDate);
                 const response = await axios.get(`/admin/quarterlySales?startDate=${startDate}`,{withCredentials:true});
+
                 
                 const salesData = response.data;
 

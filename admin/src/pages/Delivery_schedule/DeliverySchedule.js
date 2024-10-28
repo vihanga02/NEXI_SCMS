@@ -20,7 +20,7 @@ function DeliverySchedule() {
 
 
   useEffect(() => {
-    axios.get("/admin/profile",{withCredentials:true})
+    axios.get("/manager/profile",{withCredentials:true})
     .then((response) => {
     })
     .catch((error) => {
@@ -33,7 +33,7 @@ function DeliverySchedule() {
     e.preventDefault();
     try {
       console.log(date);
-      const schedules = await axios.get(`/admin/deliverySchedule/${date}`,{ withCredentials: true });
+      const schedules = await axios.get(`/manager/deliverySchedule/${date}`,{ withCredentials: true });
       setData(schedules.data);
       console.log(schedules.data);
     } catch (error) {
@@ -47,7 +47,7 @@ function DeliverySchedule() {
 
     // Sending the selected item to the backend
     try {
-      const response = await axios.post(`/admin/setDeliveryStatus`, { status: status[0], Delivery_id: status[1] },{ withCredentials: true });
+      const response = await axios.post(`/manager/setDeliveryStatus`, { status: status[0], Delivery_id: status[1] },{ withCredentials: true });
       console.log('Response from backend:', response.data);
     } catch (error) {
       console.error('Error sending request to backend:', error);
@@ -57,7 +57,7 @@ function DeliverySchedule() {
 
   const createSchedule = async () => {
     try {
-      const response = await axios.post(`/admin/addDeliverySchedule`,{},{ withCredentials: true });
+      const response = await axios.post(`/manager/addDeliverySchedule`,{},{ withCredentials: true });
       toast.success("Schedule created!", {
         position: "top-right",
         autoClose: 2000,
@@ -115,7 +115,7 @@ function DeliverySchedule() {
 
   const handleDel = async (ID) => {
     try {
-      const response = await axios.delete(`/admin/deleteSchedule`, { 
+      const response = await axios.delete(`/manager/deleteSchedule`, { 
         data: {deliveryID: ID },
         withCredentials: true 
       });

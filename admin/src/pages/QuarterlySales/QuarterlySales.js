@@ -32,7 +32,7 @@ function QuarterlySales() {
         setError(null);
 
         try {
-            const response = await axios.get('/admin/quarterlySales', {
+            const response = await axios.get('/manager/quarterlySales', {
                 params: { startDate },
                 withCredentials: true // Include credentials (cookies with token)
             });

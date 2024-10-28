@@ -20,7 +20,7 @@ function CustomerOrderReport() {
         const fetchOrderCountByCustomer = async () => {
             try {
                 const response = await axios.get('/admin/customerOrderReport', {
-                    withCredentials: true // Send request with credentials (cookies with token)
+                    withCredentials: true // Allow sending cookies and credentials if needed
                 });
 
                 setOrderCountByCustomer(response.data); // Set the fetched data
