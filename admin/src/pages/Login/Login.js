@@ -16,8 +16,6 @@ const Login = () => {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(username, password);
-
     if (!username || !password) {
       setStatus('Please fill in both fields.');
       setSuccess(false);

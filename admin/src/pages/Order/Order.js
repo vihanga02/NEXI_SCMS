@@ -57,7 +57,6 @@ function Order() {
       }
     });
 
-    console.log(selectedForTrain);
   };
 
   const handleCheckboxTruck = (event) => {
@@ -75,14 +74,12 @@ function Order() {
       }
     });
 
-    console.log(selectedForTruck);
   };
 
 
   const pOrders = async () => {
     try {
       const response = await axios.get('/manager/paidOrders', { withCredentials: true });
-      console.log('Response from backend:', response.data);
       setPaidOrders(response.data);
     } catch (error) {
       console.error('Error getting orders', error.response ? error.response : error);
@@ -92,7 +89,6 @@ function Order() {
   const handleStatus = async (status) => {
     try {
       const response = await axios.post('/manager/changeOrderStatus', { status: status[0], Order_ID: status[1] },{ withCredentials: true });
-      console.log('Response from backend:', response.data);
     } catch (error) {
       console.error('Error sending request to backend:', error);
     }

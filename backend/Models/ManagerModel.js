@@ -2,12 +2,12 @@ import pool from "../dbConfig.js";
 
 class Manager {
   static async getManager(Username) {
+    console.log("Username: ", Username);
+
     const query = `SELECT * FROM store_manager WHERE Username=?`;
 
     try {
       const [results] = await pool.query(query, [Username]);
-      console.log('admin profile');
-      console.log(results);
       return results;
     } catch (error) {
       throw error;
