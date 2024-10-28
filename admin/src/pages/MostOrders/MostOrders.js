@@ -15,7 +15,7 @@ function MostOrders() {
     useEffect(() => {
         const fetchProductOrders = async () => {
             try {
-                const response = await axios.get('/admin/productOrders', {
+                const response = await axios.get('/manager/productOrders', {
                     withCredentials: true // Include credentials (cookies with token)
                 });
                 

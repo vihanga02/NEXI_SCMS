@@ -15,8 +15,13 @@ function UsedHoursOfTrucks() {
     useEffect(() => {
         const fetchTruckHours = async () => {
             try {
-                const response = await axios.get('/admin/truckHours', {
-                    withCredentials: true // Include credentials (cookie with token)
+                const token = localStorage.getItem('token'); // Retrieve token from localStorage
+
+                const response = await axios.get('/manager/truckHours', {
+                    headers: {
+                        'Authorization': `Bearer ${token}` // Pass token in the Authorization header
+                    },
+                    withCredentials: true // Allow sending cookies and credentials if needed
                 });
 
                 setTruckHours(response.data); // Set the fetched truck hours data

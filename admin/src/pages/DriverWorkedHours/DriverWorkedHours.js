@@ -15,8 +15,13 @@ function DriverWorkedHours() {
     useEffect(() => {
         const fetchDriverWorkHours = async () => {
             try {
-                const response = await axios.get('/admin/driverWorkHours', {
-                    withCredentials: true // Allow sending cookies (token) along with the request
+                const token = localStorage.getItem('token'); // Retrieve the token from localStorage
+
+                const response = await axios.get('/manager/driverWorkHours', {
+                    headers: {
+                        'Authorization': `Bearer ${token}` // Pass token in the Authorization header
+                    },
+                    withCredentials: true // Allow sending cookies and credentials if needed
                 });
 
                 setDriverWorkHours(response.data); // Set the fetched driver work hours data

@@ -17,12 +17,12 @@ const Sidebar = () => {
     // Define an async function to fetch admin details
     const fetchAdminData = async () => {
         try {
-            const res = await axios.get("/admin/admindetails", { withCredentials: true });
+            const res = await axios.get("/manager/admindetails", { withCredentials: true });
           
             setName(res.data.Name); 
             setEmail(res.data.Email);
           } catch (error) {
-            console.error("Error getting admin details:", error);
+            console.error("Error getting manager details:", error);
           }
     };
 

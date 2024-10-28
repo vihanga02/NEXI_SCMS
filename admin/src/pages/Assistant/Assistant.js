@@ -14,7 +14,7 @@ function Assistant() {
 
   useEffect(() => {
     axios
-      .get("/admin/assistantsofstore", { withCredentials: true })
+      .get("/manager/assistantsofstore", { withCredentials: true })
       .then((response) => {
         console.log(response.data);
         setAssistants(response.data); // Set the fetched data to the assistants state
@@ -27,7 +27,7 @@ function Assistant() {
 
   const removeAssistant = (assistantId) => {
     axios
-      .delete(`/admin/assistant/${assistantId}`, { withCredentials: true })
+      .delete(`/manager/assistant/${assistantId}`, { withCredentials: true })
       .then(() => {
         setAssistants(assistants.filter(assistant => assistant.Assistant_ID !== assistantId));
       })
@@ -38,7 +38,7 @@ function Assistant() {
 
   const addAssistant = () => {
     axios
-      .post("/admin/assistant", { name: newAssistantName }, { withCredentials: true })
+      .post("/manager/assistant", { name: newAssistantName }, { withCredentials: true })
       .then((response) => {
         setAssistants([...assistants, response.data]);
         setNewAssistantName("");
