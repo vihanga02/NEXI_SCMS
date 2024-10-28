@@ -19,7 +19,7 @@ function ReportsOfMainCities() {
     useEffect(() => {
         const fetchSalesByCity = async () => {
             try {
-                const response = await axios.get('/admin/salesByCity', {
+                const response = await axios.get('/manager/salesByCity', {
                     withCredentials: true 
                 });
 

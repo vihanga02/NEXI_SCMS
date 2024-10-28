@@ -19,7 +19,7 @@ function CustomerOrderReport() {
     useEffect(() => {
         const fetchOrderCountByCustomer = async () => {
             try {
-                const response = await axios.get('/admin/customerOrderReport', {
+                const response = await axios.get('/manager/customerOrderReport', {
                     withCredentials: true 
                 });
 

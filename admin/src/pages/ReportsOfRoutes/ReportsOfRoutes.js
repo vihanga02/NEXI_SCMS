@@ -19,7 +19,7 @@ function ReportsOfRoutes() {
     useEffect(() => {
         const fetchSalesByRoute = async () => {
             try {
-                const response = await axios.get('/admin/salesByRoute', {
+                const response = await axios.get('/manager/salesByRoute', {
                     withCredentials: true 
                 });
 

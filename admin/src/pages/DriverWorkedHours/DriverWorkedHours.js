@@ -15,7 +15,7 @@ function DriverWorkedHours() {
     useEffect(() => {
         const fetchDriverWorkHours = async () => {
             try {
-                const response = await axios.get('/admin/driverWorkHours', {
+                const response = await axios.get('/manager/driverWorkHours', {
                     withCredentials: true 
                 });
 

@@ -15,7 +15,7 @@ function AssistantWorkedHours() {
     useEffect(() => {
         const fetchAssistantWorkHours = async () => {
             try {
-                const response = await axios.get('/admin/assistantWorkHours', {
+                const response = await axios.get('/manager/assistantWorkHours', {
                     withCredentials: true // Send request with credentials (cookies with token)
                 });
 

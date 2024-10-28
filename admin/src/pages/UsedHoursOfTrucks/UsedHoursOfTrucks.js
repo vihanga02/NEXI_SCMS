@@ -15,7 +15,7 @@ function UsedHoursOfTrucks() {
     useEffect(() => {
         const fetchTruckHours = async () => {
             try {
-                const response = await axios.get('/admin/truckHours', {
+                const response = await axios.get('/manager/truckHours', {
                     withCredentials: true // Include credentials (cookie with token)
 
                 });
