@@ -97,7 +97,6 @@ function Order() {
   const cOrders = async () => {
     try {
       const response = await axios.get('/manager/completedOrders', { withCredentials: true });
-      console.log('Response from backend:', response.data);
       setCompOrders(response.data);
     } catch (error) {
       console.error('Error getting orders', error.response ? error.response : error);
@@ -107,7 +106,6 @@ function Order() {
   const trackingToTruck = async () => {
     try {
       const response = await axios.post('/manager/queueForDelivery', { orderList:selectedForTruck, delID:delivery_id }, { withCredentials: true });
-      console.log('Response from backend:', response.data);
       setTrackedOrders(response.data);
 
       toast.success("Navigating to truck schedules!", {
@@ -135,7 +133,6 @@ function Order() {
   const trackingToTrain = async () => {
     try {
       const response = await axios.post('/manager/queueForDelivery', { orderList:selectedForTrain, delID:delivery_id }, { withCredentials: true });
-      console.log('Response from backend:', response.data);
       setTrackedOrders(response.data);
 
       toast.success("Navigating to truck schedules!", {
@@ -163,7 +160,6 @@ function Order() {
   const recOrders = async () => {
     try {
       const response = await axios.get('/manager/receivedOrders', { withCredentials: true });
-      console.log('Response from backend:', response.data);
       setReceivedOrders(response.data);
     } catch (error) {
       console.error('Error getting orders', error.response ? error.response : error);

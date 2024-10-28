@@ -14,7 +14,6 @@ const TrainScheduler = () => {
     const getTrains = async () => {
         try {
             const response = await axios.get('/manager/trains', { withCredentials: true });
-            console.log('Response from backend:', response.data);
             setTrains(response.data);
         } catch (error) {
             console.error('Error getting trains', error.response ? error.response : error);

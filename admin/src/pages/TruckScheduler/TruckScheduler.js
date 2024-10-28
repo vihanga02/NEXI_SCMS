@@ -26,9 +26,7 @@ function TruckScheduler() {
     const handleAssign = async () => {
         // Send request to backend to assign truck
         try {
-            console.log('Assign Truck');
             const response = await axios.post(`/manager/assignTruck`, { delivery_id },{ withCredentials: true });
-            console.log('Response from backend:', response.data);
             navigate('/delivery_schedule');
         } catch (error) {
             console.error('Error assigning truck:', error);
@@ -42,7 +40,6 @@ function TruckScheduler() {
                 data: { ID: id },
                 withCredentials: true
             });
-            console.log('Response from backend:', response.data);
         } catch (error) {
             console.error('Error deleting truck:', error);
         }
