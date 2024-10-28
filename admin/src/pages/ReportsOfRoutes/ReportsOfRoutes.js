@@ -20,7 +20,7 @@ function ReportsOfRoutes() {
         const fetchSalesByRoute = async () => {
             try {
                 const response = await axios.get('/admin/salesByRoute', {
-                    withCredentials: true // Send request with credentials (cookies with token)
+                    withCredentials: true 
                 });
 
                 setSalesByRoute(response.data); // Set the fetched sales by route data

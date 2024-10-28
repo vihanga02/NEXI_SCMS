@@ -79,7 +79,7 @@ const Signup = () => {
 
     try {
       
-      await axios.post("/admin/signup", formData);
+      await axios.post("/manager/signup", formData);
       
       setStatus("Sign up successful");
       setErrors({});

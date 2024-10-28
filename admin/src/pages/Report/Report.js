@@ -13,7 +13,7 @@ function Report() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get("/admin/profile",{withCredentials:true})
+        axios.get("/manager/profile",{withCredentials:true})
         .then((response) => {
         })
         .catch((error) => {
@@ -22,6 +22,38 @@ function Report() {
         });
       }, []); 
 
+
+
+    useEffect(() => {
+        const fetchQuarterlySales = async () => {
+            try {
+                const response = await axios.get(`/admin/quarterlySales?startDate=${startDate}`,{withCredentials:true});
+
+                
+                const salesData = response.data;
+
+                const dates = salesData.map(item => item.Order_Date);
+                const totalOrders = salesData.map(item => item.Total_Orders);
+
+                setChartData({
+                    labels: dates,
+                    datasets: [
+                        {
+                            label: 'Total Orders',
+                            data: totalOrders,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1,
+                        },
+                    ],
+                });
+            } catch (error) {
+                //console.error('Error fetching quarterly sales data:', error);
+            }
+        };
+
+        fetchQuarterlySales();
+    }, [startDate]); // Dependency array includes startDate to re-fetch when it changes
 
 
     return (

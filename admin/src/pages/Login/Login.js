@@ -16,8 +16,6 @@ const Login = () => {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(username, password);
-
     if (!username || !password) {
       setStatus('Please fill in both fields.');
       setSuccess(false);
@@ -25,7 +23,7 @@ const Login = () => {
     }
 
     axios
-      .post("/admin/login", {Username: username, Password:password },{ withCredentials: true })
+      .post("/manager/login", {Username: username, Password:password },{ withCredentials: true })
       .then((res) => {
         
         setStatus(res.data.status);

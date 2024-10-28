@@ -15,7 +15,7 @@ function Order() {
 
 
   useEffect(() => {
-    axios.get("/admin/profile",{withCredentials:true})
+    axios.get("/manager/profile",{withCredentials:true})
     .then((response) => {
     })
     .catch((error) => {
@@ -57,7 +57,6 @@ function Order() {
       }
     });
 
-    console.log(selectedForTrain);
   };
 
   const handleCheckboxTruck = (event) => {
@@ -75,14 +74,12 @@ function Order() {
       }
     });
 
-    console.log(selectedForTruck);
   };
 
 
   const pOrders = async () => {
     try {
-      const response = await axios.get('/admin/paidOrders', { withCredentials: true });
-      console.log('Response from backend:', response.data);
+      const response = await axios.get('/manager/paidOrders', { withCredentials: true });
       setPaidOrders(response.data);
     } catch (error) {
       console.error('Error getting orders', error.response ? error.response : error);
@@ -91,8 +88,7 @@ function Order() {
 
   const handleStatus = async (status) => {
     try {
-      const response = await axios.post('/admin/changeOrderStatus', { status: status[0], Order_ID: status[1] },{ withCredentials: true });
-      console.log('Response from backend:', response.data);
+      const response = await axios.post('/manager/changeOrderStatus', { status: status[0], Order_ID: status[1] },{ withCredentials: true });
     } catch (error) {
       console.error('Error sending request to backend:', error);
     }
@@ -100,8 +96,7 @@ function Order() {
 
   const cOrders = async () => {
     try {
-      const response = await axios.get('/admin/completedOrders', { withCredentials: true });
-      console.log('Response from backend:', response.data);
+      const response = await axios.get('/manager/completedOrders', { withCredentials: true });
       setCompOrders(response.data);
     } catch (error) {
       console.error('Error getting orders', error.response ? error.response : error);
@@ -110,8 +105,7 @@ function Order() {
 
   const trackingToTruck = async () => {
     try {
-      const response = await axios.post('/admin/queueForDelivery', { orderList:selectedForTruck, delID:delivery_id }, { withCredentials: true });
-      console.log('Response from backend:', response.data);
+      const response = await axios.post('/manager/queueForDelivery', { orderList:selectedForTruck, delID:delivery_id }, { withCredentials: true });
       setTrackedOrders(response.data);
 
       toast.success("Navigating to truck schedules!", {
@@ -138,8 +132,7 @@ function Order() {
 
   const trackingToTrain = async () => {
     try {
-      const response = await axios.post('/admin/queueForDelivery', { orderList:selectedForTrain, delID:delivery_id }, { withCredentials: true });
-      console.log('Response from backend:', response.data);
+      const response = await axios.post('/manager/queueForDelivery', { orderList:selectedForTrain, delID:delivery_id }, { withCredentials: true });
       setTrackedOrders(response.data);
 
       toast.success("Navigating to truck schedules!", {
@@ -166,8 +159,7 @@ function Order() {
 
   const recOrders = async () => {
     try {
-      const response = await axios.get('/admin/receivedOrders', { withCredentials: true });
-      console.log('Response from backend:', response.data);
+      const response = await axios.get('/manager/receivedOrders', { withCredentials: true });
       setReceivedOrders(response.data);
     } catch (error) {
       console.error('Error getting orders', error.response ? error.response : error);

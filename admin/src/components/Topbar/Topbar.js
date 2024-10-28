@@ -8,9 +8,8 @@ const Topbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    axios.post('/admin/logout', {}, { withCredentials: true })
+    axios.post('/manager/logout', {}, { withCredentials: true })
     .then((response) => {
-        console.log(response.data.message);
         navigate('/');  
     })
     .catch((error) => {

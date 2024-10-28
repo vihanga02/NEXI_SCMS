@@ -20,7 +20,7 @@ function ReportsOfMainCities() {
         const fetchSalesByCity = async () => {
             try {
                 const response = await axios.get('/admin/salesByCity', {
-                    withCredentials: true // Send request with credentials (cookies with token)
+                    withCredentials: true 
                 });
 
                 setSalesByCity(response.data); // Set the fetched sales by city data
