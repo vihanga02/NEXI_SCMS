@@ -17,7 +17,7 @@ function DriverWorkedHours() {
             try {
                 const token = localStorage.getItem('token'); // Retrieve the token from localStorage
 
-                const response = await axios.get('/admin/driverWorkHours', {
+                const response = await axios.get('/manager/driverWorkHours', {
                     headers: {
                         'Authorization': `Bearer ${token}` // Pass token in the Authorization header
                     },

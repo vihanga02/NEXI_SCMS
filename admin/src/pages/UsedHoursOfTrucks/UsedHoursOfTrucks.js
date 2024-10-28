@@ -17,7 +17,7 @@ function UsedHoursOfTrucks() {
             try {
                 const token = localStorage.getItem('token'); // Retrieve token from localStorage
 
-                const response = await axios.get('/admin/truckHours', {
+                const response = await axios.get('/manager/truckHours', {
                     headers: {
                         'Authorization': `Bearer ${token}` // Pass token in the Authorization header
                     },

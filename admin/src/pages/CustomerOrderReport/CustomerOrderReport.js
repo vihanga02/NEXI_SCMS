@@ -21,7 +21,7 @@ function CustomerOrderReport() {
             try {
                 const token = localStorage.getItem('token'); // Retrieve token from localStorage
 
-                const response = await axios.get('/admin/customerOrderReport', {
+                const response = await axios.get('/manager/customerOrderReport', {
                     headers: {
                         'Authorization': `Bearer ${token}` // Pass token in the Authorization header
                     },

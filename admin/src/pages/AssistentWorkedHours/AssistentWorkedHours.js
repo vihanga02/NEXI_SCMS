@@ -17,7 +17,7 @@ function AssistantWorkedHours() {
             try {
                 const token = localStorage.getItem('token'); // Retrieve the token from localStorage
 
-                const response = await axios.get('/admin/assistantWorkHours', {
+                const response = await axios.get('/manager/assistantWorkHours', {
                     headers: {
                         'Authorization': `Bearer ${token}` // Pass token in the Authorization header
                     },

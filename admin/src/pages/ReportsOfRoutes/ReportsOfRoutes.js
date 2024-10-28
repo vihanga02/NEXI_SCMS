@@ -21,7 +21,7 @@ function ReportsOfRoutes() {
             try {
                 const token = localStorage.getItem('token'); // Retrieve token from localStorage
 
-                const response = await axios.get('/admin/salesByRoute', {
+                const response = await axios.get('/manager/salesByRoute', {
                     headers: {
                         'Authorization': `Bearer ${token}` // Pass token in the Authorization header
                     },

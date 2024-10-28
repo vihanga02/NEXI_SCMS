@@ -13,7 +13,7 @@ const TrainScheduler = () => {
 
     const getTrains = async () => {
         try {
-            const response = await axios.get('/admin/trains', { withCredentials: true });
+            const response = await axios.get('/manager/trains', { withCredentials: true });
             console.log('Response from backend:', response.data);
             setTrains(response.data);
         } catch (error) {
@@ -28,7 +28,7 @@ const TrainScheduler = () => {
     const handleAssign = async (train_id) => {
         console.log('Assign Train');
         try {
-            const response = await axios.post('/admin/assignTrain', { trainID: train_id, delID:delivery_id },{ withCredentials: true });
+            const response = await axios.post('/manager/assignTrain', { trainID: train_id, delID:delivery_id },{ withCredentials: true });
             console.log('Response from backend:', response.data);
             navigate('/delivery_schedule');
         } catch (error) {

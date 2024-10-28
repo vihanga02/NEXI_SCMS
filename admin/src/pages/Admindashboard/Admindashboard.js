@@ -25,7 +25,7 @@ function Admindashboard() {
 
 
   useEffect(() => {
-    axios.get("/admin/profile",{withCredentials:true})
+    axios.get("/manager/profile",{withCredentials:true})
     .then((response) => {
     })
     .catch((error) => {
@@ -37,7 +37,7 @@ function Admindashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try { 
-        await axios.get('admin/admindetails', { withCredentials: true })
+        await axios.get('/manager/admindetails', { withCredentials: true })
           .then((res) => {
             setStoreID(res.data.Store_ID);
             setStoreCity(res.data.City);
@@ -51,7 +51,7 @@ function Admindashboard() {
 
     const fetchData1 = async () => {
       try{
-        await axios.get('admin/availabilityCounts', { withCredentials: true })
+        await axios.get('/manager/availabilityCounts', { withCredentials: true })
         .then((res) => {
           setActiveDrivers(res.data.Available_Drivers);
           setActiveAssistants(res.data.Available_Assistants);
@@ -71,7 +71,7 @@ function Admindashboard() {
 
     const fetchData2 = async () => {
       try {
-        axios.get('admin/incompleteOrders', { withCredentials: true })
+        axios.get('manager/incompleteOrders', { withCredentials: true })
         .then((res) => {
             setIncompleteOrdersList(res.data[2].map(order => ({
             id: order.Order_ID,

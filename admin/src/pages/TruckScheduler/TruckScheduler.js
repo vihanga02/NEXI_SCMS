@@ -12,7 +12,7 @@ function TruckScheduler() {
 
     const fetchDeliveries = async () => {
         try {
-            const response = await axios.get(`/admin/truckDelivery`,{ withCredentials: true });
+            const response = await axios.get(`/manager/truckDelivery`,{ withCredentials: true });
             setDeliveries(response.data);
         } catch (error) {
             console.error('Error fetching deliveries', error);
@@ -27,7 +27,7 @@ function TruckScheduler() {
         // Send request to backend to assign truck
         try {
             console.log('Assign Truck');
-            const response = await axios.post(`/admin/assignTruck`, { delivery_id },{ withCredentials: true });
+            const response = await axios.post(`/manager/assignTruck`, { delivery_id },{ withCredentials: true });
             console.log('Response from backend:', response.data);
             navigate('/delivery_schedule');
         } catch (error) {
@@ -38,7 +38,7 @@ function TruckScheduler() {
     const handleDelete = async (id) => {
         // Send request to backend to delete truck
         try {
-            const response = await axios.delete(`/admin/deleteTruck`, { 
+            const response = await axios.delete(`/manager/deleteTruck`, { 
                 data: { ID: id },
                 withCredentials: true
             });

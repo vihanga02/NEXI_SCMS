@@ -431,7 +431,7 @@ class Manager {
   }
 
   static async IncompletedTrainOrders(storeID) {
-    const query = 'call GetIncompleteOrders(?)';
+    const query = "call GetIncompleteOrders(?)";
     try {
       const result = await pool.query(query, [storeID]);
       return result[0];
@@ -439,7 +439,28 @@ class Manager {
       throw error;
     }
   }
+
+  static async insertDrivers(Driver_Name, Store_ID) {
+    const query = "INSERT INTO driver (Driver_Name, Store_ID) VALUES (?,?)";
+    try {
+      const [results] = await pool.query(query, [Driver_Name, Store_ID]);
+      return results;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async removeDriver(Driver_ID) {
+    const query = "DELETE FROM driver WHERE Driver_ID = ?";
+    try {
+      const [results] = await pool.query(query, [Driver_ID]);
+      return results;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
+
 
 
 export default Manager;
