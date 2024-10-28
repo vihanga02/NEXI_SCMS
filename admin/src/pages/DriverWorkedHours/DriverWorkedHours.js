@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import Topbar from '../../components/Topbar/Topbar';
-import './DriverWorkedHours.css'; // Assuming you have a CSS file for styling
+import './DriverWorkedHours.css';
 
 function DriverWorkedHours() {
     const [driverWorkHours, setDriverWorkHours] = useState([]);
@@ -15,13 +15,8 @@ function DriverWorkedHours() {
     useEffect(() => {
         const fetchDriverWorkHours = async () => {
             try {
-                const token = localStorage.getItem('token'); // Retrieve the token from localStorage
-
                 const response = await axios.get('/admin/driverWorkHours', {
-                    headers: {
-                        'Authorization': `Bearer ${token}` // Pass token in the Authorization header
-                    },
-                    withCredentials: true // Allow sending cookies and credentials if needed
+                    withCredentials: true // Allow sending cookies (token) along with the request
                 });
 
                 setDriverWorkHours(response.data); // Set the fetched driver work hours data
@@ -29,7 +24,7 @@ function DriverWorkedHours() {
             } catch (error) {
                 console.error('Error fetching driver work hours:', error);
                 if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-                    navigate('/login'); // Redirect to login if unauthorized
+                    navigate('/'); // Redirect to login if unauthorized
                 } else {
                     setError('Error fetching data. Please try again later.');
                 }

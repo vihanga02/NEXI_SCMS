@@ -42,7 +42,7 @@ function Report() {
         const fetchQuarterlySales = async () => {
             try {
               console.log('Starting date:', startDate);
-                const response = await axios.get(`/admin/quarterlySales?startDate=${startDate}`);
+                const response = await axios.get(`/admin/quarterlySales?startDate=${startDate}`,{withCredentials:true});
                 
                 const salesData = response.data;
 
@@ -62,7 +62,7 @@ function Report() {
                     ],
                 });
             } catch (error) {
-                console.error('Error fetching quarterly sales data:', error);
+                //console.error('Error fetching quarterly sales data:', error);
             }
         };
 

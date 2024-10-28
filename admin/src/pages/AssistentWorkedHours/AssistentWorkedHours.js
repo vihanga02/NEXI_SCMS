@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import Topbar from '../../components/Topbar/Topbar';
-import './AssistantWorkedHours.css'; // Assuming you'll add some page-specific styles
+import './AssistantWorkedHours.css';
 
 function AssistantWorkedHours() {
     const [assistantWorkHours, setAssistantWorkHours] = useState([]);
@@ -15,13 +15,8 @@ function AssistantWorkedHours() {
     useEffect(() => {
         const fetchAssistantWorkHours = async () => {
             try {
-                const token = localStorage.getItem('token'); // Retrieve the token from localStorage
-
                 const response = await axios.get('/admin/assistantWorkHours', {
-                    headers: {
-                        'Authorization': `Bearer ${token}` // Pass token in the Authorization header
-                    },
-                    withCredentials: true // Allow sending cookies and credentials if needed
+                    withCredentials: true // Send request with credentials (cookies with token)
                 });
 
                 setAssistantWorkHours(response.data); // Set the fetched assistant work hours data
@@ -29,7 +24,7 @@ function AssistantWorkedHours() {
             } catch (error) {
                 console.error('Error fetching assistant work hours:', error);
                 if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-                    navigate('/login'); // Redirect to login if unauthorized
+                    navigate('/'); // Redirect to login if unauthorized
                 } else {
                     setError('Error fetching data. Please try again later.');
                 }

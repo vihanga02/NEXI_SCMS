@@ -19,13 +19,8 @@ function CustomerOrderReport() {
     useEffect(() => {
         const fetchOrderCountByCustomer = async () => {
             try {
-                const token = localStorage.getItem('token'); // Retrieve token from localStorage
-
                 const response = await axios.get('/admin/customerOrderReport', {
-                    headers: {
-                        'Authorization': `Bearer ${token}` // Pass token in the Authorization header
-                    },
-                    withCredentials: true // Allow sending cookies and credentials if needed
+                    withCredentials: true // Send request with credentials (cookies with token)
                 });
 
                 setOrderCountByCustomer(response.data); // Set the fetched data
@@ -33,7 +28,7 @@ function CustomerOrderReport() {
             } catch (error) {
                 console.error('Error fetching customer order report:', error);
                 if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-                    navigate('/login'); // Redirect to login if unauthorized
+                    navigate('/'); // Redirect to login if unauthorized
                 } else {
                     setError('Error fetching data. Please try again later.');
                 }

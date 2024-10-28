@@ -19,13 +19,8 @@ function ReportsOfMainCities() {
     useEffect(() => {
         const fetchSalesByCity = async () => {
             try {
-                const token = localStorage.getItem('token'); // Retrieve the token from localStorage
-
                 const response = await axios.get('/admin/salesByCity', {
-                    headers: {
-                        'Authorization': `Bearer ${token}` // Pass token in the Authorization header
-                    },
-                    withCredentials: true // Allow sending cookies and credentials if needed
+                    withCredentials: true // Send request with credentials (cookies with token)
                 });
 
                 setSalesByCity(response.data); // Set the fetched sales by city data
@@ -33,7 +28,7 @@ function ReportsOfMainCities() {
             } catch (error) {
                 console.error('Error fetching sales by city:', error);
                 if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-                    navigate('/login'); // Redirect to login if unauthorized
+                    navigate('/'); // Redirect to login if unauthorized
                 } else {
                     setError('Error fetching data. Please try again later.');
                 }
