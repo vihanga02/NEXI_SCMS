@@ -265,7 +265,7 @@ INSERT INTO Truck_Route(Store_ID,Route,Time_Taken) VALUES
 (7, 'Kandy-Digana-Mahiyanganaya', 3),
 (7, 'Kandy-Matale-Dambulla', 2.5);
 
-INSERT INTO Driver (Name, Store_ID, Work_Hours, Availability) VALUES
+INSERT INTO Driver (Driver_Name, Store_ID, Work_Hours, Availability) VALUES
 ('Vihanga Muthumala', 1, 0.0, 'On_Trip'),
 ('Sahan Perera', 1, 0.0, 'Rest'),
 ('Kasun Gayantha', 1, 0.0, 'Rest'),
@@ -300,9 +300,9 @@ INSERT INTO Driver (Name, Store_ID, Work_Hours, Availability) VALUES
 ('Sunil Wijesinghe', 6, 0.0, 'On_Trip'),
 ('Ruwan Wijesinghe', 6, 0.0, 'Rest'),
 ('Gayan Wijesinghe', 6, 0.0, 'Rest'),
-('Suresh Wijesinghe', 6, 0.0, 'Rest'),
+('Suresh Wijesinghe', 6, 0.0, 'Rest');
 
-INSERT INTO Driver_Assistant (Name, Store_ID, Work_Hours, Availability) VALUES
+INSERT INTO Driver_Assistant (Assistant_Name, Store_ID, Work_Hours, Availability) VALUES
 ('Tharindu Perera', 1, 0.0, 'On_Trip'),
 ('Lakshan Perera', 2, 0.0, 'Rest'),
 ('Ravindu Perera', 1, 0.0, 'Rest'),
@@ -337,7 +337,7 @@ INSERT INTO Driver_Assistant (Name, Store_ID, Work_Hours, Availability) VALUES
 ('Sunil Wijesinghe', 6, 0.0, 'On_Trip'),
 ('Ruwan Wijesinghe', 6, 0.0, 'Rest'),
 ('Gayan Wijesinghe', 6, 0.0, 'Rest'),
-('Suresh Wijesinghe', 6, 0.0, 'Rest'),
+('Suresh Wijesinghe', 6, 0.0, 'Rest');
 
 
 INSERT INTO Truck (Reg_number, Store_ID, Used_Hours, Availability) VALUES 

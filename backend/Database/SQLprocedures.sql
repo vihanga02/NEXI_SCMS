@@ -663,3 +663,22 @@ END //
 
 DELIMITER ;
 
+DELIMITER //
+DROP PROCEDURE IF EXISTS GetIncompleteOrders//
+CREATE PROCEDURE `GetIncompleteOrders`(IN store_id_ INT)
+BEGIN
+	SELECT COUNT(*) AS Total_Order_Count
+    FROM Orders
+    WHERE Order_state != 'Pending' and Store_ID = store_id_;
+
+    SELECT COUNT(*) AS Incomplete_Order_Count
+    FROM Orders
+    WHERE Order_state != 'Complete' AND Order_state != 'Pending' and Store_ID = store_id_;
+
+    SELECT Order_ID, Customer_ID, Route_ID, Order_state
+    FROM Orders
+    WHERE Order_state != 'Complete' AND Order_state != 'Pending' and Store_ID = store_id_;
+END //
+
+DELIMITER ;
+
