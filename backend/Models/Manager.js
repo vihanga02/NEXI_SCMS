@@ -6,8 +6,6 @@ class Manager {
 
     try {
       const [results] = await pool.query(query, [Username]);
-      console.log('admin profile');
-      console.log(results);
       return results;
     } catch (error) {
       throw error;
