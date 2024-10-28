@@ -12,20 +12,6 @@ import axios from 'axios';
 function Report() {
     const navigate = useNavigate();
 
-    const [chartData, setChartData] = useState({
-        labels: [],
-        datasets: [
-            {
-                label: 'Total Sales',
-                data: [],
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1,
-            },
-        ],
-    });
-    const [startDate, setStartDate] = useState('2024-10-01'); // Default or user-selected date
-
     useEffect(() => {
         axios.get("/manager/profile",{withCredentials:true})
         .then((response) => {
