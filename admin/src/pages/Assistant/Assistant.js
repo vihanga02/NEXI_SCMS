@@ -4,6 +4,7 @@ import "./Assistant.css";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Alert from "../../components/Alert/Alert";
 
 function Assistant() {
   const navigate = useNavigate();
@@ -24,27 +25,56 @@ function Assistant() {
       });
   }, []);
 
+  const [showRemoveAlert, setShowRemoveAlert] = useState(false);
+  const [assistantToRemove, setAssistantToRemove] = useState(null);
+
+  const [showAddAlert, setShowAddAlert] = useState(false);
+
   const removeAssistant = (assistantId) => {
+    setShowRemoveAlert(true);
+    setAssistantToRemove(assistantId);
+  };
+
+  const confirmRemoveAssistant = () => {
     axios
-      .delete(`/manager/assistant/${assistantId}`, { withCredentials: true })
+      .delete(`/manager/assistant/${assistantToRemove}`, { withCredentials: true })
       .then(() => {
-        setAssistants(assistants.filter(assistant => assistant.Assistant_ID !== assistantId));
+        setAssistants(assistants.filter(assistant => assistant.Assistant_ID !== assistantToRemove));
+        setShowRemoveAlert(false);
+        setAssistantToRemove(null);
       })
       .catch((error) => {
         console.error("Error removing assistant:", error);
+        setShowRemoveAlert(false);
+        setAssistantToRemove(null);
       });
   };
 
+  const cancelRemoveAssistant = () => {
+    setShowRemoveAlert(false);
+    setAssistantToRemove(null);
+  };
+
   const addAssistant = () => {
+    setShowAddAlert(true);
+  };
+
+  const confirmAddAssistant = () => {
     axios
       .post("/manager/assistant", { name: newAssistantName }, { withCredentials: true })
       .then((response) => {
         setAssistants([...assistants, response.data]);
         setNewAssistantName("");
+        setShowAddAlert(false);
       })
       .catch((error) => {
         console.error("Error adding assistant:", error);
+        setShowAddAlert(false);
       });
+  };
+
+  const cancelAddAssistant = () => {
+    setShowAddAlert(false);
   };
 
   return (
@@ -85,6 +115,20 @@ function Assistant() {
         />
         <button className="add-assistant-button" onClick={addAssistant}>Add Assistant</button>
       </div>
+      {showRemoveAlert && (
+        <Alert
+          message="Are you sure you want to remove this assistant?"
+          onConfirm={confirmRemoveAssistant}
+          onCancel={cancelRemoveAssistant}
+        />
+      )}
+      {showAddAlert && (
+        <Alert
+          message="Are you sure you want to add this assistant?"
+          onConfirm={confirmAddAssistant}
+          onCancel={cancelAddAssistant}
+        />
+      )}
     </div>
   );
 }

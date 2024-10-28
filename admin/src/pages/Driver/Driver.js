@@ -2,6 +2,7 @@ import "./Driver.css";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Alert from "../../components/Alert/Alert";
 
 function Driver() {
   const navigate = useNavigate();
@@ -23,17 +24,40 @@ function Driver() {
   }, [drivers]);
 
   const removeDriver = (Driver_ID) => {
+    setShowRemoveAlert(true);
+    setDriverToRemove(Driver_ID);
+  };
+
+  const confirmRemoveDriver = () => {
     axios
-      .delete(`/manager/driver/remove/${Driver_ID}`, { withCredentials: true })
+      .delete(`/manager/driver/remove/${driverToRemove}`, { withCredentials: true })
       .then(() => {
-        setDrivers(drivers.filter((driver) => driver.Driver_ID !== Driver_ID));
+        setDrivers(drivers.filter((driver) => driver.Driver_ID !== driverToRemove));
+        setShowRemoveAlert(false);
+        setDriverToRemove(null);
       })
       .catch((error) => {
         console.error("Error removing driver:", error);
+        setShowRemoveAlert(false);
+        setDriverToRemove(null);
       });
   };
 
+  const cancelRemoveDriver = () => {
+    setShowRemoveAlert(false);
+    setDriverToRemove(null);
+  };
+
+  const [showRemoveAlert, setShowRemoveAlert] = useState(false);
+  const [driverToRemove, setDriverToRemove] = useState(null);
+
+  const [showAddAlert, setShowAddAlert] = useState(false);
+
   const addDriver = () => {
+    setShowAddAlert(true);
+  };
+
+  const confirmAddDriver = () => {
     axios
       .post(
         "/manager/driver/insert",
@@ -43,10 +67,16 @@ function Driver() {
       .then((response) => {
         setDrivers([...drivers, response.data]);
         setNewDriverName("");
+        setShowAddAlert(false);
       })
       .catch((error) => {
         console.error("Error adding driver:", error);
+        setShowAddAlert(false);
       });
+  };
+
+  const cancelAddDriver = () => {
+    setShowAddAlert(false);
   };
 
   return (
@@ -94,6 +124,20 @@ function Driver() {
           Add Driver
         </button>
       </div>
+      {showRemoveAlert && (
+        <Alert
+          message="Are you sure you want to remove this driver?"
+          onConfirm={confirmRemoveDriver}
+          onCancel={cancelRemoveDriver}
+        />
+      )}
+      {showAddAlert && (
+        <Alert
+          message="Are you sure you want to add this driver?"
+          onConfirm={confirmAddDriver}
+          onCancel={cancelAddDriver}
+        />
+      )}
     </div>
   );
 }

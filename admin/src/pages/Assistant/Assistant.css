@@ -31,8 +31,8 @@
 }
 
 .assistant-table-head {
-    background-color: var(--color3);
-    color: #fff;
+    background-color: #f2f2f2;
+    color: var(--color1);
 }
 
 .assistant-table-row {
