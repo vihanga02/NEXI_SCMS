@@ -18,7 +18,7 @@ function authenticateToken(req, res, next) {
         .status(403)
         .json({ message: "Token is not valid", success: false });
     }
-    req.user = user; 
+    req.user = user;
     next(); 
   });
 }

@@ -13,7 +13,6 @@ BEGIN
     WHERE NEW.truck_ID = t.truck_ID;
     
     UPDATE driver_assistant da
---     RIGHT JOIN Delivery_Schedule ds ON ds.Assistant_ID = da.Assistant_ID
     SET Availability = 'On_Trip'
     WHERE NEW.Assistant_ID = da.Assistant_ID;
 END $$
@@ -56,16 +55,6 @@ BEGIN
     INTO capacity
     FROM orders o
     WHERE NEW.Order_ID = o.Order_ID;
-
-    -- Newly added -----------------------------------------------------------------------------------------
-
---     SELECT ds.Train_ID
---     INTO TrainID
---     FROM order_delivery 
---     JOIN delivery_schedule ds ON ds.Delivery_id = order_delivery.Delivery_ID
-
---     WHERE order_delivery.Order_ID = NEW.Order_id AND ds.Train_ID != NULL;
-    -- -----------------------------------------------------------------------------------------------------
 
     UPDATE train t
     JOIN train_delivery td ON t.Train_ID = td.Train_ID

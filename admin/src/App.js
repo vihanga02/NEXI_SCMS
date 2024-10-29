@@ -14,7 +14,7 @@ import Assistant from './pages/Assistant/Assistant.js';
 import Report from './pages/Report/Report.js';
 import Order from './pages/Order/Order.js';
 import DeliverySchedule from './pages/Delivery_schedule/DeliverySchedule.js';
-import ManagerControl from './pages/ManagerControl/ManagerControl.js';
+import ManagerControl from './pages/Admin_Control/Admin_Control.js';
 import TruckScheduler from './pages/TruckScheduler/TruckScheduler.js';
 import TrainScheduler from './pages/TrainScheduler/TrainScheduler.js';
 

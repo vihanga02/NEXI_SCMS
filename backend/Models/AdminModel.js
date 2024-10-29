@@ -3,11 +3,21 @@ import pool from "../dbConfig.js";
 class Admin {
 
   static async getManagers() {
-    const query = `SELECT * FROM store_manager`;
+    const query = `SELECT * FROM store_manager order by Store_ID asc`;
 
     try {
       const [results] = await pool.query(query);
+      return results;
+    } catch (error) {
+      throw error;
+    }
+  }
 
+  static async getStores() {
+    const query = `SELECT * FROM get_total_store_stats`;
+
+    try {
+      const [results] = await pool.query(query);
       return results;
     } catch (error) {
       throw error;

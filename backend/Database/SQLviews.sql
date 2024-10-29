@@ -1,9 +1,6 @@
 CREATE OR REPLACE VIEW `sales_by_city` AS
 SELECT 
 	store.City,
---     Order_ID,
---     Customer_ID,
---     Ordered_Date,
     SUM(Total_Price)
 FROM orders
 JOIN store ON store.Store_ID = orders.Store_ID
@@ -16,9 +13,6 @@ GROUP BY store.City;
 CREATE OR REPLACE VIEW `sales_by_route` AS
 SELECT 
     truck_route.Route,
---     Order_ID,
---     Customer_ID,
---     Ordered_Date,
     SUM(Total_Price)
 FROM orders
 JOIN store ON store.Store_ID = orders.Store_ID
@@ -35,7 +29,10 @@ SELECT
     SUM(Quantity) AS 'Total_sales'
 FROM order_item
 JOIN product ON product.Product_ID=order_item.Product_ID
-GROUP BY Product_ID, Product_Name;
+
+GROUP BY Product_ID, Product_Name
+ORDER BY SUM(QUANTITY) DESC;
+
 
 
 
@@ -47,8 +44,6 @@ SELECT
     SUM(ROUND(((TIME_TO_SEC(Vehicle_arrival_time)-TIME_TO_SEC(Vehicle_departure_time))/3600),1)) AS "Hours_worked"
 FROM truck_delivery td
 JOIN delivery_schedule ds ON ds.Delivery_id = td.Truck_Del_ID
--- JOIN order_delivery od ON ds.Delivery_id = od.Delivery_ID
--- JOIN orders ON od.Order_ID = orders.Order_ID
 GROUP BY WEEK(shipment_date), td.Driver_id;
 
 
@@ -61,8 +56,6 @@ SELECT
     SUM(ROUND(((TIME_TO_SEC(Vehicle_arrival_time)-TIME_TO_SEC(Vehicle_departure_time))/3600),1)) AS "Hours_worked"
 FROM truck_delivery td
 JOIN delivery_schedule ds ON ds.Delivery_id = td.Truck_Del_ID
--- JOIN order_delivery od ON ds.Delivery_id = od.Delivery_ID
--- JOIN orders ON od.Order_ID = orders.Order_ID
 GROUP BY WEEK(ds.shipment_date), td.Assistant_id;
 
 
@@ -103,3 +96,17 @@ FROM
     store_manager sm
 JOIN 
     store s ON sm.Store_id = s.Store_Id;
+    
+    
+CREATE OR REPLACE VIEW get_total_store_stats AS
+SELECT
+    S.Store_ID,
+    S.City,
+    COUNT(DISTINCT T.Truck_ID) AS Truck,
+    COUNT(DISTINCT D.Driver_ID) AS Driver,
+    COUNT(DISTINCT A.Assistant_ID) AS Assistant
+FROM Store S
+LEFT JOIN Truck T ON T.Store_ID = S.Store_ID
+LEFT JOIN Driver D ON D.Store_ID = S.Store_ID
+LEFT JOIN Driver_Assistant A ON A.Store_ID = S.Store_ID
+GROUP BY S.Store_ID, S.City;
