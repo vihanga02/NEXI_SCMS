@@ -9,12 +9,10 @@ async function getIncompletedTrainOrders(req, res) {
     const result = await Manager.getIncompletedTrainOrders(req);
     res.status(200).json(result);
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: "Error fetching incomplete train orders",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Error fetching incomplete train orders",
+      error: error.message,
+    });
   }
 }
 //controller to get hours of assistants
@@ -23,12 +21,10 @@ async function getAssistantWorkedHours(req, res) {
     const result = await Manager.getAssistantWorkHours(req);
     res.status(200).json(result);
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: "Error fetching assistant worked hours",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Error fetching assistant worked hours",
+      error: error.message,
+    });
   }
 }
 
@@ -38,12 +34,10 @@ async function getDriverWorkedHours(req, res) {
     const result = await Manager.getDriverWorkHours(req);
     res.status(200).json(result);
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: "Error fetching driver worked hours",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Error fetching driver worked hours",
+      error: error.message,
+    });
   }
 }
 
@@ -65,12 +59,10 @@ async function getQuarterlySales(req, res) {
     const result = await Manager.getQuarterlySales(req);
     res.status(200).json(result);
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: "Error fetching quarterly sales",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Error fetching quarterly sales",
+      error: error.message,
+    });
   }
 }
 
@@ -114,12 +106,10 @@ async function getCustomerOrderReport(req, res) {
     const result = await Manager.getOrderCountByCustomer();
     res.status(200).json(result); // Send the retrieved data to the frontend
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: "Error fetching customer order report",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Error fetching customer order report",
+      error: error.message,
+    });
   }
 }
 
@@ -156,12 +146,10 @@ async function addDeliverySchedule(req, res) {
       .status(201)
       .json({ message: "Delivery schedule added successfully", data: result });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: "Error adding delivery schedule",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Error adding delivery schedule",
+      error: error.message,
+    });
   }
 }
 
@@ -171,12 +159,10 @@ async function deleteDelivery(req, res) {
     const result = await Manager.deleteDelivery(delID);
     res.status(204).json(result);
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: "Error deleting delivery schedule",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Error deleting delivery schedule",
+      error: error.message,
+    });
   }
 }
 
@@ -187,12 +173,10 @@ async function getDeliverySchedule(req, res) {
     const result = await Manager.getDeliverySchedule(date);
     res.status(200).json(result);
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: "Error fetching delivery schedule",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Error fetching delivery schedule",
+      error: error.message,
+    });
   }
 }
 
@@ -203,12 +187,10 @@ async function setDeliveryStatus(req, res) {
     const result = await Manager.setDeliveryStatus(status, delID);
     res.status(200).json(result);
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: "Error updating delivery status",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Error updating delivery status",
+      error: error.message,
+    });
   }
 }
 
@@ -222,12 +204,10 @@ async function addTruckDelivery(req, res) {
       .status(201)
       .json({ message: "Delivery schedule added successfully", data: result });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: "Error adding delivery schedule",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Error adding delivery schedule",
+      error: error.message,
+    });
   }
 }
 
@@ -240,12 +220,10 @@ async function addTrainDelivery(req, res) {
       .status(201)
       .json({ message: "Delivery schedule added successfully", data: result });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: "Error adding delivery schedule",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Error adding delivery schedule",
+      error: error.message,
+    });
   }
 }
 
@@ -255,12 +233,10 @@ async function deleteTruckDelivery(req, res) {
     const result = await Manager.deleteTruck(delID);
     res.status(204).json(result);
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: "Error deleting delivery schedule",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Error deleting delivery schedule",
+      error: error.message,
+    });
   }
 }
 
@@ -346,12 +322,10 @@ async function getDrivers(req, res) {
     const result = await Manager.getDrivers(city);
     res.status(200).json(result);
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: `Error fetching drivers for city: ${city}`,
-        error: error.message,
-      });
+    res.status(500).json({
+      message: `Error fetching drivers for city: ${city}`,
+      error: error.message,
+    });
   }
 }
 
@@ -362,12 +336,10 @@ async function getDriversOfStore(req, res) {
     const result = await Manager.getDriversbyStore(storeID);
     res.status(200).json(result);
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: `Error fetching drivers for store: ${storeID}`,
-        error: error.message,
-      });
+    res.status(500).json({
+      message: `Error fetching drivers for store: ${storeID}`,
+      error: error.message,
+    });
   }
 }
 
@@ -378,12 +350,10 @@ async function getAssistants(req, res) {
     const result = await Manager.getAssistants(city);
     res.status(200).json(result);
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: `Error fetching assistants for city: ${city}`,
-        error: error.message,
-      });
+    res.status(500).json({
+      message: `Error fetching assistants for city: ${city}`,
+      error: error.message,
+    });
   }
 }
 
@@ -394,12 +364,10 @@ async function getAssistsantsOfStore(req, res) {
     const result = await Manager.getAssistantsbyStore(storeID);
     res.status(200).json(result);
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: `Error fetching Assistants for store: ${storeID}`,
-        error: error.message,
-      });
+    res.status(500).json({
+      message: `Error fetching Assistants for store: ${storeID}`,
+      error: error.message,
+    });
   }
 }
 
@@ -410,12 +378,10 @@ async function getVehicles(req, res) {
     const result = await Manager.getVehicles(city);
     res.status(200).json(result);
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: `Error fetching vehicles for city: ${city}`,
-        error: error.message,
-      });
+    res.status(500).json({
+      message: `Error fetching vehicles for city: ${city}`,
+      error: error.message,
+    });
   }
 }
 
@@ -454,6 +420,7 @@ async function manager_login(req, res) {
       id: manager.Manager_ID,
       username: manager.Username,
       store: manager.Store_ID,
+      role: "manager",
     },
     process.env.SECRET_KEY,
     { expiresIn: "1h" }
@@ -533,16 +500,15 @@ async function getAvailabilityCounts(req, res) {
     const result = await Manager.getAvailabilityCounts(storeID);
     res.status(200).json(result);
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: "Error fetching availability counts",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Error fetching availability counts",
+      error: error.message,
+    });
   }
 }
 
 async function getIncompleteOrdersForStore(req, res) {
+<<<<<<< Updated upstream
 
     const storeID = req.user.store;
     try {
@@ -551,6 +517,18 @@ async function getIncompleteOrdersForStore(req, res) {
     } catch (error) {
         res.status(500).json({ message: "Error fetching incomplete orders", error: error.message });
     }
+=======
+  const storeID = req.user.store;
+  try {
+    const result = await Manager.IncompletedTrainOrders(storeID);
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error fetching incomplete orders",
+      error: error.message,
+    });
+  }
+>>>>>>> Stashed changes
 }
 
 async function insertDriver(req, res){
