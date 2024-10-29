@@ -32,7 +32,7 @@ function Order() {
       navigate("/"); 
         console.error("Error fetching customer profile:", error);
     });
-  }, [compOrders,paidOrders,receivedOrders]); 
+  }, []); 
 
   const handleCheckboxTrain = (event) => {
     const { value, checked } = event.target;
@@ -121,6 +121,7 @@ function Order() {
   };
 
   const trackingToTrain = async () => {
+
     try {
       const response = await axios.post('/manager/queueForDelivery', { orderList:selectedForTrain, delID:delivery_id }, { withCredentials: true });
       setTrackedOrders(response.data);

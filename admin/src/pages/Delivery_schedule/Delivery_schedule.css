@@ -1,6 +1,7 @@
 .DScontainer {
     display: flex;
-    height: 100vh; /* Full viewport height */
+    height: 100vh; 
+    padding: 1vh 3vw 3vh 4vh;
 }
 
 .DScontainer h1 {
