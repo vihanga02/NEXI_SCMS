@@ -12,8 +12,8 @@ import axios from 'axios';
 function Report() {
     const navigate = useNavigate();
 
-
-
+   
+    
     useEffect(() => {
         axios.get("/manager/profile",{withCredentials:true})
         .then((response) => {
