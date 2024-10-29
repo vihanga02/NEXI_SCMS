@@ -158,8 +158,8 @@ function Order() {
 
 
   return (
-    <div className='ADcontainer'>
-      <div className='Acontainer'>
+    <div className='ADcontainer-order'>
+      <div className='Acontainer-order'>
         {/* -----------Paid orders----------- */}
         <div className='order-content'>
           <h2>Paid Orders</h2>
@@ -199,7 +199,6 @@ function Order() {
                     </details>
                   </td>
                   <td>
-                    {/* <button className='btn btn-primary m-2 p-2' onClick={() => navigate(`/delivery_schedule/truckScheduler/`, { state: { delivery_id: order.Order_ID } })}>Track</button> */}
                     <input
                       type="checkbox"
                       className="toggle toggle-primary"
@@ -260,8 +259,7 @@ function Order() {
                   <td>
                     <input
                       type="checkbox"
-                      className="checkbox"
-                      class="toggle toggle-primary" 
+                      className="checkbox" 
                       value={order.Order_ID}
                       checked={selectedForTruck.includes(order.Order_ID)}
                       onChange={handleCheckboxTruck}
