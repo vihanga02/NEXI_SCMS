@@ -478,6 +478,17 @@ class Manager {
       throw error;
     }
   }
+
+
+  static async removeAssistant(Assistant_ID) {
+    const query = "DELETE FROM Driver_assistant WHERE Assistant_ID = ?";
+    try {
+      const [results] = await pool.query(query, [Assistant_ID]);
+      return results;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 

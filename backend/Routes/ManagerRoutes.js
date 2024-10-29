@@ -47,6 +47,7 @@ import {
     getAvailabilityCounts,
     getIncompletedTrainOrders,
     getIncompleteOrdersForStore,
+    removeAssistant
 
 } from "../Controllers/ManagerController.js";
 
@@ -100,5 +101,6 @@ router.get("/truckHours",authenticateToken,getTruckHours);
 router.get("/salesByCity",authenticateToken,getSalesByCity);
 router.get("/salesByRoute",authenticateToken,getSalesByRoute);
 router.get("/customerOrderReport",authenticateToken,getCustomerOrderReport);
+router.delete("/assistant/remove/:assistant_ID",authenticateToken, removeAssistant);
 
 export default router;
