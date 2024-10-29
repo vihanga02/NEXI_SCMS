@@ -24,6 +24,7 @@ class Manager {
     }
   }
 
+
   //model for getting the most orders
   static async getMostOrders(req) {
     const query = `SELECT * FROM product_orders;`;
@@ -235,7 +236,7 @@ class Manager {
     try {
       const result = await pool.query(query, deliveryID);
       return result;
-    }catch (error) {
+    } catch (error) {
       throw error;
     }
   }
