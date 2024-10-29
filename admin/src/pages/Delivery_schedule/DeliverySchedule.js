@@ -90,7 +90,7 @@ function DeliverySchedule() {
 
   const updateArrival = async (ID) => {
     try {
-      const response = await axios.post(`/admin/updateArrivalTime`, { deliveryID: ID }, { withCredentials: true });
+      const response = await axios.post(`/manager/updateArrivalTime`, { deliveryID: ID }, { withCredentials: true });
       toast.success("Arrival time updated!", {
         position: "top-right",
         autoClose: 2000,
@@ -165,12 +165,12 @@ function DeliverySchedule() {
                 <td>{new Date(delivery.Shipment_date).toLocaleDateString()}</td>
                 <td>{delivery.Vehicle_departure_time}</td>
                 <td>
-                  {delivery.Vehicle_arrival_time}<br />
-                  <button className='btn m-0.5 btn-primary' onClick={() => updateArrival(delivery.Delivery_id)}>Update Arrival Time</button>
+                  <div className='bottom-2'>{delivery.Vehicle_arrival_time}</div><br/>
+                  <button className='btn top-1 btn-primary p-1' onClick={() => updateArrival(delivery.Delivery_id)}>Update Arrival Time</button>
                 </td>
                 <td>
                   {/* setStatus(delivery.Delivery_status) */}
-                  <div className='btn m-0.5' onClick={() => window.location.reload()}>{delivery.Delivery_status}</div>
+                  <div className='btn m-0.5'>{delivery.Delivery_status}</div>
                   <details className="dropdown">
                     <summary className="btn m-0.5 bg-green-500 hover:border-spacing-3">Change status</summary>
                     <ul className="menu dropdown-content bg-base-100 bg-green-400 rounded z-[1] w-52 p-2 shadow">

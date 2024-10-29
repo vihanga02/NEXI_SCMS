@@ -96,7 +96,7 @@ BEGIN
     END IF;
 	
     -- Insert the new delivery schedule into the table
-    IF (selected_truck_id!=NULL AND selected_driver_id!=NULL AND selected_assistant_id!=NULL) THEN
+    IF (selected_truck_id IS NOT NULL AND selected_driver_id IS NOT NULL AND selected_assistant_id IS NOT NULL) THEN
     
 		INSERT INTO Truck_Delivery (Truck_Del_ID, truck_id, driver_id, assistant_id)
 		VALUES (deliveryID, selected_truck_id, selected_driver_id, selected_assistant_id);
