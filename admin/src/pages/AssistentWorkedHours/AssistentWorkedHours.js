@@ -53,6 +53,7 @@ function AssistantWorkedHours() {
                                 <tr>
                                     <th>Week Number</th>
                                     <th>Assistant ID</th>
+                                    <th>Assistant Name</th>
                                     <th>Hours Worked</th>
                                 </tr>
                             </thead>
@@ -60,8 +61,9 @@ function AssistantWorkedHours() {
                                 {assistantWorkHours.map((entry, index) => (
                                     <tr key={index}>
                                         <td>{entry.Week_number}</td>
-                                        <td>{entry.Assistant_id}</td>
-                                        <td>{entry.Hours_worked}</td>
+                                        <td>{entry.Assistant_ID}</td>
+                                        <td>{entry.Assistant_Name}</td>
+                                        <td>{entry.Work_Hours}</td>
                                     </tr>
                                 ))}
                             </tbody>

@@ -82,10 +82,10 @@ class Manager {
   }
 
   //model for get the assistant worked hours
-  static async getAssistantWorkHours() {
-    const query = `SELECT * FROM assistant_work_hours`; // Query the view directly
+  static async getAssistantWorkHours(Store_ID) {
+    const query = `call AssistantHoursByCity(?);`; // Query the view directly
     try {
-      const [rows] = await pool.query(query); // Execute the query and return rows
+      const [rows] = await pool.query(query,[Store_ID]); // Execute the query and return rows
       return rows; // Return only rows
     } catch (error) {
       console.error("Error in getAssistantWorkHours:", error);
@@ -93,27 +93,27 @@ class Manager {
     }
   }
 
-  //model for getting the quarterly sales
 
-  static async getQuarterlySales(req) {
-    const { startDate } = req.query;
-
-    const query = `CALL Quarterly_sales_from(?)`;
-    try {
-      const [rows] = await pool.query(query, [startDate]); // Get only the rows
-      // Verify that this is the correct data
-      return rows[0]; // Return only the first element of rows
-    } catch (error) {
-      console.error("Error in getQuarterlySales:", error);
-      throw error;
-    }
+// model for getting the quarterly sales
+static async getQuarterlySales(req, storeID) {
+  const { startDate } = req.query; // Get startDate from request query
+  const query = `CALL Quarterly_sales_from(?, ?)`; // Updated procedure call with two parameters
+  try {
+    const [rows] = await pool.query(query, [startDate, storeID]); // Pass both startDate and storeID
+    console.log(rows);
+    return rows[0]; // Return only the first element of rows
+  } catch (error) {
+    console.error("Error in getQuarterlySales:", error);
+    throw error;
   }
+}
+
   // Model function to get truck hours
-  static async getTruckHours() {
-    const query = `SELECT * FROM truck_hours`; // Query the view directly
+  static async getTruckHours(Store_ID) {
+    const query = `call TruckHoursByCity(?)`; // Query the view directly
 
     try {
-      const [rows] = await pool.query(query); // Execute the query and return rows
+      const [rows] = await pool.query(query,[Store_ID]); // Execute the query and return rows
       return rows; // Return only rows
     } catch (error) {
       console.error("Error in getTruckHours:", error);
@@ -122,10 +122,10 @@ class Manager {
   }
 
   // Function to get the total hours worked by each driver
-  static async getDriverWorkHours() {
-    const query = `SELECT * FROM driver_work_hours`; // Query the view directly
+  static async getDriverWorkHours(Store_ID) {
+    const query = `call DriverHoursByCity(?);`; // Query the view directly
     try {
-      const [rows] = await pool.query(query); // Execute the query and return rows
+      const [rows] = await pool.query(query,[Store_ID]); // Execute the query and return rows
       return rows; // Return only rows
     } catch (error) {
       console.error("Error in getDriverWorkHours:", error);
@@ -146,11 +146,14 @@ class Manager {
   }
 
   // Model function to get sales by route
-  static async getSalesByRoute() {
-    const query = `SELECT * FROM sales_by_route`; // Query the view directly
+  static async getSalesByRoute(st) {
+    
+    const query = `SELECT Route,Total_Sales FROM sales_by_route where Store_ID=?`; // Query the view directly
+    
 
     try {
-      const [rows] = await pool.query(query); // Execute the query and return rows
+      const [rows] = await pool.query(query,st); // Execute the query and return rows
+      console.log(rows);
       return rows; // Return only rows
     } catch (error) {
       console.error("Error in getSalesByRoute:", error);
@@ -159,11 +162,11 @@ class Manager {
   }
 
   // Model function to get order count by customer
-  static async getOrderCountByCustomer() {
-    const query = `CALL GetOrderCountByCustomer()`;
+  static async getOrderCountByCustomer(storeID) {
+    const query = `CALL GetOrderCountByCustomer(?);`; // Query the view directly
 
     try {
-      const [rows] = await pool.query(query);
+      const [rows] = await pool.query(query, [storeID]); // Execute the query and return rows
       return rows[0]; // Return only the data portion of the result
     } catch (error) {
       console.error("Error in getOrderCountByCustomer:", error);

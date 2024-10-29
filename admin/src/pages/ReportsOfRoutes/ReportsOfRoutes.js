@@ -7,7 +7,6 @@ import Sidebar from '../../components/Sidebar/Sidebar';
 import Topbar from '../../components/Topbar/Topbar';
 import './ReportsOfRoutes.css';
 
-// Register necessary Chart.js components
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 function ReportsOfRoutes() {
@@ -23,12 +22,12 @@ function ReportsOfRoutes() {
                     withCredentials: true 
                 });
 
-                setSalesByRoute(response.data); // Set the fetched sales by route data
+                setSalesByRoute(response.data); 
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching sales by route:', error);
                 if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-                    navigate('/'); // Redirect to login if unauthorized
+                    navigate('/'); 
                 } else {
                     setError('Error fetching data. Please try again later.');
                 }
@@ -39,13 +38,12 @@ function ReportsOfRoutes() {
         fetchSalesByRoute();
     }, [navigate]);
 
-    // Prepare the data for the bar chart
     const chartData = {
-        labels: salesByRoute.map(entry => entry.Route), // X-axis labels
+        labels: salesByRoute.map(entry => entry.Route),
         datasets: [
             {
                 label: 'Total Sales',
-                data: salesByRoute.map(entry => entry['SUM(Total_Price)']), // Y-axis data
+                data: salesByRoute.map(entry => parseFloat(entry.Total_Sales)), // Updated mapping
                 backgroundColor: 'rgba(75, 192, 192, 0.6)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1,

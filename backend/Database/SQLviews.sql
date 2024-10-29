@@ -8,16 +8,16 @@ JOIN truck_route ON truck_route.Route_ID = orders.Route_ID
 GROUP BY store.City;
 
 
-
-
 CREATE OR REPLACE VIEW `sales_by_route` AS
 SELECT 
+    truck_route.Store_ID,  
     truck_route.Route,
-    SUM(Total_Price)
+    SUM(Total_Price) AS Total_Sales  -- Alias for the SUM column
 FROM orders
 JOIN store ON store.Store_ID = orders.Store_ID
 JOIN truck_route ON truck_route.Route_ID = orders.Route_ID
-GROUP BY truck_route.Route;
+GROUP BY truck_route.Store_ID, truck_route.Route;  -- Include Route_ID in GROUP BY
+
 
 
 

@@ -17,8 +17,9 @@ async function getIncompletedTrainOrders(req, res) {
 }
 //controller to get hours of assistants
 async function getAssistantWorkedHours(req, res) {
+  const storeID = req.user.store; // Extract storeID from token payload
   try {
-    const result = await Manager.getAssistantWorkHours(req);
+    const result = await Manager.getAssistantWorkHours(storeID);
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json({
@@ -30,8 +31,9 @@ async function getAssistantWorkedHours(req, res) {
 
 //controller to get hours of drivers
 async function getDriverWorkedHours(req, res) {
+  const storeID = req.user.store;
   try {
-    const result = await Manager.getDriverWorkHours(req);
+    const result = await Manager.getDriverWorkHours(storeID);
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json({
@@ -43,8 +45,10 @@ async function getDriverWorkedHours(req, res) {
 
 //controller to get most orders
 async function getMostOrders(req, res) {
+  const storeID = req.user.store;
+  console.log('in controller');
   try {
-    const result = await Manager.getMostOrders(req);
+    const result = await Manager.getMostOrders(req,storeID);
     res.status(200).json(result);
   } catch (error) {
     res
@@ -53,10 +57,12 @@ async function getMostOrders(req, res) {
   }
 }
 
-//controller to get quaterly sales
+// //controller to get quaterly sales
 async function getQuarterlySales(req, res) {
+  const storeID = req.user.store; // Extract storeID from token payload
+  
   try {
-    const result = await Manager.getQuarterlySales(req);
+    const result = await Manager.getQuarterlySales(req, storeID); // Pass storeID to the model
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json({
@@ -68,8 +74,9 @@ async function getQuarterlySales(req, res) {
 
 // Controller function to get truck hours
 async function getTruckHours(req, res) {
+  const storeID = req.user.store;
   try {
-    const result = await Manager.getTruckHours();
+    const result = await Manager.getTruckHours(storeID);
     res.status(200).json(result); // Send the retrieved data to the frontend
   } catch (error) {
     res
@@ -77,6 +84,7 @@ async function getTruckHours(req, res) {
       .json({ message: "Error fetching truck hours", error: error.message });
   }
 }
+
 // Controller function to get sales by city
 
 async function getSalesByCity(req, res) {
@@ -91,8 +99,9 @@ async function getSalesByCity(req, res) {
 }
 // Controller function to get sales by route
 async function getSalesByRoute(req, res) {
+  const storeID = req.user.store;
   try {
-    const result = await Manager.getSalesByRoute();
+    const result = await Manager.getSalesByRoute(storeID);
     res.status(200).json(result); // Send the retrieved data to the frontend
   } catch (error) {
     res
@@ -102,8 +111,9 @@ async function getSalesByRoute(req, res) {
 }
 // Controller function to get customer order count report
 async function getCustomerOrderReport(req, res) {
+  const storeID = req.user.store;
   try {
-    const result = await Manager.getOrderCountByCustomer();
+    const result = await Manager.getOrderCountByCustomer(storeID);
     res.status(200).json(result); // Send the retrieved data to the frontend
   } catch (error) {
     res.status(500).json({
