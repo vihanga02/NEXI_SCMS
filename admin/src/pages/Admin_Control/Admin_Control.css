@@ -17,9 +17,6 @@
 
 .manager-control__subtitle {
     color: #555;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 5px;
-    margin-top: 20px;
 }
 
 .manager-control__table {
@@ -64,4 +61,40 @@
 
 .manager-control__button:hover {
     background-color: #ff1a1a;
+}
+
+.add-manager-section {
+    margin-top: 30px;
+    text-align: center;
+    margin-left: 50vw;
+    height: 5vh;
+}
+
+.add-button {
+    background-color: #4CAF50;
+    width: 14vw;
+    height: 5vh;
+    color: white;
+    border: none;
+    padding: 5px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1em;
+    font-weight: bolder;
+}
+
+.add-button:hover {
+    background-color: #45a049;
+}
+
+.manager-control .manager-header{
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 5px;
+    margin-top: 5vh;
+    justify-content: space-between;
+}
+
+.store-control__subtitle{
+    margin-top: 8vh;
 }

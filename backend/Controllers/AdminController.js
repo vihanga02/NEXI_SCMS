@@ -4,13 +4,25 @@ import bcrypt from "bcrypt";
 
 async function getManager(req, res) {
   try {
-    const managers = await Admin.getManagers();
+    const managers = await Admin.getManagers(); 
     res.status(200).json(managers);
   } catch (error) {
     console.error("Error in getting managers:", error);
     res
       .status(500)
       .json({ success: false, message: "Error during getting managers." });
+  }
+}
+
+async function getStores(req, res) {
+  try {
+    const stores = await Admin.getStores();
+    res.status(200).json(stores);
+  } catch (error) {
+    console.error("Error in getting stores:", error);
+    res
+      .status(500)
+      .json({ success: false, message: "Error during getting stores." });
   }
 }
 
@@ -27,4 +39,4 @@ async function removeManager(req, res) {
   }
 }
 
-export { removeManager, getManager };
+export { removeManager, getManager, getStores };

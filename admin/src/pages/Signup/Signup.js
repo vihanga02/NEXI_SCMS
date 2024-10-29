@@ -105,10 +105,9 @@ const Signup = () => {
       <div className="signupbody">
         <div className="signup-form-outer">
           <form className="signup-form-inner" onSubmit={handleSubmit}>
-            <h2>Sign Up</h2>
-
+            <h2>Add Manager</h2>
             <div className="form-group">
-              <label htmlFor="fullname">Full Name:</label>
+              <label htmlFor="fullname">Name</label>
               <input
                 type="text"
                 id="fullname"
@@ -122,7 +121,7 @@ const Signup = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="email">Email:</label>
+              <label htmlFor="email">Email</label>
               <input
                 type="email"
                 id="email"
@@ -136,7 +135,7 @@ const Signup = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="city">City:</label>
+              <label htmlFor="city">City</label>
               <select
                 id="city"
                 name="City"
@@ -173,7 +172,7 @@ const Signup = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="username">Username:</label>
+              <label htmlFor="username">Username</label>
               <input
                 type="text"
                 id="username"
@@ -187,7 +186,7 @@ const Signup = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="password">Create Password:</label>
+              <label htmlFor="password">Create Password</label>
               <input
                 type="password"
                 id="password"
@@ -201,7 +200,7 @@ const Signup = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="confirmPassword">Confirm Password:</label>
+              <label htmlFor="confirmPassword">Confirm Password</label>
               <input
                 type="password"
                 id="confirmPassword"
