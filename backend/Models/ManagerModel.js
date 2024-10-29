@@ -212,9 +212,7 @@ class Manager {
             INNER JOIN Driver d ON td.Driver_id = d.Driver_ID
             WHERE da.Store_ID = ? AND d.Store_ID = ?;`;
     try {
-      console.log('controller');
       const result = await pool.query(query, [storeID,storeID]);
-      console.log(result);
       return result[0];
     } catch (error) {
       throw error;
@@ -261,10 +259,10 @@ class Manager {
     }
   }
 
-  static async addTruckDelivery(AdminID, delivery_id) {
+  static async addTruckDelivery(storeID, delivery_id) {
     const query = "call CreateTruckDelivery(?,?)";
     try {
-      const result = await pool.query(query, [AdminID, delivery_id]);
+      const result = await pool.query(query, [storeID, delivery_id]);
       return result;
     } catch (error) {
       throw error;

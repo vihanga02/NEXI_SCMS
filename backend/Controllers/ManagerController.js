@@ -127,7 +127,7 @@ async function getPaidOrders(req, res) {
 }
 
 async function getTruckDelivery(req, res) {
-  const storeID = req.user.id;
+  const storeID = req.user.store;
   try {
     const result = await Manager.getTruckDelivery(storeID);
     res.status(200).json(result);
@@ -139,7 +139,6 @@ async function getTruckDelivery(req, res) {
 }
 
 async function addDeliverySchedule(req, res) {
-  const AdminID = req.user.id;
   try {
     const result = await Manager.addDeliverySchedule(req);
     res
@@ -196,10 +195,10 @@ async function setDeliveryStatus(req, res) {
 
 // Controller to add a new delivery schedule
 async function addTruckDelivery(req, res) {
-  const AdminID = req.user.id;
+  const storeID = req.user.store;
   const delID = req.body.delivery_id.delivery_id.delivery_id;
   try {
-    const result = await Manager.addTruckDelivery(AdminID, delID);
+    const result = await Manager.addTruckDelivery(storeID, delID);
     res
       .status(201)
       .json({ message: "Delivery schedule added successfully", data: result });
@@ -254,7 +253,7 @@ async function changeOrderStatus(req, res) {
 }
 
 async function getCompletedOrders(req, res) {
-  const storeID = req.user.id;
+  const storeID = req.user.store;
   try {
     const result = await Manager.getCompletedOrders(storeID);
     res.status(200).json(result);
@@ -266,7 +265,7 @@ async function getCompletedOrders(req, res) {
 }
 
 async function getReceivedOrders(req, res) {
-  const storeID = req.user.id;
+  const storeID = req.user.store;
   try {
     const result = await Manager.getReceivedOrders(storeID);
     res.status(200).json(result);
@@ -304,7 +303,7 @@ async function updateArrivalTime(req, res) {
 
 // Controller to get trains for a specific store
 async function getTrains(req, res) {
-  const storeID = req.user.id;
+  const storeID = req.user.store;
   try {
     const result = await Manager.getTrains(storeID);
     res.status(200).json(result);

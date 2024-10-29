@@ -165,7 +165,7 @@ function DeliverySchedule() {
                 <td>{new Date(delivery.Shipment_date).toLocaleDateString()}</td>
                 <td>{delivery.Vehicle_departure_time}</td>
                 <td>
-                  {delivery.Vehicle_arrival_time}
+                  {delivery.Vehicle_arrival_time}<br />
                   <button className='btn m-0.5 btn-primary' onClick={() => updateArrival(delivery.Delivery_id)}>Update Arrival Time</button>
                 </td>
                 <td>

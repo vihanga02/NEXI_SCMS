@@ -14,128 +14,27 @@ DELIMITER ;
 
 
 
--- DROP procedure IF EXISTS `CreateDeliverySchedule`;
--- DELIMITER $$
--- CREATE PROCEDURE CreateDeliverySchedule(managerID INT)
--- BEGIN
---     DECLARE selected_driver_id INT;
---     DECLARE driver_hours INT;
---     DECLARE selected_assistant_id INT;
---     DECLARE assistant_hours INT;
---     DECLARE selected_truck_id INT;
---     DECLARE schedule_exists INT;
---     DECLARE route_time INT;
---     DECLARE manager_store_id INT;
-    
--- 	-- Get the store_id associated with the manager
---     SELECT store_id INTO manager_store_id
---     FROM store_manager
---     WHERE store_manager.manager_id = managerID;
-
--- 	-- Select a random available truck
---     SELECT t.truck_id INTO selected_truck_id
---     FROM truck t
---     WHERE t.Availability = '1' AND t.Store_ID = manager_store_id
---     ORDER BY RAND() 
---     LIMIT 1;
-
---     -- Check if the delivery_schedule table has any records
---     SELECT COUNT(Delivery_ID) 
---     INTO schedule_exists
---     FROM delivery_schedule;
-
---     IF schedule_exists > 0 THEN
---         -- Select a random driver who is available and not in the last schedule
---         SELECT d.driver_id 
---         INTO selected_driver_id
---         FROM driver d
-
---         WHERE 
---         d.driver_id != 
---         (
---             SELECT ds.driver_id
---             FROM delivery_schedule ds
---             ORDER BY ds.delivery_id DESC
---             LIMIT 1
---         ) AND 
---         d.work_hours < 40
---         AND d.Availability = 'Rest' 
---         AND d.Store_ID = manager_store_id
---         ORDER BY RAND() 
---         LIMIT 1;
-
---         -- Select a random assistant who is available and not in the last two schedules
---         SELECT a.assistant_id 
---         INTO selected_assistant_id
---         FROM driver_assistant a
---         WHERE a.Assistant_ID != 
---         (
---             SELECT ds.assistant_id
---             FROM delivery_schedule ds
---             ORDER BY ds.delivery_id DESC
---             LIMIT 1
---         ) AND 
--- 		a.work_hours < 60
---         AND a.Availability = 'Rest' AND a.Store_ID = manager_store_id
---         ORDER BY RAND() 
---         LIMIT 1;
---     ELSE
---         -- If delivery_schedule is empty, randomly select a driver based on availability
---         SELECT d.driver_id INTO selected_driver_id
---         FROM driver d
---         WHERE d.work_hours < 40
--- 			AND d.Availability = 'Rest'
--- 			AND d.Store_ID = manager_store_id
---         ORDER BY RAND() 
---         LIMIT 1;
-
---         -- Randomly select an assistant based on availability
---         SELECT a.assistant_id 
---         INTO selected_assistant_id
---         FROM driver_assistant a
---         WHERE a.work_hours < 60
---         AND a.Availability = 'Rest'
---         AND a.Store_ID = manager_store_id
---         ORDER BY RAND() 
---         LIMIT 1;
---     END IF;
-
---     -- Insert the new delivery schedule into the table
---     INSERT INTO delivery_schedule (truck_id, driver_id, assistant_id, vehicle_arrival_time, vehicle_departure_time, Shipment_date)
---     VALUES (selected_truck_id, selected_driver_id, selected_assistant_id, DEFAULT, CURTIME() , CURDATE());
--- END $$
--- DELIMITER ;
-
-
 DELIMITER $$
 DROP procedure IF EXISTS `CreateTruckDelivery`$$
 CREATE PROCEDURE CreateTruckDelivery(
-	managerID INT,
+	storeID INT,
     deliveryID INT)
+
 BEGIN
     DECLARE selected_driver_id INT;
-    DECLARE driver_hours INT;
     DECLARE selected_assistant_id INT;
-    DECLARE assistant_hours INT;
     DECLARE selected_truck_id INT;
     DECLARE schedule_exists INT;
-    DECLARE route_time INT;
-    DECLARE manager_store_id INT;
-    
-	-- Get the store_id associated with the manager
-    SELECT store_id INTO manager_store_id
-    FROM store_manager
-    WHERE store_manager.manager_id = managerID;
 
 	-- Select a random available truck
     SELECT t.truck_id INTO selected_truck_id
     FROM truck t
-    WHERE t.Availability = '1' AND t.Store_ID = manager_store_id
+    WHERE t.Availability = '1' AND t.Store_ID = storeID
     ORDER BY RAND() 
     LIMIT 1;
 
     -- Check if the delivery_schedule table has any records
-    SELECT COUNT(Truck_Del_ID) 
+    SELECT COUNT(ID) 
     INTO schedule_exists
     FROM Truck_Delivery;
 
@@ -150,13 +49,13 @@ BEGIN
         (
             SELECT td.driver_id
             FROM Truck_Delivery td
-            ORDER BY td.Truck_Del_ID DESC
+            ORDER BY td.ID DESC
             LIMIT 1
         ) AND 
         d.work_hours < 40
         AND d.Availability = 'Rest' 
-        AND d.Store_ID = manager_store_id
-        ORDER BY RAND() 
+        AND d.Store_ID = storeID
+        ORDER BY RAND()
         LIMIT 1;
 
         -- Select a random assistant who is available and not in the last two schedules
@@ -167,20 +66,21 @@ BEGIN
         (
             SELECT td.assistant_id
             FROM Truck_Delivery td
-            ORDER BY td.Truck_Del_ID DESC
-            LIMIT 2
+            ORDER BY td.ID DESC
+            LIMIT 1
         ) AND 
 		a.work_hours < 60
-        AND a.Availability = 'Rest' AND a.Store_ID = manager_store_id
+        AND a.Availability = 'Rest' AND a.Store_ID = storeID
         ORDER BY RAND() 
         LIMIT 1;
+
     ELSE
         -- If delivery_schedule is empty, randomly select a driver based on availability
         SELECT d.driver_id INTO selected_driver_id
         FROM driver d
         WHERE d.work_hours < 40
 			AND d.Availability = 'Rest'
-			AND d.Store_ID = manager_store_id
+			AND d.Store_ID = storeID
         ORDER BY RAND() 
         LIMIT 1;
 
@@ -189,24 +89,32 @@ BEGIN
         INTO selected_assistant_id
         FROM driver_assistant a
         WHERE a.work_hours < 60
-        AND a.Availability = 'Rest'
-        AND a.Store_ID = manager_store_id
+			AND a.Availability = 'Rest'
+			AND a.Store_ID = storeID
         ORDER BY RAND() 
         LIMIT 1;
     END IF;
-
+	
     -- Insert the new delivery schedule into the table
-    INSERT INTO Truck_Delivery (Truck_Del_ID, truck_id, driver_id, assistant_id)
-    VALUES (deliveryID, selected_truck_id, selected_driver_id, selected_assistant_id);
+    IF (selected_truck_id!=NULL AND selected_driver_id!=NULL AND selected_assistant_id!=NULL) THEN
     
-    UPDATE delivery_schedule ds
-    SET Shipment_Date = CURDATE(),
-		Vehicle_departure_time = CURTIME(),
-		Delivery_status = 'In_Truck'
-    WHERE Delivery_id = deliveryID;
-    
+		INSERT INTO Truck_Delivery (Truck_Del_ID, truck_id, driver_id, assistant_id)
+		VALUES (deliveryID, selected_truck_id, selected_driver_id, selected_assistant_id);
+        
+        UPDATE delivery_schedule ds
+		SET Shipment_Date = CURDATE(),
+			Vehicle_departure_time = CURTIME(),
+			Delivery_status = 'In_Truck'
+		WHERE Delivery_id = deliveryID;
+        
+	ELSE
+		SIGNAL SQLSTATE '45000'
+		SET MESSAGE_TEXT = 'One or more required IDs (truck, driver, assistant) is NULL. Unable to proceed with delivery insertion.';
+	END IF;
+
 END $$
 DELIMITER ;
+
 
 
 
@@ -345,54 +253,6 @@ DO
     CALL UpdateDailyWorkHours();
 $$
 DELIMITER ;
-
--- --------------------------------------------------------------
-
-
-
-
--- DROP EVENT IF EXISTS daily_add_work_hours;
--- DELIMITER $$
--- CREATE EVENT daily_add_work_hours
--- ON SCHEDULE
--- 	EVERY 1 DAY STARTS '2024-10-26'
--- DO BEGIN
--- 	-- DECLARE dr_id INT;
--- -- 	DECLARE as_id INT;
-    
--- 	UPDATE driver d
---     SET d.work_hours = CASE
--- 		WHEN d.Driver_ID = 1 THEN d.work_hours + driver_hours_worked(CURDATE(),1)
---         WHEN d.Driver_ID = 2 THEN d.work_hours + driver_hours_worked(CURDATE(),2)
---         WHEN d.Driver_ID = 3 THEN d.work_hours + driver_hours_worked(CURDATE(),3)
---         WHEN d.Driver_ID = 4 THEN d.work_hours + driver_hours_worked(CURDATE(),4)
---         WHEN d.Driver_ID = 5 THEN d.work_hours + driver_hours_worked(CURDATE(),5)
---         WHEN d.Driver_ID = 6 THEN d.work_hours + driver_hours_worked(CURDATE(),6)
---         WHEN d.Driver_ID = 7 THEN d.work_hours + driver_hours_worked(CURDATE(),7)
---         WHEN d.Driver_ID = 8 THEN d.work_hours + driver_hours_worked(CURDATE(),8)
---         WHEN d.Driver_ID = 9 THEN d.work_hours + driver_hours_worked(CURDATE(),9)
---         WHEN d.Driver_ID = 10 THEN d.work_hours + driver_hours_worked(CURDATE(),10)
---         WHEN d.Driver_ID = 11 THEN d.work_hours + driver_hours_worked(CURDATE(),11)
---         ELSE d.work_hours
--- 	END;
-    
---     UPDATE driver_assistant a
---     SET a.work_hours = CASE
--- 		WHEN a.Assistant_ID = 1 THEN a.work_hours + assistant_hours_worked(CURDATE(), 1)
---         WHEN a.Assistant_ID = 2 THEN a.work_hours + assistant_hours_worked(CURDATE(), 2)
---         WHEN a.Assistant_ID = 3 THEN a.work_hours + assistant_hours_worked(CURDATE(), 3)
---         WHEN a.Assistant_ID = 4 THEN a.work_hours + assistant_hours_worked(CURDATE(), 4)
---         WHEN a.Assistant_ID = 5 THEN a.work_hours + assistant_hours_worked(CURDATE(), 5)
---         WHEN a.Assistant_ID = 6 THEN a.work_hours + assistant_hours_worked(CURDATE(), 6)
---         WHEN a.Assistant_ID = 7 THEN a.work_hours + assistant_hours_worked(CURDATE(), 7)
---         WHEN a.Assistant_ID = 8 THEN a.work_hours + assistant_hours_worked(CURDATE(), 8)
---         WHEN a.Assistant_ID = 9 THEN a.work_hours + assistant_hours_worked(CURDATE(), 9)
---         WHEN a.Assistant_ID = 8 THEN a.work_hours + assistant_hours_worked(CURDATE(), 10)
---         WHEN a.Assistant_ID = 11 THEN a.work_hours + assistant_hours_worked(CURDATE(), 11)
---         ELSE a.work_hours
--- 	END;
--- END$$
--- DELIMITER ;
 
 
 
