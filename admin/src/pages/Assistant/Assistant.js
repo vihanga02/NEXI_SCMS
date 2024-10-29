@@ -34,10 +34,10 @@ function Assistant() {
     setShowRemoveAlert(true);
     setAssistantToRemove(assistantId);
   };
-  
+
   const confirmRemoveAssistant = () => {
     axios
-      .delete(`/manager/assistant/remove/${assistantToRemove}`, { withCredentials: true })
+      .delete(`/manager/assistant/${assistantToRemove}`, { withCredentials: true })
       .then(() => {
         setAssistants(assistants.filter(assistant => assistant.Assistant_ID !== assistantToRemove));
         setShowRemoveAlert(false);
