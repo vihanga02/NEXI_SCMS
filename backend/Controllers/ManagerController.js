@@ -507,7 +507,6 @@ async function getAvailabilityCounts(req, res) {
 }
 
 async function getIncompleteOrdersForStore(req, res) {
-<<<<<<< Updated upstream
 
     const storeID = req.user.store;
     try {
@@ -516,18 +515,6 @@ async function getIncompleteOrdersForStore(req, res) {
     } catch (error) {
         res.status(500).json({ message: "Error fetching incomplete orders", error: error.message });
     }
-=======
-  const storeID = req.user.store;
-  try {
-    const result = await Manager.IncompletedTrainOrders(storeID);
-    res.status(200).json(result);
-  } catch (error) {
-    res.status(500).json({
-      message: "Error fetching incomplete orders",
-      error: error.message,
-    });
-  }
->>>>>>> Stashed changes
 }
 
 async function insertDriver(req, res){
