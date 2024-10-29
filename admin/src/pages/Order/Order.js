@@ -9,20 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 function Order() {
 
-  // Sample data for the table
-
   const navigate = useNavigate();
-
-
-  useEffect(() => {
-    axios.get("/manager/profile",{withCredentials:true})
-    .then((response) => {
-    })
-    .catch((error) => {
-      navigate("/"); 
-        console.error("Error fetching customer profile:", error);
-    });
-  }, []); 
 
   const location = useLocation();
   const delivery_id = location.state || {};
@@ -32,19 +19,30 @@ function Order() {
   const [paidOrders, setPaidOrders] = useState([]);
   const [trackedOrders, setTrackedOrders] = useState([]);
   const [receivedOrders, setReceivedOrders] = useState([]);
+  
+  useEffect(() => {
+    pOrders();
+    cOrders();
+    recOrders();
 
+    axios.get("/manager/profile",{withCredentials:true})
+    .then((response) => {
+    })
+    .catch((error) => {
+      navigate("/"); 
+        console.error("Error fetching customer profile:", error);
+    });
+  }, [compOrders,paidOrders,receivedOrders]); 
 
   const handleCheckboxTrain = (event) => {
     const { value, checked } = event.target;
 
     setSelectedForTrain((prevSelectedCheckboxes) => {
       if (checked) {
-        // Add value only if it doesn't already exist
         return prevSelectedCheckboxes.includes(value)
-          ? prevSelectedCheckboxes // Return existing state if already present
-          : [...prevSelectedCheckboxes, value]; // Add the value if not present
+          ? prevSelectedCheckboxes 
+          : [...prevSelectedCheckboxes, value]; 
       } else {
-        // Remove the value if unchecked
         return prevSelectedCheckboxes.filter((item) => item !== value);
       }
     });
@@ -157,13 +155,6 @@ function Order() {
       console.error('Error getting orders', error.response ? error.response : error);
     }
   };
-
-  useEffect(() => {
-    pOrders();
-    cOrders();
-    recOrders();
-  }, []);
-
 
 
   return (

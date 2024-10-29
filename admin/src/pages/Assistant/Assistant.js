@@ -1,5 +1,3 @@
-import Sidebar from "../../components/Sidebar/Sidebar.js";
-import Topbar from "../../components/Topbar/Topbar.js";
 import "./Assistant.css";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
@@ -17,29 +15,28 @@ function Assistant() {
     axios
       .get("/manager/assistantsofstore", { withCredentials: true })
       .then((response) => {
-        setAssistants(response.data); // Set the fetched data to the assistants state
+        setAssistants(response.data);
       })
       .catch((error) => {
         console.error("Error fetching assistant data:", error);
         navigate("/");
       });
-  }, []);
+  }, [assistants]);
 
-  const [showRemoveAlert, setShowRemoveAlert] = useState(false);
-  const [assistantToRemove, setAssistantToRemove] = useState(null);
-
-  const [showAddAlert, setShowAddAlert] = useState(false);
-
-  const removeAssistant = (assistantId) => {
+  const removeAssistant = (Assistant_ID) => {
     setShowRemoveAlert(true);
-    setAssistantToRemove(assistantId);
+    setAssistantToRemove(Assistant_ID);
   };
 
   const confirmRemoveAssistant = () => {
     axios
-      .delete(`/manager/assistant/${assistantToRemove}`, { withCredentials: true })
+      .delete(`/manager/assistant/remove/${assistantToRemove}`, {
+        withCredentials: true,
+      })
       .then(() => {
-        setAssistants(assistants.filter(assistant => assistant.Assistant_ID !== assistantToRemove));
+        setAssistants(
+          assistants.filter((assistant) => assistant.Assistant_ID !== assistantToRemove)
+        );
         setShowRemoveAlert(false);
         setAssistantToRemove(null);
       })
@@ -55,13 +52,22 @@ function Assistant() {
     setAssistantToRemove(null);
   };
 
+  const [showRemoveAlert, setShowRemoveAlert] = useState(false);
+  const [assistantToRemove, setAssistantToRemove] = useState(null);
+
+  const [showAddAlert, setShowAddAlert] = useState(false);
+
   const addAssistant = () => {
     setShowAddAlert(true);
   };
 
   const confirmAddAssistant = () => {
     axios
-      .post("/manager/assistant", { name: newAssistantName }, { withCredentials: true })
+      .post(
+        "/manager/assistant/insert",
+        { Assistant_Name: newAssistantName },
+        { withCredentials: true }
+      )
       .then((response) => {
         setAssistants([...assistants, response.data]);
         setNewAssistantName("");
@@ -99,7 +105,12 @@ function Assistant() {
                 <td className="assistant-table-data">{assistant.Work_Hours}</td>
                 <td className="assistant-table-data">{assistant.Availability}</td>
                 <td className="assistant-table-data">
-                  <button className="remove-button" onClick={() => removeAssistant(assistant.Assistant_ID)}>Remove</button>
+                  <button
+                    className="remove-button"
+                    onClick={() => removeAssistant(assistant.Assistant_ID)}
+                  >
+                    Remove
+                  </button>
                 </td>
               </tr>
             ))}
@@ -113,7 +124,9 @@ function Assistant() {
           onChange={(e) => setNewAssistantName(e.target.value)}
           placeholder="Enter assistant name"
         />
-        <button className="add-assistant-button" onClick={addAssistant}>Add Assistant</button>
+        <button className="add-assistant-button" onClick={addAssistant}>
+          Add Assistant
+        </button>
       </div>
       {showRemoveAlert && (
         <Alert

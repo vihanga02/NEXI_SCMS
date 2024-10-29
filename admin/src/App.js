@@ -64,7 +64,7 @@ const App = () => {
         <Route path='report/customerorderreports' element={<CustomerOrderReport/>}/>
 
 
-        <Route path='/manager_control' element={<ManagerControl />} />
+        <Route path='/admin-control' element={<ManagerControl />} />
 
       </Routes>
     </>

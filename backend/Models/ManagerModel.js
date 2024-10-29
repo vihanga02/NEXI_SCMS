@@ -24,7 +24,6 @@ class Manager {
     }
   }
 
-
   //model for getting the most orders
   static async getMostOrders(req) {
     const query = `SELECT * FROM product_orders;`;
@@ -212,7 +211,7 @@ class Manager {
             INNER JOIN Driver d ON td.Driver_id = d.Driver_ID
             WHERE da.Store_ID = ? AND d.Store_ID = ?;`;
     try {
-      const result = await pool.query(query, [storeID,storeID]);
+      const result = await pool.query(query, [storeID, storeID]);
       return result[0];
     } catch (error) {
       throw error;
@@ -469,10 +468,30 @@ class Manager {
     }
   }
 
+  static async insertAssistants(Assistant_Name, Store_ID) {
+    const query = "INSERT INTO driver_assistant (Assistant_Name, Store_ID) VALUES (?,?)";
+    try {
+      const [results] = await pool.query(query, [Assistant_Name, Store_ID]);
+      return results;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async removeDriver(Driver_ID) {
     const query = "DELETE FROM driver WHERE Driver_ID = ?";
     try {
       const [results] = await pool.query(query, [Driver_ID]);
+      return results;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async removeAssistant(Assistant_ID) {
+    const query = "DELETE FROM driver_assistant WHERE Assistant_ID = ?";
+    try {
+      const [results] = await pool.query(query, [Assistant_ID]);
       return results;
     } catch (error) {
       throw error;

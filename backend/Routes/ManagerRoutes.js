@@ -32,6 +32,8 @@ import {
     getAssistsantsOfStore,
     insertDriver,
     removeDriver,
+    insertAssistant,
+    removeAssistant,
 
     getProfile,
 
@@ -47,6 +49,7 @@ import {
     getAvailabilityCounts,
     getIncompletedTrainOrders,
     getIncompleteOrdersForStore,
+    
 
 } from "../Controllers/ManagerController.js";
 
@@ -90,6 +93,8 @@ router.get("/driversofstore", authenticateToken, getDriversOfStore);
 router.get("/assistantsofstore",authenticateToken, getAssistsantsOfStore);
 router.post("/driver/insert",authenticateToken,insertDriver);
 router.delete("/driver/remove/:Driver_ID",authenticateToken, removeDriver);
+router.post("/assistant/insert",authenticateToken,insertAssistant);
+router.delete("/assistant/remove/:Assistant_ID",authenticateToken, removeAssistant);
 
 //routs for get reports//
 router.get("/quarterlySales",authenticateToken,getQuarterlySales);
@@ -100,5 +105,6 @@ router.get("/truckHours",authenticateToken,getTruckHours);
 router.get("/salesByCity",authenticateToken,getSalesByCity);
 router.get("/salesByRoute",authenticateToken,getSalesByRoute);
 router.get("/customerOrderReport",authenticateToken,getCustomerOrderReport);
+router.delete("/assistant/remove/:assistant_ID",authenticateToken, removeAssistant);
 
 export default router;

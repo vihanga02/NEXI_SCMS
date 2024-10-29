@@ -32,7 +32,7 @@ function TruckScheduler() {
             console.log('Response from backend:', response.data);
             toast.success("Truck schedule assigned!", {
                 position: "top-right",
-                autoClose: 2000,
+                autoClose: 1000,
                 hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -42,6 +42,15 @@ function TruckScheduler() {
               });
             // navigate('/delivery_schedule');
         } catch (error) {
+            toast.error("Error assigning!", {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                theme: "colored",
+            });
             console.error('Error assigning truck:', error);
         }
     };
