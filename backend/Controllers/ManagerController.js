@@ -539,6 +539,17 @@ async function removeDriver(req, res){
 }
 
 
+async function removeAssistant(req, res){
+  const {Assistant_ID} = req.params;
+  try {
+      const result = await Manager.removeAssistant(Assistant_ID);
+      res.status(200).json(result);
+  } catch (error) {
+      res.status(500).json({ message: "Error removing assistants", error: error.message });
+  }
+}
+
+
 
 export {
   getPaidOrders,
@@ -579,5 +590,6 @@ export {
   getAvailabilityCounts,
   getIncompletedTrainOrders,
   getIncompleteOrdersForStore,
+  removeAssistant
 };
 
