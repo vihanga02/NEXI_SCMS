@@ -168,7 +168,7 @@ function Order() {
 
   return (
     <div className='ADcontainer-order'>
-      <div className='Acontainer-orde'>
+      <div className='Acontainer-order'>
         {/* -----------Paid orders----------- */}
         <div className='order-content'>
           <h2>Paid Orders</h2>

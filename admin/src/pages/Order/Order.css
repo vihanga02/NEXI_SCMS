@@ -1,12 +1,11 @@
-.ADcontainer {
+.ADcontainer-order {
     display: flex;
     height: 100vh; 
 }
 
-.Acontainer {
-    flex-grow: 1; /* Take up the remaining space */
-    margin-left: 250px; 
-    padding: 0 5px 5px;
+.Acontainer-order {
+    flex-grow: 1; 
+    margin: 12vh 2vw 3vh 19vw;
     background-color: #f5f5f58f;
     display: flex;
     flex-direction: column; 
@@ -34,7 +33,7 @@
 
 .order-table th, .order-table td {
     padding: 10px;
-    text-align: left;
+    text-align: center; /* Center align text */
     border-bottom: 1px solid #ddd;
 }
 
@@ -51,4 +50,16 @@ input[type="checkbox"] {
     appearance: checkbox;
     -moz-appearance: checkbox;
     -webkit-appearance: checkbox;
-  }
+}
+
+.dropdown summary {
+    list-style: none;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.dropdown summary:hover{
+    background-color: #86bfee;
+}
