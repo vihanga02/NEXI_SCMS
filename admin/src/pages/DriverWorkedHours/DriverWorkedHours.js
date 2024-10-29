@@ -53,6 +53,7 @@ function DriverWorkedHours() {
                                 <tr>
                                     <th>Week Number</th>
                                     <th>Driver ID</th>
+                                    <th>Driver Name</th>
                                     <th>Hours Worked</th>
                                 </tr>
                             </thead>
@@ -61,6 +62,7 @@ function DriverWorkedHours() {
                                     <tr key={index}>
                                         <td>{entry.Week_number}</td>
                                         <td>{entry.Driver_id}</td>
+                                        <td>{entry.Driver_name}</td>
                                         <td>{entry.Hours_worked}</td>
                                     </tr>
                                 ))}

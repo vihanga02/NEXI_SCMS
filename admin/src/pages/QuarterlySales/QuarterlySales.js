@@ -36,7 +36,7 @@ function QuarterlySales() {
                 params: { startDate },
                 withCredentials: true // Include credentials (cookies with token)
             });
-
+            
             if (response && response.data) {
                 const salesData = response.data;
                 const dates = salesData.map(item => item.Order_Date);

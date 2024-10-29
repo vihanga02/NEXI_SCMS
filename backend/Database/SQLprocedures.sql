@@ -1,17 +1,65 @@
 DELIMITER $$
 DROP PROCEDURE IF EXISTS `Quarterly_sales_from`$$
-CREATE PROCEDURE `Quarterly_sales_from`(start_date DATE)
+CREATE PROCEDURE `Quarterly_sales_from`(start_date DATE , storeID INT)
 BEGIN
     SELECT DATE(Ordered_Date) AS Order_Date, COUNT(*) AS Total_Orders
     FROM Orders
     WHERE Ordered_Date BETWEEN start_date AND DATE_ADD(start_date, INTERVAL 3 MONTH)
-      AND Order_state = 'Paid'
+      AND Order_state != 'Pending' AND Orders.Store_ID = storeID
     GROUP BY DATE(Ordered_Date)
     ORDER BY Order_Date;
 END$$
 DELIMITER ;
 
 
+DELIMITER $$
+DROP PROCEDURE IF EXISTS `DriverHoursByCity`$$
+CREATE PROCEDURE `DriverHoursByCity`(storeID INT)
+BEGIN
+    SELECT 
+        Week_number,
+        d.Driver_id, 
+        Driver_name,
+        Hours_worked
+    FROM Driver_work_hours dwh
+    JOIN driver d ON d.Driver_ID = dwh.Driver_ID
+    WHERE d.Store_ID = storeID;
+
+END$$
+DELIMITER ;
+
+--Assistant work hours
+DELIMITER $$
+DROP PROCEDURE IF EXISTS `AssistantHoursByCity`$$
+CREATE PROCEDURE `AssistantHoursByCity`(storeID INT)
+BEGIN
+    SELECT 
+    Week_number,
+    a.Assistant_ID, 
+    Assistant_Name, 
+    Work_Hours,
+    FROM assistant_work_hours awh
+    JOIN driver_assistant a ON a.Assistant_ID = awh.Assistant_ID
+    WHERE a.Store_ID = storeID;
+
+END$$
+DELIMITER ;
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS `TruckHoursByCity`$$
+CREATE PROCEDURE `TruckHoursByCity`(storeID INT)
+BEGIN
+    SELECT 
+        Week_number,
+        t.Truck_id, 
+        Reg_Number,
+        Hours_worked
+    FROM Truck_hours th
+    JOIN truck t ON t.Truck_ID = th.Truck_ID
+    WHERE t.Store_ID = storeID;
+
+END$$
+DELIMITER ;
 
 
 DELIMITER $$
@@ -509,7 +557,7 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `GetOrderCountByCustomer`;
 DELIMITER $$
 
-CREATE PROCEDURE GetOrderCountByCustomer()
+CREATE PROCEDURE GetOrderCountByCustomer(Store_ID INT)
 BEGIN
     SELECT 
         Customer_ID,
@@ -517,7 +565,7 @@ BEGIN
     FROM 
         Orders
     WHERE 
-        Order_state = 'Paid'
+        Order_state != 'Pending' and orders.Store_ID = Store_ID
     GROUP BY 
         Customer_ID;
 END$$
