@@ -45,7 +45,7 @@
 
 .assistant-table-header, .assistant-table-data {
     padding: 15px;
-    text-align: left;
+    text-align: center; /* Center-align text */
 }
 
 .assistant-table-header {
