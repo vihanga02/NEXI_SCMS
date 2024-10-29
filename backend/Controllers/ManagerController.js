@@ -527,6 +527,18 @@ async function insertDriver(req, res){
         res.status(500).json({ message: "Error inserting drivers", error: error.message });
     }
 }
+async function insertAssistant(req, res) {
+  const { Assistant_Name } = req.body;
+  const Store_ID = req.user.store;
+  try {
+    const result = await Manager.insertAssistants(Assistant_Name, Store_ID);
+    res.status(200).json(result);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error inserting assistants", error: error.message });
+  }
+}
 
 async function removeDriver(req, res){
     const {Driver_ID} = req.params;
@@ -576,8 +588,6 @@ export {
   getAdminDetails,
   getDriversOfStore,
   getAssistsantsOfStore,
-  insertDriver,
-  removeDriver,
   manager_logout,
   getProfile,
   getMostOrders,
@@ -590,6 +600,9 @@ export {
   getAvailabilityCounts,
   getIncompletedTrainOrders,
   getIncompleteOrdersForStore,
-  removeAssistant
+  removeAssistant,
+  insertDriver,
+  removeDriver,
+  insertAssistant
 };
 
