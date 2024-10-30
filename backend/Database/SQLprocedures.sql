@@ -34,10 +34,10 @@ DROP PROCEDURE IF EXISTS `AssistantHoursByCity`$$
 CREATE PROCEDURE `AssistantHoursByCity`(storeID INT)
 BEGIN
     SELECT 
-    Week_number,
-    a.Assistant_ID, 
-    Assistant_Name, 
-    Work_Hours
+        Week_number,
+        a.Assistant_ID, 
+        Assistant_Name, 
+        Work_Hours
     FROM assistant_work_hours awh
     JOIN driver_assistant a ON a.Assistant_ID = awh.Assistant_ID
     WHERE a.Store_ID = storeID;
@@ -250,8 +250,8 @@ DROP PROCEDURE IF EXISTS UpdateDailyWorkHours$$
 CREATE PROCEDURE UpdateDailyWorkHours()
 BEGIN
     DECLARE done INT DEFAULT 0;
-    DECLARE driver_id INT;
-    DECLARE assistant_id INT;
+    DECLARE dr_id INT;
+    DECLARE ass_id INT;
 
     -- Declare cursors to fetch each driver and assistant ID
     DECLARE cur_driver CURSOR FOR SELECT Driver_ID FROM driver;
@@ -264,12 +264,12 @@ BEGIN
     OPEN cur_driver;
     SET done = 0;
     REPEAT
-        FETCH cur_driver INTO driver_id;
+        FETCH cur_driver INTO dr_id;
         
         IF NOT done THEN
             UPDATE driver 
-            SET work_hours = work_hours + driver_hours_worked(CURDATE(), driver_id)
-            WHERE Driver_ID = driver_id;
+            SET work_hours = work_hours + driver_hours_worked(CURDATE(), dr_id)
+            WHERE Driver_ID = dr_id;
         END IF;
     UNTIL done END REPEAT;
     CLOSE cur_driver;
@@ -278,12 +278,12 @@ BEGIN
     OPEN cur_assistant;
     SET done = 0;
     REPEAT
-        FETCH cur_assistant INTO assistant_id;
+        FETCH cur_assistant INTO ass_id;
         
         IF NOT done THEN
             UPDATE driver_assistant 
-            SET work_hours = work_hours + assistant_hours_worked(CURDATE(), assistant_id)
-            WHERE Assistant_ID = assistant_id;
+            SET work_hours = work_hours + assistant_hours_worked(CURDATE(), ass_id)
+            WHERE Assistant_ID = ass_id;
         END IF;
     UNTIL done END REPEAT;
     CLOSE cur_assistant;
@@ -367,6 +367,31 @@ BEGIN
     WHERE Delivery_ID = delID;
 END$$
 DELIMITER ;
+
+
+
+DROP PROCEDURE IF EXISTS `release_workers`;
+DELIMITER $$
+CREATE PROCEDURE `release_workers`(delID INT)
+BEGIN
+	UPDATE driver d
+    RIGHT JOIN truck_delivery td ON td.Driver_ID = d.Driver_ID
+    SET Availability = 'Rest'
+    WHERE td.Truck_Del_ID = delID;
+	
+    UPDATE truck t
+    RIGHT JOIN truck_delivery td ON td.Truck_ID = t.Truck_ID
+    SET Availability = 1
+    WHERE td.Truck_Del_ID = delID;
+    
+    UPDATE driver_assistant da
+	RIGHT JOIN truck_delivery td ON td.Assistant_ID = da.Assistant_ID
+    SET Availability = 'Rest'
+    WHERE td.Truck_Del_ID = delID;
+END $$
+DELIMITER ;
+
+
 
 
 DELIMITER $$

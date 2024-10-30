@@ -39,7 +39,7 @@ function QuarterlySales() {
             
             if (response && response.data) {
                 const salesData = response.data;
-                const dates = salesData.map(item => item.Order_Date);
+                const dates = salesData.map(item => new Date(item.Order_Date).toLocaleDateString());
                 const totalOrders = salesData.map(item => item.Total_Orders);
 
                 setChartData({

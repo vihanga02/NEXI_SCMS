@@ -14,6 +14,7 @@ import {
     changeOrderStatus,
     getCompletedOrders,
     getReceivedOrders,
+    releaseAll,
 
     addToDeliveryQueue,
     updateArrivalTime,
@@ -75,6 +76,7 @@ router.post("/setDeliveryStatus", authenticateToken("Manager"), setDeliveryStatu
 router.post("/changeOrderStatus", authenticateToken("Manager"), changeOrderStatus);
 router.get("/completedOrders", authenticateToken("Manager"), getCompletedOrders);
 router.get("/receivedOrders", authenticateToken("Manager"), getReceivedOrders);
+router.post("/releaseAll", authenticateToken("Manager"), releaseAll);
 
 router.post("/queueForDelivery", authenticateToken("Manager"), addToDeliveryQueue); 
 router.post("/updateArrivalTime", authenticateToken("Manager"), updateArrivalTime);
