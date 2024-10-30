@@ -1,26 +1,39 @@
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
+const { verify } = jwt;
 
-dotenv.config();
+const roleHierarchy = {
+  Admin: 3,
+  Manager: 2,
+  Customer: 1,
+};
 
-function authenticateToken(req, res, next) {
-  const token = req.cookies.token;
-  if (!token) {
-    return res.status(401).json({
-      message: "No token provided, authorization denied",
-      success: false,
-    });
-  }
-
-  jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
-    if (err) {
-      return res
-        .status(403)
-        .json({ message: "Token is not valid", success: false });
+const authenticateToken = (requiredRole) => {
+  return (req, res, next) => {
+    const token = req.cookies.token;
+    if (!token) {
+      return res.status(401).json({ message: "Unauthorized" });
     }
-    req.user = user;
-    next(); 
-  });
-}
+
+    try {
+      const verified = verify(token, process.env.SECRET_KEY);
+      const role = verified.role;
+
+      // Check if the user's role allows access based on hierarchy
+      if (
+        roleHierarchy[role] >= roleHierarchy[requiredRole] &&
+        !(role !== "Customer" && requiredRole === "Customer") // Managers and Admins can't access customer routes
+      ) {
+        req.user = verified;
+        
+        next();
+      } else {
+        res.status(403).json({ message: "Forbidden" });
+      }
+    } catch (err) {
+      console.log(err);
+      res.status(401).json({ message: "Unauthorized" });
+    }
+  };
+};
 
 export default authenticateToken;

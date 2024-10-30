@@ -1,6 +1,7 @@
 import Manager from "../Models/ManagerModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import Admin from "../Models/AdminModel.js";
 
 // Controller to get incomplete train orders
 
@@ -409,7 +410,9 @@ async function manager_login(req, res) {
   const { Username, Password } = req.body;
 
   const [manager] = await Manager.getManager(Username);
+  const [admin] = await Admin.getAdmin(Username);
 
+  // If no manager is found, return an error response
   if (!manager) {
     return res
       .status(401)
@@ -423,18 +426,23 @@ async function manager_login(req, res) {
       .status(401)
       .json({ message: "Invalid credentials", success: false });
   }
-  // Create a token
+  
+
+  // Determine the role and create a token
+  const isAdmin = admin && admin.Store_ID === manager.Store_ID;
+  const role = isAdmin ? "Admin" : "Manager";
   const token = jwt.sign(
     {
       id: manager.Manager_ID,
       username: manager.Username,
       store: manager.Store_ID,
-      role: "manager",
+      role: role,
     },
     process.env.SECRET_KEY,
     { expiresIn: "1h" }
   );
 
+  // Set token in cookies
   res.cookie("token", token, {
     httpOnly: true,
     secure: true,
@@ -443,6 +451,7 @@ async function manager_login(req, res) {
 
   return res.status(200).json({ success: true });
 }
+
 
 async function manager_logout(req, res) {
   // Clear the token cookie
@@ -462,13 +471,15 @@ async function getAdminDetails(req, res) {
 
   try {
     const result = await Manager.getAdminDetails(adminID);
-    res.status(200).json(result);
+    res.status(200).json({ result, role: req.user.role });
   } catch (error) {
+    console.log(error);
     res
       .status(500)
-      .json({ message: "Error fetching orders", error: error.message });
+      .json({ message: "Error fetching admin details", error: error.message });
   }
 }
+
 
 async function manager_signup(req, res) {
   const { Name, Username, City, Password, Email, Address, Phone_Number } =
@@ -522,22 +533,26 @@ async function getIncompleteOrdersForStore(req, res) {
     const result = await Manager.IncompletedTrainOrders(storeID);
     res.status(200).json(result);
   } catch (error) {
-    res.status(500).json({
-      message: "Error fetching incomplete orders",
-      error: error.message,
-    });
+    res
+      .status(500)
+      .json({
+        message: "Error fetching incomplete orders",
+        error: error.message,
+      });
   }
 }
 
-async function insertDriver(req, res){
-    const {Driver_Name} = req.body;
-    const Store_ID =  req.user.store;
-    try {
-        const result = await Manager.insertDrivers(Driver_Name, Store_ID);
-        res.status(200).json(result);
-    } catch (error) {
-        res.status(500).json({ message: "Error inserting drivers", error: error.message });
-    }
+async function insertDriver(req, res) {
+  const { Driver_Name } = req.body;
+  const Store_ID = req.user.store;
+  try {
+    const result = await Manager.insertDrivers(Driver_Name, Store_ID);
+    res.status(200).json(result);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error inserting drivers", error: error.message });
+  }
 }
 async function insertAssistant(req, res) {
   const { Assistant_Name } = req.body;
@@ -552,28 +567,29 @@ async function insertAssistant(req, res) {
   }
 }
 
-async function removeDriver(req, res){
-    const {Driver_ID} = req.params;
-    try {
-        const result = await Manager.removeDriver(Driver_ID);
-        res.status(200).json(result);
-    } catch (error) {
-        res.status(500).json({ message: "Error removing drivers", error: error.message });
-    }
-}
-
-
-async function removeAssistant(req, res){
-  const {Assistant_ID} = req.params;
+async function removeDriver(req, res) {
+  const { Driver_ID } = req.params;
   try {
-      const result = await Manager.removeAssistant(Assistant_ID);
-      res.status(200).json(result);
+    const result = await Manager.removeDriver(Driver_ID);
+    res.status(200).json(result);
   } catch (error) {
-      res.status(500).json({ message: "Error removing assistants", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error removing drivers", error: error.message });
   }
 }
 
-
+async function removeAssistant(req, res) {
+  const { Assistant_ID } = req.params;
+  try {
+    const result = await Manager.removeAssistant(Assistant_ID);
+    res.status(200).json(result);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error removing assistants", error: error.message });
+  }
+}
 
 export {
   getPaidOrders,
@@ -615,6 +631,5 @@ export {
   removeAssistant,
   insertDriver,
   removeDriver,
-  insertAssistant
+  insertAssistant,
 };
-
