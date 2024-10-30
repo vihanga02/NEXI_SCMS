@@ -422,3 +422,17 @@ INSERT INTO Destination (Trip_ID, Store_ID) VALUES
 (10, 1),
 (11, 5),
 (11, 6);
+
+CREATE INDEX idx_category_name ON product(Category,Product_Name);
+
+CREATE INDEX idx_store ON driver(Store_ID);
+
+CREATE INDEX idx_store ON driver_assistant(Store_ID);
+
+CREATE INDEX idx_store ON Truck(Store_ID);
+
+CREATE INDEX idx_store ON truck_route(Store_ID);
+
+CREATE INDEX idx_store ON Truck(Store_ID);
+
+CREATE INDEX idx_store_customer ON orders(Store_ID, Customer_ID);
