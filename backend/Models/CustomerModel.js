@@ -207,13 +207,7 @@ class Customer {
   }
 
   static async checkout(Customer_ID, Store_ID, Route_ID) {
-    const updateOrderStateQuery = `UPDATE Orders 
-    SET order_state = 'Paid',
-        ordered_date = CURRENT_DATE,
-        expected_date = DATE_ADD(CURRENT_DATE, INTERVAL 7 DAY),
-        Store_ID = ?,
-        Route_ID = ?
-    WHERE Customer_ID = ? AND order_state = 'Pending';`;
+    const updateOrderStateQuery = `call CheckoutOrder(?, ?, ?)`;
 
     try {
       // Update the order state to 'paid' using separate values for each placeholder

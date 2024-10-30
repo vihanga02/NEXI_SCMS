@@ -28,7 +28,9 @@ BEGIN
 END$$
 DELIMITER ;
 
---Assistant work hours
+
+
+-- Assistant work hours
 DELIMITER $$
 DROP PROCEDURE IF EXISTS `AssistantHoursByCity`$$
 CREATE PROCEDURE `AssistantHoursByCity`(storeID INT)
@@ -41,9 +43,10 @@ BEGIN
     FROM assistant_work_hours awh
     JOIN driver_assistant a ON a.Assistant_ID = awh.Assistant_ID
     WHERE a.Store_ID = storeID;
-
 END$$
 DELIMITER ;
+
+
 
 DELIMITER $$
 DROP PROCEDURE IF EXISTS `TruckHoursByCity`$$
@@ -62,26 +65,30 @@ END$$
 DELIMITER ;
 
 
-DELIMITER $$
-DROP procedure IF EXISTS `CreateTruckDelivery`$$
-CREATE PROCEDURE CreateTruckDelivery(
-	storeID INT,
-    deliveryID INT)
 
+DELIMITER $$
+DROP PROCEDURE IF EXISTS `CreateTruckDelivery`$$
+CREATE PROCEDURE CreateTruckDelivery(
+    storeID INT,
+    deliveryID INT
+)
 BEGIN
     DECLARE selected_driver_id INT;
     DECLARE selected_assistant_id INT;
     DECLARE selected_truck_id INT;
     DECLARE schedule_exists INT;
 
-	-- Select a random available truck
+    -- Start the transaction
+    START TRANSACTION;
+
+    -- Select a random available truck
     SELECT t.truck_id INTO selected_truck_id
     FROM truck t
     WHERE t.Availability = '1' AND t.Store_ID = storeID
     ORDER BY RAND() 
     LIMIT 1;
 
-    -- Check if the delivery_schedule table has any records
+    -- Check if the Truck_Delivery table has any records
     SELECT COUNT(ID) 
     INTO schedule_exists
     FROM Truck_Delivery;
@@ -91,44 +98,42 @@ BEGIN
         SELECT d.driver_id 
         INTO selected_driver_id
         FROM driver d
-
         WHERE 
-        d.driver_id != 
-        (
-            SELECT td.driver_id
-            FROM Truck_Delivery td
-            ORDER BY td.ID DESC
-            LIMIT 1
-        ) AND 
-        d.work_hours < 40
-        AND d.Availability = 'Rest' 
-        AND d.Store_ID = storeID
+            d.driver_id != (
+                SELECT td.driver_id
+                FROM Truck_Delivery td
+                ORDER BY td.ID DESC
+                LIMIT 1
+            ) 
+            AND d.work_hours < 40
+            AND d.Availability = 'Rest' 
+            AND d.Store_ID = storeID
         ORDER BY RAND()
         LIMIT 1;
 
-        -- Select a random assistant who is available and not in the last two schedules
+        -- Select a random assistant who is available and not in the last schedule
         SELECT a.assistant_id 
         INTO selected_assistant_id
         FROM driver_assistant a
-        WHERE a.Assistant_ID !=
-        (
-            SELECT td.assistant_id
-            FROM Truck_Delivery td
-            ORDER BY td.ID DESC
-            LIMIT 1
-        ) AND 
-		a.work_hours < 60
-        AND a.Availability = 'Rest' AND a.Store_ID = storeID
+        WHERE a.Assistant_ID != (
+                SELECT td.assistant_id
+                FROM Truck_Delivery td
+                ORDER BY td.ID DESC
+                LIMIT 1
+            ) 
+            AND a.work_hours < 60
+            AND a.Availability = 'Rest' 
+            AND a.Store_ID = storeID
         ORDER BY RAND() 
         LIMIT 1;
 
     ELSE
-        -- If delivery_schedule is empty, randomly select a driver based on availability
+        -- If Truck_Delivery is empty, randomly select a driver based on availability
         SELECT d.driver_id INTO selected_driver_id
         FROM driver d
         WHERE d.work_hours < 40
-			AND d.Availability = 'Rest'
-			AND d.Store_ID = storeID
+            AND d.Availability = 'Rest'
+            AND d.Store_ID = storeID
         ORDER BY RAND() 
         LIMIT 1;
 
@@ -137,31 +142,38 @@ BEGIN
         INTO selected_assistant_id
         FROM driver_assistant a
         WHERE a.work_hours < 60
-			AND a.Availability = 'Rest'
-			AND a.Store_ID = storeID
+            AND a.Availability = 'Rest'
+            AND a.Store_ID = storeID
         ORDER BY RAND() 
         LIMIT 1;
     END IF;
-	
-    -- Insert the new delivery schedule into the table
-    IF (selected_truck_id IS NOT NULL AND selected_driver_id IS NOT NULL AND selected_assistant_id IS NOT NULL) THEN
-    
-		INSERT INTO Truck_Delivery (Truck_Del_ID, truck_id, driver_id, assistant_id)
-		VALUES (deliveryID, selected_truck_id, selected_driver_id, selected_assistant_id);
-        
-        UPDATE delivery_schedule ds
-		SET Shipment_Date = CURDATE(),
-			Vehicle_departure_time = CURTIME(),
-			Delivery_status = 'In_Truck'
-		WHERE Delivery_id = deliveryID;
-        
-	ELSE
-		SIGNAL SQLSTATE '45000'
-		SET MESSAGE_TEXT = 'One or more required IDs (truck, driver, assistant) is NULL. Unable to proceed with delivery insertion.';
-	END IF;
 
+    -- Insert the new delivery schedule into the table if IDs are valid
+    IF (selected_truck_id IS NOT NULL AND selected_driver_id IS NOT NULL AND selected_assistant_id IS NOT NULL) THEN
+        BEGIN
+            -- Insert into Truck_Delivery
+            INSERT INTO Truck_Delivery (Truck_Del_ID, truck_id, driver_id, assistant_id)
+            VALUES (deliveryID, selected_truck_id, selected_driver_id, selected_assistant_id);
+
+            -- Update delivery_schedule
+            UPDATE delivery_schedule ds
+            SET Shipment_Date = CURDATE(),
+                Vehicle_departure_time = CURTIME(),
+                Delivery_status = 'In_Truck'
+            WHERE Delivery_id = deliveryID;
+
+            -- Commit the transaction if everything is successful
+            COMMIT;
+        END;
+    ELSE
+        -- Rollback if any IDs are NULL and throw an error
+        ROLLBACK;
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'One or more required IDs (truck, driver, assistant) is NULL. Unable to proceed with delivery insertion.';
+    END IF;
 END $$
 DELIMITER ;
+
 
 
 
@@ -204,11 +216,11 @@ DELIMITER ;
 
 
 
-
 DROP PROCEDURE IF EXISTS `Add_product`;
 DELIMITER $$
+
 CREATE PROCEDURE `Add_product`(
-	Product_Name VARCHAR(100), 
+    Product_Name VARCHAR(100), 
     Category VARCHAR(20), 
     Price DECIMAL(8,2), 
     Capacity INT, 
@@ -217,29 +229,59 @@ CREATE PROCEDURE `Add_product`(
     Img_Link VARCHAR(50)
 )
 BEGIN
-	INSERT INTO Product(Product_Name, Category, Price, Capacity, Stock_Quantity, Description, Image_Link) VALUES
-    (Product_Name, Category, Price, Capacity, Stock, Description, Img_Link);
+    -- Error handling declaration
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- Rollback the transaction if any error occurs
+        ROLLBACK;
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Error occurred during product insertion. Transaction rolled back.';
+    END;
+
+    -- Start the transaction
+    START TRANSACTION;
+
+    -- Insert the product data into the Product table
+    INSERT INTO Product (Product_Name, Category, Price, Capacity, Stock_Quantity, Description, Image_Link) 
+    VALUES (Product_Name, Category, Price, Capacity, Stock, Description, Img_Link);
+
+    -- Commit the transaction if the insert is successful
+    COMMIT;
+
 END$$
 DELIMITER ;
 
 
 
 
--- Event for deleting records older than 2 years
 
 DROP EVENT IF EXISTS yearly_delete_order_details;
 DELIMITER $$
+
 CREATE EVENT yearly_delete_order_details
 ON SCHEDULE
-	EVERY 1 YEAR STARTS '2025-01-01'
-DO BEGIN
-	DELETE o,od,ds 
+    EVERY 1 YEAR STARTS '2025-01-01'
+DO 
+BEGIN
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
+    BEGIN
+
+        ROLLBACK;
+    END;
+
+    START TRANSACTION;
+
+    DELETE o, od, ds 
     FROM orders o
     JOIN order_delivery od ON od.Order_ID = o.Order_ID
     JOIN delivery_schedule ds ON ds.Delivery_id = od.Delivery_id
-    WHERE ordered_date < DATE_SUB(NOW(),INTERVAL 2 YEAR);
+    WHERE ordered_date < DATE_SUB(NOW(), INTERVAL 2 YEAR);
+
+    COMMIT;
+    
 END$$
 DELIMITER ;
+
 
 
 
@@ -253,14 +295,19 @@ BEGIN
     DECLARE dr_id INT;
     DECLARE ass_id INT;
 
-    -- Declare cursors to fetch each driver and assistant ID
     DECLARE cur_driver CURSOR FOR SELECT Driver_ID FROM driver;
     DECLARE cur_assistant CURSOR FOR SELECT Assistant_ID FROM driver_assistant;
 
-    -- Handlers for when cursors finish
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+    
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
 
-    -- Open the driver cursor and loop through each driver
+        ROLLBACK;
+    END;
+
+    START TRANSACTION;
+
     OPEN cur_driver;
     SET done = 0;
     REPEAT
@@ -274,9 +321,9 @@ BEGIN
     UNTIL done END REPEAT;
     CLOSE cur_driver;
 
-    -- Open the assistant cursor and loop through each assistant
-    OPEN cur_assistant;
+
     SET done = 0;
+    OPEN cur_assistant;
     REPEAT
         FETCH cur_assistant INTO ass_id;
         
@@ -287,6 +334,8 @@ BEGIN
         END IF;
     UNTIL done END REPEAT;
     CLOSE cur_assistant;
+
+    COMMIT;
 END$$
 DELIMITER ;
 
@@ -324,70 +373,104 @@ DELIMITER ;
 
 
 
-DROP PROCEDURE IF EXISTS `Total_cap_price`;
 DELIMITER $$
+DROP PROCEDURE IF EXISTS `Total_cap_price`$$
 CREATE PROCEDURE `Total_cap_price`(orderID INT)
 BEGIN
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+    END;
+
+    START TRANSACTION;
+
     UPDATE orders
     SET Total_Capacity = (
-		SELECT SUM(order_item.Order_Item_Capacity)
+        SELECT SUM(order_item.Order_Item_Capacity)
         FROM order_item
-        GROUP BY order_item.Order_ID
-        HAVING order_item.Order_ID=orderID)
-    WHERE orders.Order_ID = orderID;
-    
-	UPDATE orders
-	SET Total_Price = (
-		SELECT SUM(order_item.Order_Item_Price)
-        FROM order_item
-        GROUP BY order_item.Order_ID
-        HAVING order_item.Order_ID=orderID)
+        WHERE order_item.Order_ID = orderID
+    )
     WHERE orders.Order_ID = orderID;
 
+    -- Update the Total_Price in the orders table
+    UPDATE orders
+    SET Total_Price = (
+        SELECT SUM(order_item.Order_Item_Price)
+        FROM order_item
+        WHERE order_item.Order_ID = orderID
+    )
+    WHERE orders.Order_ID = orderID;
+
+    -- Commit the transaction if no errors occurred
+    COMMIT;
 END$$
 DELIMITER ;
 
 
 
-
-
-DROP PROCEDURE IF EXISTS `Update_arrival_time`;
 DELIMITER $$
+DROP PROCEDURE IF EXISTS `Update_arrival_time`$$
 CREATE PROCEDURE `Update_arrival_time`(delID INT)
 BEGIN
-	DECLARE time_taken DECIMAL(3,1);
+    -- Declare variables and error handler at the beginning
+    DECLARE time_taken DECIMAL(3,1);
 
-	SELECT hours
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+    END;
+
+    -- Start transaction
+    START TRANSACTION;
+
+    -- Fetch the hours for the given delivery ID
+    SELECT hours
     INTO time_taken
     FROM delivery_times 
     WHERE Delivery_ID = delID;
     
+    -- Update Vehicle_arrival_time in Delivery_schedule
     UPDATE Delivery_schedule ds
     SET Vehicle_arrival_time = SEC_TO_TIME(TIME_TO_SEC(Vehicle_departure_time) + time_taken * 3600)
     WHERE Delivery_ID = delID;
+
+    -- Commit the transaction if no errors occur
+    COMMIT;
 END$$
 DELIMITER ;
 
 
 
-DROP PROCEDURE IF EXISTS `release_workers`;
 DELIMITER $$
+DROP PROCEDURE IF EXISTS `release_workers`$$
 CREATE PROCEDURE `release_workers`(delID INT)
 BEGIN
-	UPDATE driver d
+    -- Error handler for rolling back the transaction if an error occurs
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+    END;
+
+    -- Start transaction
+    START TRANSACTION;
+    
+    UPDATE driver d
     RIGHT JOIN truck_delivery td ON td.Driver_ID = d.Driver_ID
-    SET Availability = 'Rest'
+    SET d.Availability = 'Rest'
     WHERE td.Truck_Del_ID = delID;
-	
+    
     UPDATE truck t
     RIGHT JOIN truck_delivery td ON td.Truck_ID = t.Truck_ID
-    SET Availability = 1
+    SET t.Availability = 1
     WHERE td.Truck_Del_ID = delID;
     
     UPDATE driver_assistant da
-	RIGHT JOIN truck_delivery td ON td.Assistant_ID = da.Assistant_ID
-    SET Availability = 'Rest'
+    RIGHT JOIN truck_delivery td ON td.Assistant_ID = da.Assistant_ID
+    SET da.Availability = 'Rest'
     WHERE td.Truck_Del_ID = delID;
+
+    COMMIT;
 END $$
 DELIMITER ;
 
@@ -435,6 +518,7 @@ END$$
 DELIMITER ;
 
 
+
 DELIMITER $$
 DROP PROCEDURE IF EXISTS GetCurrentOrderItem$$
 CREATE PROCEDURE GetCurrentOrderItem(IN Order_id INT)
@@ -451,6 +535,7 @@ BEGIN
 	ORDER BY oi.Order_item_price DESC;
 END$$
 DELIMITER ;
+
 
 
 
@@ -471,6 +556,7 @@ BEGIN
 	LIMIT 1;
 END$$
 DELIMITER ;
+
 
 
 
@@ -524,7 +610,6 @@ DELIMITER ;
 
 
 
-
 DELIMITER //
 DROP PROCEDURE IF EXISTS getAssistantsByCity//
 CREATE PROCEDURE getAssistantsByCity(IN cityName VARCHAR(255))
@@ -567,6 +652,7 @@ END //
 DELIMITER ;
 
 
+
 DROP procedure IF EXISTS `GetAdminDetails`;
 DELIMITER //
 CREATE PROCEDURE GetAdminDetails(IN adminID INT)
@@ -600,6 +686,7 @@ END$$
 DELIMITER ;
 
 
+
 DROP procedure IF EXISTS getManagerByStore;
 DELIMITER //
 
@@ -614,7 +701,7 @@ DELIMITER ;
 
 
 
-DROP procedure IF EXISTS InsertManager;
+DROP PROCEDURE IF EXISTS InsertManager;
 DELIMITER //
 
 CREATE PROCEDURE InsertManager(
@@ -627,19 +714,26 @@ CREATE PROCEDURE InsertManager(
 )
 BEGIN
     DECLARE storeId INT;
-
-    -- Find the store ID based on the city name
+    
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+    END;
+    
+    START TRANSACTION;
+    
     SELECT Store_Id INTO storeId 
     FROM store
     WHERE City = cityName;
-
-    -- Insert the manager details into the store_manager table
+    
     INSERT INTO store_manager (Name, Username, Password, Email, PhoneNumber, Store_id)
     VALUES (managerName, managerUsername, managerPassword, managerEmail, managerPhoneNumber, storeId);
     
+    COMMIT;
 END //
 
 DELIMITER ;
+
 
 
 
@@ -662,6 +756,7 @@ END //
 DELIMITER ;
 
 
+
 DELIMITER //
 DROP PROCEDURE IF EXISTS GetIncompleteOrders//
 CREATE PROCEDURE `GetIncompleteOrders`(IN store_id_ INT)
@@ -682,3 +777,40 @@ END //
 
 DELIMITER ;
 
+
+
+
+DELIMITER $$
+CREATE PROCEDURE CheckoutOrder(
+    IN p_Customer_ID INT,
+    IN p_Store_ID INT,
+    IN p_Route_ID INT
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK; -- Rollback transaction if an error occurs
+    END;
+
+    START TRANSACTION;
+
+    -- Update the order with the specified details if it's in a 'Pending' state
+    UPDATE Orders 
+    SET order_state = 'Paid',
+        ordered_date = CURRENT_DATE,
+        expected_date = DATE_ADD(CURRENT_DATE, INTERVAL 7 DAY),
+        Store_ID = p_Store_ID,
+        Route_ID = p_Route_ID
+    WHERE Customer_ID = p_Customer_ID AND order_state = 'Pending';
+
+    -- Check if any rows were affected
+    IF ROW_COUNT() = 0 THEN
+        ROLLBACK;
+        SELECT 'No pending order found for checkout.' AS message, 0 AS success;
+    ELSE
+        COMMIT;
+        SELECT 'Checkout successful.' AS message, 1 AS success;
+    END IF;
+END $$
+
+DELIMITER ;
