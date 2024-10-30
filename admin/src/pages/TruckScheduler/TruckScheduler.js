@@ -39,7 +39,6 @@ function TruckScheduler() {
                 progress: undefined,
                 theme: "colored",
               });
-            // navigate('/delivery_schedule');
         } catch (error) {
             toast.error("Error assigning!", {
                 position: "top-right",
