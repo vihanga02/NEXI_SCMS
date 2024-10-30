@@ -86,7 +86,7 @@ class Manager {
     const query = `call AssistantHoursByCity(?);`; // Query the view directly
     try {
       const [rows] = await pool.query(query,[Store_ID]); // Execute the query and return rows
-      return rows; // Return only rows
+      return rows[0]; // Return only rows
     } catch (error) {
       console.error("Error in getAssistantWorkHours:", error);
       throw error;
@@ -114,7 +114,7 @@ static async getQuarterlySales(req, storeID) {
 
     try {
       const [rows] = await pool.query(query,[Store_ID]); // Execute the query and return rows
-      return rows; // Return only rows
+      return rows[0]; // Return only rows
     } catch (error) {
       console.error("Error in getTruckHours:", error);
       throw error;
@@ -126,7 +126,7 @@ static async getQuarterlySales(req, storeID) {
     const query = `call DriverHoursByCity(?);`; // Query the view directly
     try {
       const [rows] = await pool.query(query,[Store_ID]); // Execute the query and return rows
-      return rows; // Return only rows
+      return rows[0]; // Return only rows
     } catch (error) {
       console.error("Error in getDriverWorkHours:", error);
       throw error;
@@ -148,7 +148,7 @@ static async getQuarterlySales(req, storeID) {
   // Model function to get sales by route
   static async getSalesByRoute(st) {
     
-    const query = `SELECT Route,Total_Sales FROM sales_by_route where Store_ID=?`; // Query the view directly
+    const query = `SELECT Route,Total_Sales FROM sales_by_route where Store_ID=?`; 
     
 
     try {
@@ -233,7 +233,7 @@ static async getQuarterlySales(req, storeID) {
   static async updateArrivalTime(deliveryID) {
     const query = `CALL Update_arrival_time(?);`;
     try {
-      const result = await pool.query(query, deliveryID);
+      const result = await pool.query(query, [deliveryID]);
       return result;
     } catch (error) {
       throw error;
@@ -335,6 +335,16 @@ static async getQuarterlySales(req, storeID) {
       const result = await pool.query(query, storeID);
       return result[0];
     } catch (error) {
+      throw error;
+    }
+  }
+
+  static async releaseAll(deliveryID) {
+    const query = `CALL release_workers(?)`;
+    try {
+      const result = await pool.query(query, deliveryID);
+      return result;
+    }catch (error) {
       throw error;
     }
   }

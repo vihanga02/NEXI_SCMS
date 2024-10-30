@@ -33,7 +33,7 @@ async function login(req, res) {
 
     // Create a token
     const token = jwt.sign(
-      { id: user.Customer_ID, username: user.Username },
+      { id: user.Customer_ID, username: user.Username, role: "Customer" },
       process.env.SECRET_KEY,
       { expiresIn: "1h" }
     );

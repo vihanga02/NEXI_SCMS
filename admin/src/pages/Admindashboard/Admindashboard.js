@@ -40,7 +40,6 @@ function Admindashboard() {
         await axios.get('/manager/admindetails', { withCredentials: true })
           .then((res) => {
             setStoreID(res.data.result.Store_ID);
-            console.log(storeID);
             setStoreCity(res.data.result.City);
             fetchData1();
             fetchData2();
@@ -80,8 +79,8 @@ function Admindashboard() {
             routeId: order.Route_ID,
             status: order.Order_state
             })));
-          setTotalOrders(res.data[0][0].Total_Order_Count);
-          setIncompleteOrders(res.data[1][0].Incomplete_Order_Count);
+            setTotalOrders(res.data[0][0].Total_Order_Count);
+            setIncompleteOrders(res.data[1][0].Incomplete_Order_Count)
         }).catch((error) => {
           console.error('Error fetching incomplete orders:', error);
         }
@@ -106,21 +105,21 @@ function Admindashboard() {
         </div>
         <div className='widgets-row'>
           <div className='widget available-drivers'>
-            <p>{Math.floor((activeDrivers / totalDrivers) * 100)}%</p>
+            <p>{totalDrivers > 0 ? `${Math.floor((activeDrivers / totalDrivers) * 100)}%` : 'Loading...'}</p>
             <div className='progress-bar' style={{ width: '100%'}}>
               <div className='progress' style={{ width: `${Math.floor((activeDrivers / totalDrivers) * 100)}%` }}></div>
             </div>
             <h3>Available Drivers</h3>
           </div>
           <div className='widget available-assistants'>
-            <p>{Math.floor((activeAssistants / totalAssistants) * 100)}%</p>
+          <p>{totalTrucks > 0 ? `${Math.floor((activeTrucks / totalTrucks) * 100)}%` : 'Loading...'}</p>
             <div className='progress-bar'>
               <div className='progress' style={{ width: `${Math.floor((activeAssistants / totalAssistants) * 100)}%` }}></div>
             </div>
             <h3>Available Assistants</h3>
           </div>
           <div className='widget available-trucks'>
-            <p>{Math.floor((activeTrucks / totalTrucks) * 100)}%</p>
+            <p>{totalAssistants > 0 ? `${Math.floor((activeAssistants / totalAssistants) * 100)}%` : 'Loading...'}</p>
             <div className='progress-bar'>
               <div className='progress' style={{ width: `${Math.floor((activeTrucks / totalTrucks) * 100)}%` }}></div>
             </div>
@@ -133,7 +132,7 @@ function Admindashboard() {
           </div>
           <div className='incomplete-order-container'>
               <div className='incomplete-orders'>
-                <p>{Math.floor(incompleteOrders/totalOrders)*100}%</p>
+              <p>{totalOrders > 0 ? `${Math.floor((incompleteOrders / totalOrders) * 100)}%` : 'Loading...'}</p>
                 <div className='progress-bar'>
                   <div className='progress' style={{ width: `${Math.floor((incompleteOrders / totalOrders) * 100)}%` }}></div>
                 </div>

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Sidebar from '../../components/Sidebar/Sidebar';
-import Topbar from '../../components/Topbar/Topbar';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import './DriverWorkedHours.css';
@@ -58,9 +56,7 @@ function DriverWorkedHours() {
 
     return (
         <div className="driver-work-hours-container">
-            <Sidebar />
             <div className="content">
-                <Topbar />
                 <div className="table-container">
                     <h2>Driver Work Hours</h2>
                     

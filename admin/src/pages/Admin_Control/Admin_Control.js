@@ -9,10 +9,6 @@ const ManagerControl = () => {
 
   const [managers, setManagers] = useState([]);
   const [stores, setStores] = useState([]);
-  const [selectedManager, setSelectedManager] = useState(null);
-  const [selectedStore, setSelectedStore] = useState(null);
-  const [newManagerName, setNewManagerName] = useState("");
-  const [newManagerEmail, setNewManagerEmail] = useState("");
 
   const [showRemoveAlert, setShowRemoveAlert] = useState(false);
   const [managerToRemove, setManagerToRemove] = useState(null);
@@ -32,16 +28,18 @@ const ManagerControl = () => {
   }, []);
 
   // Remove a manager
-  const removeManager = (id) => {
+  const removeManager = (Manager_ID) => {
     setShowRemoveAlert(true);
-    setManagerToRemove(id);
+    setManagerToRemove(Manager_ID);
   };
 
   const confirmRemoveManager = () => {
     axios
       .delete(`/admin/remove/${managerToRemove}`, { withCredentials: true })
       .then(() => {
-        setManagers(managers.filter((manager) => manager.id !== managerToRemove));
+        setManagers(
+          managers.filter((manager) => manager.Manager_ID !== managerToRemove)
+        );
         setShowRemoveAlert(false);
         setManagerToRemove(null);
       })
@@ -89,12 +87,14 @@ const ManagerControl = () => {
               <td>{manager.PhoneNumber}</td>
               <td>{manager.Store_ID}</td>
               <td>
-                <button
-                  className="manager-control__button"
-                  onClick={() => removeManager(manager.id)}
-                >
-                  Remove
-                </button>
+                {manager.Store_ID !== 7 && (
+                  <button
+                    className="manager-control__button"
+                    onClick={() => removeManager(manager.Manager_ID)}
+                  >
+                    Remove
+                  </button>
+                )}
               </td>
             </tr>
           ))}

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './Login.css';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import logo from '../../assets/2.png';
@@ -104,17 +103,8 @@ const Login = () => {
             {message}
           </p>
         )}
-
-        <span>
-          Don't have an account? <Link to="/signup">Register</Link>
-        </span>
-        <div className="forgot-password">
-          <a href="">Forgot password</a>
-        </div>
       </div>
       <div className="login-right"></div>
-
-      {/* Add ToastContainer for toast notifications */}
       <ToastContainer />
     </div>
   );

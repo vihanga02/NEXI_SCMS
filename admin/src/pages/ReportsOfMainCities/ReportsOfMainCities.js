@@ -69,6 +69,7 @@ function ReportsOfMainCities() {
         <div className="reports-main-cities-container">
             <div className="content">
                 <div className="chart-container" ref={chartRef}>
+
                     <h2>Sales by City</h2>
                     {loading ? (
                         <p>Loading data...</p>

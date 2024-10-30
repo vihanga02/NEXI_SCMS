@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Sidebar from '../../components/Sidebar/Sidebar';
-import Topbar from '../../components/Topbar/Topbar';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+
 import './AssistantWorkedHours.css';
 
 function AssistantWorkedHours() {
@@ -58,9 +57,7 @@ function AssistantWorkedHours() {
 
     return (
         <div className="assistant-work-hours-container">
-            <Sidebar />
             <div className="content">
-                <Topbar />
                 <div className="table-container">
                     <h2>Assistant Work Hours</h2>
                     

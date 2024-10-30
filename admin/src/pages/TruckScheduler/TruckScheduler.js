@@ -1,13 +1,12 @@
 import React, { useEffect,useState } from 'react'
 import './TruckScheduler.css';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from 'axios';
 
 function TruckScheduler() {
 
-    const navigate = useNavigate();
     const location = useLocation();
     const[deliveries, setDeliveries] = useState([]);
     const delivery_id = location.state || {};
@@ -40,7 +39,6 @@ function TruckScheduler() {
                 progress: undefined,
                 theme: "colored",
               });
-            // navigate('/delivery_schedule');
         } catch (error) {
             toast.error("Error assigning!", {
                 position: "top-right",
@@ -80,8 +78,8 @@ function TruckScheduler() {
 
   return (
     <div>
-        <div className='ADcontainer'>
-            <div className='Acontainer'>
+        <div className='ADcontainer-truck-schedule'>
+            <div className='Acontainer-truck-schedule'>
                 <h1>Truck Scheduler</h1>
                 <button className='btn btn-primary' onClick={() => handleAssign()}>Assign Truck, Driver & Assistant</button>
                 <table className='order-table'>

@@ -5,8 +5,6 @@ import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend }
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import Sidebar from '../../components/Sidebar/Sidebar';
-import Topbar from '../../components/Topbar/Topbar';
 import './CustomerOrderReport.css'; // CSS for styling
 
 // Register necessary Chart.js components
@@ -82,10 +80,9 @@ function CustomerOrderReport() {
 
     return (
         <div className="customer-order-report-container">
-            <Sidebar />
             <div className="content">
-                <Topbar />
                 <div className="chart-container" ref={chartRef}>
+
                     <h2>Customer Order Report</h2>
                     
                     <button onClick={downloadPDF} ref={downloadBtnRef} className="download-btn">Download PDF</button>

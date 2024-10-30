@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../../components/Sidebar/Sidebar';
-import Topbar from '../../components/Topbar/Topbar';
 import { Bar } from 'react-chartjs-2';
 import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import axios from 'axios';
@@ -43,7 +41,7 @@ function QuarterlySales() {
             
             if (response && response.data) {
                 const salesData = response.data;
-                const dates = salesData.map(item => item.Order_Date);
+                const dates = salesData.map(item => new Date(item.Order_Date).toLocaleDateString());
                 const totalOrders = salesData.map(item => item.Total_Orders);
 
                 setChartData({
@@ -102,10 +100,8 @@ function QuarterlySales() {
     
     return (
         <div className="Rcontainer">
-            <Sidebar />
             <div className="rcontainer">
-                <Topbar />
-
+                <h1>Quarterly Sales</h1>
                 <div className="date-picker">
                     <label htmlFor="startDate">Select Start Date:</label>
                     <input

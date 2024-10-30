@@ -1,7 +1,5 @@
 
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../../components/Sidebar/Sidebar.js';
-import Topbar from '../../components/Topbar/Topbar.js';
 import './Report.css';
 
 import React, { useState, useEffect } from 'react';
@@ -26,9 +24,7 @@ function Report() {
 
     return (
         <div className='Rcontainer'>
-            <Sidebar />
             <div className='rcontainer'>
-                <Topbar />
                 <div className='button-container'>
                     <button className='report-button' onClick={() => navigate('/report/quarterlysales')}>
                         <i className="fas fa-chart-line"></i> Quarterly Sales

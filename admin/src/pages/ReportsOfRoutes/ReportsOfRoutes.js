@@ -5,8 +5,6 @@ import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend }
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import Sidebar from '../../components/Sidebar/Sidebar';
-import Topbar from '../../components/Topbar/Topbar';
 import './ReportsOfRoutes.css';
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -80,9 +78,7 @@ function ReportsOfRoutes() {
 
     return (
         <div className="reports-routes-container">
-            <Sidebar />
             <div className="content">
-                <Topbar />
                 <div className="chart-container" ref={chartRef}>
                     <h2>Sales by Route</h2>
                     

@@ -23,6 +23,7 @@ const Sidebar = () => {
                 console.log(isAdmin);
             }
             setName(res.data.result.Name); 
+            console.log(name);
             setEmail(res.data.result.Email);
           } catch (error) {
             console.error("Error getting manager details:", error);

@@ -14,6 +14,12 @@
     overflow: auto; /* Allow scrolling within the content area */
 }
 
+.rcontainer h1 {
+    margin-bottom: 20px;
+    color: #2c3e50;
+    text-align: center;
+}
+
 .date-picker {
     margin: 20px 0;
 }

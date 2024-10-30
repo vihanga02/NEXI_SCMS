@@ -31,7 +31,7 @@ const ProductDetails = () => {
 
 
   const { id } = useParams(); // Get the product ID from the URL
-  const product = products.find((p) => p.Product_ID == id); // Find the product by ID
+  const product = products.find((p) => p.Product_ID === id); // Find the product by ID
 
   // Loading state
   if (loading) {
@@ -130,7 +130,7 @@ const ProductDetails = () => {
             +
           </button>
         </div>
-        <button className="add-to-cart" onClick={handleAddToCart}>
+        <button className="add-to-cart1" onClick={handleAddToCart}>
           Add To Cart
         </button>
       </div>

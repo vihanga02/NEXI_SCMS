@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../../components/Sidebar/Sidebar';
-import Topbar from '../../components/Topbar/Topbar';
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
@@ -59,9 +57,7 @@ function MostOrders() {
 
     return (
         <div className="most-orders-container">
-            <Sidebar />
             <div className="content">
-                <Topbar />
                 <div className="table-container">
                     <h2>Products with Most Orders</h2>
                     

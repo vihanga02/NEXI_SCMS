@@ -10,7 +10,7 @@
 }
 
 .dscontainer {
-    flex-grow: 1; /* Take up the remaining space */
+    flex-grow: 1;
     margin-left: 250px; 
  
     padding: 0 5px 5px;
