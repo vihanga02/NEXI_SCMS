@@ -4,8 +4,8 @@ import { getManager, removeManager, getStores } from "../Controllers/AdminContro
 import authenticateToken from "../Middleware/Authentication.js";
 
 
-router.get("/getManagers", authenticateToken, getManager);
-router.get("/stores", authenticateToken, getStores);
-router.delete("/remove/:Driver_ID", authenticateToken, removeManager);
+router.get("/getManagers", authenticateToken("Admin"), getManager);
+router.get("/stores", authenticateToken("Admin"), getStores);
+router.delete("/remove/:Driver_ID", authenticateToken("Admin"), removeManager);
 
 export default router;

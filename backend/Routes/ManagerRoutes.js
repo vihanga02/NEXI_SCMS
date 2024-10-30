@@ -63,48 +63,48 @@ router.post("/logout", manager_logout)
 
 
 // Order-related routes
-router.get("/paidOrders", authenticateToken, getPaidOrders);
-router.get("/deliverySchedule/:date", authenticateToken, getDeliverySchedule);
-router.get("/truckDelivery", authenticateToken, getTruckDelivery);
-router.post("/addDeliverySchedule", authenticateToken, addDeliverySchedule);
-router.delete("/deleteSchedule", authenticateToken, deleteDelivery);
-router.post("/assignTruck", authenticateToken, addTruckDelivery);
-router.post("/assignTrain", authenticateToken, addTrainDelivery);
-router.delete("/deleteTruck", authenticateToken, deleteTruckDelivery);
-router.post("/setDeliveryStatus", authenticateToken, setDeliveryStatus);
-router.post("/changeOrderStatus", authenticateToken, changeOrderStatus);
-router.get("/completedOrders", authenticateToken, getCompletedOrders);
-router.get("/receivedOrders", authenticateToken, getReceivedOrders);
+router.get("/paidOrders", authenticateToken("Manager"), getPaidOrders);
+router.get("/deliverySchedule/:date", authenticateToken("Manager"), getDeliverySchedule);
+router.get("/truckDelivery", authenticateToken("Manager"), getTruckDelivery);
+router.post("/addDeliverySchedule", authenticateToken("Manager"), addDeliverySchedule);
+router.delete("/deleteSchedule", authenticateToken("Manager"), deleteDelivery);
+router.post("/assignTruck", authenticateToken("Manager"), addTruckDelivery);
+router.post("/assignTrain", authenticateToken("Manager"), addTrainDelivery);
+router.delete("/deleteTruck", authenticateToken("Manager"), deleteTruckDelivery);
+router.post("/setDeliveryStatus", authenticateToken("Manager"), setDeliveryStatus);
+router.post("/changeOrderStatus", authenticateToken("Manager"), changeOrderStatus);
+router.get("/completedOrders", authenticateToken("Manager"), getCompletedOrders);
+router.get("/receivedOrders", authenticateToken("Manager"), getReceivedOrders);
 
-router.post("/queueForDelivery", authenticateToken, addToDeliveryQueue); 
-router.post("/updateArrivalTime", authenticateToken, updateArrivalTime);
+router.post("/queueForDelivery", authenticateToken("Manager"), addToDeliveryQueue); 
+router.post("/updateArrivalTime", authenticateToken("Manager"), updateArrivalTime);
 
-router.get("/trains", authenticateToken, getTrains);
-router.get("/drivers", authenticateToken, getDrivers);
-router.get("/assistants", authenticateToken, getAssistants);
-router.get("/vehicles", authenticateToken, getVehicles);
-router.get("/admindetails",authenticateToken,getAdminDetails);
-router.get('/profile', authenticateToken, getProfile);
+router.get("/trains", authenticateToken("Manager"), getTrains);
+router.get("/drivers", authenticateToken("Manager"), getDrivers);
+router.get("/assistants", authenticateToken("Manager"), getAssistants);
+router.get("/vehicles", authenticateToken("Manager"), getVehicles);
+router.get("/admindetails",authenticateToken("Manager"),getAdminDetails);
+router.get('/profile', authenticateToken("Manager"), getProfile);
 
-router.get("/availabilityCounts",authenticateToken,getAvailabilityCounts);
-router.get("/incompleteOrders",authenticateToken,getIncompleteOrdersForStore);
+router.get("/availabilityCounts",authenticateToken("Manager"),getAvailabilityCounts);
+router.get("/incompleteOrders",authenticateToken("Manager"),getIncompleteOrdersForStore);
 
-router.get("/driversofstore", authenticateToken, getDriversOfStore);
-router.get("/assistantsofstore",authenticateToken, getAssistsantsOfStore);
-router.post("/driver/insert",authenticateToken,insertDriver);
-router.delete("/driver/remove/:Driver_ID",authenticateToken, removeDriver);
-router.post("/assistant/insert",authenticateToken,insertAssistant);
-router.delete("/assistant/remove/:Assistant_ID",authenticateToken, removeAssistant);
+router.get("/driversofstore", authenticateToken("Manager"), getDriversOfStore);
+router.get("/assistantsofstore",authenticateToken("Manager"), getAssistsantsOfStore);
+router.post("/driver/insert",authenticateToken("Manager"),insertDriver);
+router.delete("/driver/remove/:Driver_ID",authenticateToken("Manager"), removeDriver);
+router.post("/assistant/insert",authenticateToken("Manager"),insertAssistant);
+router.delete("/assistant/remove/:Assistant_ID",authenticateToken("Manager"), removeAssistant);
 
 //routs for get reports//
-router.get("/quarterlySales",authenticateToken,getQuarterlySales);
-router.get("/productOrders",authenticateToken,getMostOrders);
-router.get("/assistantWorkHours",authenticateToken,getAssistantWorkedHours);
-router.get("/driverWorkHours",authenticateToken,getDriverWorkedHours);
-router.get("/truckHours",authenticateToken,getTruckHours);
-router.get("/salesByCity",authenticateToken,getSalesByCity);
-router.get("/salesByRoute",authenticateToken,getSalesByRoute);
-router.get("/customerOrderReport",authenticateToken,getCustomerOrderReport);
-router.delete("/assistant/remove/:assistant_ID",authenticateToken, removeAssistant);
+router.get("/quarterlySales",authenticateToken("Manager"),getQuarterlySales);
+router.get("/productOrders",authenticateToken("Manager"),getMostOrders);
+router.get("/assistantWorkHours",authenticateToken("Manager"),getAssistantWorkedHours);
+router.get("/driverWorkHours",authenticateToken("Manager"),getDriverWorkedHours);
+router.get("/truckHours",authenticateToken("Manager"),getTruckHours);
+router.get("/salesByCity",authenticateToken("Manager"),getSalesByCity);
+router.get("/salesByRoute",authenticateToken("Manager"),getSalesByRoute);
+router.get("/customerOrderReport",authenticateToken("Manager"),getCustomerOrderReport);
+router.delete("/assistant/remove/:assistant_ID",authenticateToken("Manager"), removeAssistant);
 
 export default router;

@@ -426,6 +426,7 @@ static async getQuarterlySales(req, storeID) {
     }
   }
 
+
   static async getAdminDetails(adminID) {
     // Add adminId as a parameter
 
@@ -472,7 +473,8 @@ static async getQuarterlySales(req, storeID) {
   }
 
   static async insertAssistants(Assistant_Name, Store_ID) {
-    const query = "INSERT INTO driver_assistant (Assistant_Name, Store_ID) VALUES (?,?)";
+    const query =
+      "INSERT INTO driver_assistant (Assistant_Name, Store_ID) VALUES (?,?)";
     try {
       const [results] = await pool.query(query, [Assistant_Name, Store_ID]);
       return results;
