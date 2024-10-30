@@ -794,7 +794,6 @@ BEGIN
 
     START TRANSACTION;
 
-    -- Update the order with the specified details if it's in a 'Pending' state
     UPDATE Orders 
     SET order_state = 'Paid',
         ordered_date = CURRENT_DATE,
