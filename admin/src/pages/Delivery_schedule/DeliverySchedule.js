@@ -107,6 +107,25 @@ function DeliverySchedule() {
     }
   };
 
+  const handleRelease = async (ID) => {
+    try {
+      const response = await axios.post(`/manager/releaseAll`, { deliveryID: ID }, { withCredentials: true });
+      toast.success("All workers released!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      console.log('Response from backend:', response.data);
+    } catch (error) {
+      console.error('Error sending request to backend:', error);
+    }
+  };
+
   const handleDel = async (ID) => {
     try {
       const response = await axios.delete(`/manager/deleteSchedule`, { 
@@ -153,6 +172,7 @@ function DeliverySchedule() {
               <th>Shipment Date</th>
               <th>Vehicle Departure Time</th>
               <th>Vehicle Arrival Time</th>
+              <th>Release All</th>
               <th>Delivery Status</th>
               <th>Truck or train</th>
               <th>Actions</th>
@@ -168,6 +188,7 @@ function DeliverySchedule() {
                   <div className='bottom-2'>{delivery.Vehicle_arrival_time}</div><br/>
                   <button className='btn top-1 btn-primary p-1' onClick={() => updateArrival(delivery.Delivery_id)}>Update Arrival Time</button>
                 </td>
+                <td><button className='btn btn-primary' onClick={() => handleRelease(delivery.Delivery_id)}>Release</button></td>
                 <td>
                   {/* setStatus(delivery.Delivery_status) */}
                   <div className='btn m-0.5'>{delivery.Delivery_status}</div>

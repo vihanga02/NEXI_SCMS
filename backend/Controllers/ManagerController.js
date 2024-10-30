@@ -287,6 +287,18 @@ async function getReceivedOrders(req, res) {
   }
 }
 
+async function releaseAll(req, res) {
+  const delID = req.body.deliveryID;
+  try {
+    const result = await Manager.releaseAll(delID);
+    res.status(200).json(result);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error fetching orders", error: error.message });
+  }
+}
+
 async function addToDeliveryQueue(req, res) {
   const { orderList, delID } = req.body;
   const deliveryID = delID.delivery_id;
@@ -604,6 +616,7 @@ export {
   changeOrderStatus,
   getCompletedOrders,
   getReceivedOrders,
+  releaseAll,
   addToDeliveryQueue,
   updateArrivalTime,
   getTrains,
