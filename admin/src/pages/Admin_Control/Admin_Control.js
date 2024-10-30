@@ -32,25 +32,28 @@ const ManagerControl = () => {
   }, []);
 
   // Remove a manager
-  const removeManager = (id) => {
-    setShowRemoveAlert(true);
-    setManagerToRemove(id);
-  };
+const removeManager = (Manager_ID) => {
+  setShowRemoveAlert(true);
+  setManagerToRemove(Manager_ID);
+};
 
-  const confirmRemoveManager = () => {
-    axios
-      .delete(`/admin/remove/${managerToRemove}`, { withCredentials: true })
-      .then(() => {
-        setManagers(managers.filter((manager) => manager.id !== managerToRemove));
-        setShowRemoveAlert(false);
-        setManagerToRemove(null);
-      })
-      .catch((error) => {
-        console.error("Error removing manager:", error);
-        setShowRemoveAlert(false);
-        setManagerToRemove(null);
-      });
-  };
+const confirmRemoveManager = () => {
+  axios
+    .delete(`/admin/remove/${managerToRemove}`, { withCredentials: true })
+    .then(() => {
+      setManagers(
+        managers.filter((manager) => manager.Manager_ID !== managerToRemove)
+      );
+      setShowRemoveAlert(false);
+      setManagerToRemove(null);
+    })
+    .catch((error) => {
+      console.error("Error removing manager:", error);
+      setShowRemoveAlert(false);
+      setManagerToRemove(null);
+    });
+};
+
 
   const cancelRemoveManager = () => {
     setShowRemoveAlert(false);
@@ -91,7 +94,7 @@ const ManagerControl = () => {
               <td>
                 <button
                   className="manager-control__button"
-                  onClick={() => removeManager(manager.id)}
+                  onClick={() => removeManager(manager.Manager_ID)}
                 >
                   Remove
                 </button>

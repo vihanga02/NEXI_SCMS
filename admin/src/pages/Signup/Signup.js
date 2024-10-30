@@ -83,7 +83,7 @@ const Signup = () => {
       
       setStatus("Sign up successful");
       setErrors({});
-      navigate("/");
+      navigate("/admin-control");
     } catch (error) {
       if (error.response && error.response.status === 400) {
         const errorMessage = error.response.data.message;
@@ -145,7 +145,7 @@ const Signup = () => {
               >
                 <option value="">Select a city</option>
                 <option value="Colombo">Colombo</option>
-                <option value="Negambo">Negambo</option>
+                <option value="Negombo">Negombo</option>
                 <option value="Galle">Galle</option>
                 <option value="Matara">Matara</option>
                 <option value="Jaffna">Jaffna</option>

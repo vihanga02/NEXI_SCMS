@@ -26,7 +26,7 @@ async function getStores(req, res) {
 
 async function removeManager(req, res) {
   try {
-    const Manager_ID = req.user.id;
+    const {Manager_ID} = req.params;
     const result = await Admin.removeManager(Manager_ID);
     res.status(200).json(result);
   } catch (error) {
