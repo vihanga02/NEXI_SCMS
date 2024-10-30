@@ -126,3 +126,9 @@ span{
   opacity: 0.3; /* Adjust the opacity of the background image */
   z-index: 1; 
 }
+
+.error-message{
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}

@@ -191,7 +191,7 @@ function Order() {
                   <td>
                     <div className='btn m-0.5' onClick={() => window.location.reload()}>{order.Order_state}</div>
                     <details className="dropdown">
-                      <summary className="btn m-0.5 bg-green-500 hover:border-spacing-3">Change state</summary>
+                      <summary className="btn m-0.5 bg-green-500 hover:border-spacing-3">Change</summary>
                       <ul className="menu dropdown-content bg-base-100 bg-green-400 rounded z-[1] w-52 p-2 shadow">
                         <li><button onClick={() => handleStatus(['Paid', order.Order_ID])}>Paid</button></li>
                         <li><button onClick={() => handleStatus(['Received', order.Order_ID])}>Received</button></li>
@@ -250,7 +250,7 @@ function Order() {
                   <td>
                   <div className='btn m-0.5' onClick={() => window.location.reload()}>{order.Order_state}</div>
                     <details className="dropdown">
-                      <summary className="btn m-0.5 bg-green-500 hover:border-spacing-3">Change state</summary>
+                      <summary className="btn m-0.5 bg-green-500 hover:border-spacing-3">Change</summary>
                       <ul className="menu dropdown-content bg-base-100 bg-green-400 rounded z-[1] w-52 p-2 shadow">
                         <li><button onClick={() => handleStatus(['Received', order.Order_ID])}>Received</button></li>
                         <li><button onClick={() => handleStatus(['Completed', order.Order_ID])}>Completed</button></li>
