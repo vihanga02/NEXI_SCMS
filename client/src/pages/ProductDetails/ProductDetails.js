@@ -130,7 +130,7 @@ const ProductDetails = () => {
             +
           </button>
         </div>
-        <button className="add-to-cart" onClick={handleAddToCart}>
+        <button className="add-to-cart1" onClick={handleAddToCart}>
           Add To Cart
         </button>
       </div>
