@@ -142,7 +142,7 @@ CREATE TABLE Order_Item (
   Order_ID INT NOT NULL,
   Quantity INT DEFAULT 1,
   Order_Item_Capacity INT DEFAULT 0,
-  Order_item_Price DECIMAL(8,2) DEFAULT 0,
+  Order_item_Price DECIMAL(10,2) DEFAULT 0,
   PRIMARY KEY (Set_id),
   FOREIGN KEY (Product_ID) REFERENCES Product(Product_ID),
   FOREIGN KEY (Order_ID) REFERENCES Orders(Order_ID) ON DELETE CASCADE ON UPDATE CASCADE

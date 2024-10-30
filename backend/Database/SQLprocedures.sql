@@ -502,7 +502,7 @@ DELIMITER ;
 
 DELIMITER $$
 DROP PROCEDURE IF EXISTS GetCurrentOrder$$
-CREATE PROCEDURE GetCurrentOrder(IN customer_id INT)
+CREATE PROCEDURE GetCurrentOrder(IN customer_id_ INT)
 BEGIN
 	SELECT 
 		Order_ID,
@@ -511,7 +511,7 @@ BEGIN
 		Total_Price
 	FROM Orders
 	WHERE 
-		Customer_ID = customer_id 
+		Customer_ID = customer_id_ 
 		AND Order_state = 'Paid'
 	ORDER BY Ordered_Date DESC;
 END$$
@@ -813,3 +813,5 @@ BEGIN
 END $$
 
 DELIMITER ;
+
+
