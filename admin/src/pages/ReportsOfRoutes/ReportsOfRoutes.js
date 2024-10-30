@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Bar } from 'react-chartjs-2';
 import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import axios from 'axios';
-import Sidebar from '../../components/Sidebar/Sidebar';
-import Topbar from '../../components/Topbar/Topbar';
 import './ReportsOfRoutes.css';
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);

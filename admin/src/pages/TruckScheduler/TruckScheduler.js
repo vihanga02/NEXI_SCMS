@@ -1,13 +1,12 @@
 import React, { useEffect,useState } from 'react'
 import './TruckScheduler.css';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from 'axios';
 
 function TruckScheduler() {
 
-    const navigate = useNavigate();
     const location = useLocation();
     const[deliveries, setDeliveries] = useState([]);
     const delivery_id = location.state || {};
