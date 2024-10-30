@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './UserDetails.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Alert from '../../components/Alert/Alert'; // Import Alert component
 
 const UserDetails = () => {
     const navigate = useNavigate();
@@ -15,6 +16,10 @@ const UserDetails = () => {
 
     const [isEditingPhone, setIsEditingPhone] = useState(false);
     const [isEditingName, setIsEditingName] = useState(false);
+
+    const [showLogoutAlert, setShowLogoutAlert] = useState(false);
+    const [showSavePhoneAlert, setShowSavePhoneAlert] = useState(false);
+    const [showSaveNameAlert, setShowSaveNameAlert] = useState(false);
 
     useEffect(() => {
         // Fetch customer profile
@@ -90,38 +95,62 @@ const UserDetails = () => {
             alert('Phone number must be exactly 10 digits.');
             return;
         }
+        setShowSavePhoneAlert(true);
+    };
 
-        axios.post('/customer/updateCustomer', { phoneNumber }, { withCredentials: true })
-            .then(response => {
-                setCustomerData({ ...customerData, Phone_Number: phoneNumber });
-                setIsEditingPhone(false);
-            })
-            .catch(error => {
-                if (error.response && error.response.status === 401) {
-                    setLoginStatus(false);
-                }
-                console.error('Error updating phone number:', error);
-            });
+    const confirmSavePhoneNumber = async () => {
+        try {
+            await axios.post('/customer/updateCustomer', { phoneNumber }, { withCredentials: true });
+            setCustomerData({ ...customerData, Phone_Number: phoneNumber });
+            setIsEditingPhone(false);
+            setShowSavePhoneAlert(false);
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                setLoginStatus(false);
+            }
+            console.error('Error updating phone number:', error);
+            setShowSavePhoneAlert(false);
+        }
     };
 
     const handleSaveName = () => {
-        axios.post('/customer/updateCustomer', { Name: name }, { withCredentials: true })
-            .then(response => {
-                setCustomerData({ ...customerData, Name: name });
-                setIsEditingName(false);
-            })
-            .catch(error => {
-                if (error.response && error.response.status === 401) {
-                    setLoginStatus(false);
-                }
-                console.error('Error updating name:', error);
-            });
+        setShowSaveNameAlert(true);
+    };
+
+    const confirmSaveName = async () => {
+        try {
+            await axios.post('/customer/updateCustomer', { Name: name }, { withCredentials: true });
+            setCustomerData({ ...customerData, Name: name });
+            setIsEditingName(false);
+            setShowSaveNameAlert(false);
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                setLoginStatus(false);
+            }
+            console.error('Error updating name:', error);
+            setShowSaveNameAlert(false);
+        }
     };
 
     const handleLogout = () => {
-        axios.post('/customer/logout', {}, { withCredentials: true })
-            .then(() => navigate('/'))
-            .catch((error) => console.error('Logout failed:', error));
+        setShowLogoutAlert(true);
+    };
+
+    const confirmLogout = async () => {
+        try {
+            await axios.post('/customer/logout', {}, { withCredentials: true });
+            navigate('/');
+            setShowLogoutAlert(false);
+        } catch (error) {
+            console.error('Logout failed:', error);
+            setShowLogoutAlert(false);
+        }
+    };
+
+    const cancelAlert = () => {
+        setShowLogoutAlert(false);
+        setShowSavePhoneAlert(false);
+        setShowSaveNameAlert(false);
     };
 
     useEffect(() => {
@@ -250,6 +279,27 @@ const UserDetails = () => {
                     )}
                 </div>
             </div>
+            {showLogoutAlert && (
+                <Alert
+                    message="Are you sure you want to logout?"
+                    onConfirm={confirmLogout}
+                    onCancel={cancelAlert}
+                />
+            )}
+            {showSavePhoneAlert && (
+                <Alert
+                    message="Are you sure you want to save the new phone number?"
+                    onConfirm={confirmSavePhoneNumber}
+                    onCancel={cancelAlert}
+                />
+            )}
+            {showSaveNameAlert && (
+                <Alert
+                    message="Are you sure you want to save the new name?"
+                    onConfirm={confirmSaveName}
+                    onCancel={cancelAlert}
+                />
+            )}
         </div>
     ) : <div>Redirecting to login...</div>;
 };
