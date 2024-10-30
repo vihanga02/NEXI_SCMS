@@ -15,6 +15,7 @@ function ReportsOfMainCities() {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     const chartRef = useRef();
+    const downloadBtnRef = useRef();
 
     useEffect(() => {
         const fetchSalesByCity = async () => {
@@ -55,14 +56,21 @@ function ReportsOfMainCities() {
     const downloadPDF = async () => {
         const doc = new jsPDF();
         const chartElement = chartRef.current;
+        const downloadBtn = downloadBtnRef.current;
 
-        const canvas = await html2canvas(chartElement);
-        const imgData = canvas.toDataURL('image/png');
+        if (downloadBtn) {
+            downloadBtn.style.display = 'none'; 
 
-        doc.setFontSize(18);
-        doc.text("Sales by City", 14, 20);
-        doc.addImage(imgData, 'PNG', 10, 30, 180, 100);
-        doc.save("Sales_by_City_Report.pdf");
+            const canvas = await html2canvas(chartElement);
+            const imgData = canvas.toDataURL('image/png');
+
+            downloadBtn.style.display = 'block';
+
+            doc.setFontSize(18);
+            doc.text("Sales by City", 14, 20);
+            doc.addImage(imgData, 'PNG', 10, 30, 180, 100);
+            doc.save("Sales_by_City_Report.pdf");
+        }
     };
 
     return (
@@ -78,7 +86,7 @@ function ReportsOfMainCities() {
                     ) : (
                         <Bar data={chartData} options={{ responsive: true }} />
                     )}
-                    <button onClick={downloadPDF} className="download-btn">
+                    <button onClick={downloadPDF} className="download-btn" ref={downloadBtnRef}>
                         Download PDF
                     </button>
                 </div>

@@ -103,13 +103,15 @@ function QuarterlySales() {
             <div className="rcontainer">
                 <h1>Quarterly Sales</h1>
                 <div className="date-picker">
-                    <label htmlFor="startDate">Select Start Date:</label>
                     <input
                         type="date"
                         id="startDate"
                         value={startDate}
                         onChange={(e) => setStartDate(e.target.value)}
                     />
+                    <button onClick={downloadPDF} ref={downloadBtnRef} className="download-btn1">
+                        Download PDF
+                    </button>
                 </div>
 
                 <div className="chart-area" ref={chartRef}>
@@ -120,11 +122,6 @@ function QuarterlySales() {
                     ) : (
                         <Bar data={chartData} options={{ responsive: true }} />
                     )}
-
-                    {/* Download PDF Button */}
-                    <button onClick={downloadPDF} ref={downloadBtnRef} className="download-btn">
-                        Download PDF
-                    </button>
                 </div>
             </div>
         </div>

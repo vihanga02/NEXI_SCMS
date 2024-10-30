@@ -224,11 +224,6 @@ INSERT INTO Product (Product_Name, Category, Price, Capacity, Stock_Quantity, De
 ('Redmi K40', 'Redmi', 120000, 56, 30, 'The Redmi K40 features a 6.67-inch AMOLED display, Snapdragon 870 processor, and a triple-camera system, offering flagship performance at a competitive price.', '/assets/redmi-k40.jpg');
 
 
-INSERT INTO Customer(Name, Username, Password, Email, Phone_Number) VALUES
-('Vihanga Muthumala', 'vihanga', '$2b$10$P9D/m0lHf7hVb4CgRuXHl.yLxzqQy1siHMDNrR0ku5BEO7EcedTO.', 'vihangamuthu@gmail.com', '0775567984'),
-('Sahan  Perera', 'Sahan1234', '$2b$10$MWshePCXvp7A5fvuZBbXKubBd8zY9u9f.OZk5.wx77eeM/Vdax0eG', 'sahan@gmail.com', '0775567982');
-
-
 INSERT INTO Store (City) VALUES
 ('Colombo'),
 ('Negombo'),
@@ -423,16 +418,15 @@ INSERT INTO Destination (Trip_ID, Store_ID) VALUES
 (11, 5),
 (11, 6);
 
-CREATE INDEX idx_category_name ON product(Category,Product_Name);
+CREATE INDEX idx_category_name ON product(Category, Product_Name);
 
-CREATE INDEX idx_store ON driver(Store_ID);
+CREATE INDEX idx_driver_store ON driver(Store_ID);
 
-CREATE INDEX idx_store ON driver_assistant(Store_ID);
+CREATE INDEX idx_assistant_store ON driver_assistant(Store_ID);
 
-CREATE INDEX idx_store ON Truck(Store_ID);
+CREATE INDEX idx_truck_store ON truck(Store_ID);
 
-CREATE INDEX idx_store ON truck_route(Store_ID);
+CREATE INDEX idx_truck_route_store ON truck_route(Store_ID);
 
-CREATE INDEX idx_store ON Truck(Store_ID);
+CREATE INDEX idx_orders_store_customer ON orders(Store_ID, Customer_ID);
 
-CREATE INDEX idx_store_customer ON orders(Store_ID, Customer_ID);
