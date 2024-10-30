@@ -80,8 +80,8 @@ function TruckScheduler() {
 
   return (
     <div>
-        <div className='ADcontainer'>
-            <div className='Acontainer'>
+        <div className='ADcontainer-truck-schedule'>
+            <div className='Acontainer-truck-schedule'>
                 <h1>Truck Scheduler</h1>
                 <button className='btn btn-primary' onClick={() => handleAssign()}>Assign Truck, Driver & Assistant</button>
                 <table className='order-table'>

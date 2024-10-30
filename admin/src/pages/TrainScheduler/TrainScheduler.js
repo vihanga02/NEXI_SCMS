@@ -37,8 +37,8 @@ const TrainScheduler = () => {
 
   return (
 
-        <div className='ADcontainer'>
-            <div className='Acontainer'>
+        <div className='ADcontainer-train-schedule'>
+            <div className='Acontainer-train-schedule'>
                 <div className='order-content'>
                 <h2>Available Trains</h2>
                 <table className='order-table'>

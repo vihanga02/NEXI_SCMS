@@ -186,14 +186,14 @@ function DeliverySchedule() {
                 <td>{delivery.Vehicle_departure_time}</td>
                 <td>
                   <div className='bottom-2'>{delivery.Vehicle_arrival_time}</div><br/>
-                  <button className='btn top-1 btn-primary p-1' onClick={() => updateArrival(delivery.Delivery_id)}>Update Arrival Time</button>
+                  <button className='btn top-1 btn-primary p-1' onClick={() => updateArrival(delivery.Delivery_id)}>Update</button>
                 </td>
                 <td><button className='btn btn-primary' onClick={() => handleRelease(delivery.Delivery_id)}>Release</button></td>
                 <td>
                   {/* setStatus(delivery.Delivery_status) */}
                   <div className='btn m-0.5'>{delivery.Delivery_status}</div>
                   <details className="dropdown">
-                    <summary className="btn m-0.5 bg-green-500 hover:border-spacing-3">Change status</summary>
+                    <summary className="btn m-0.5 bg-green-500 hover:border-spacing-3">Change</summary>
                     <ul className="menu dropdown-content bg-base-100 bg-green-400 rounded z-[1] w-52 p-2 shadow">
                       <li><button onClick={() => handleSelect(['Not_Yet', delivery.Delivery_id])}>Not Yet</button></li>
                       <li><button onClick={() => handleSelect(['On_Train', delivery.Delivery_id])}>On Train</button></li>
@@ -203,7 +203,7 @@ function DeliverySchedule() {
                   </details>
                 </td>
                 <td>
-                  <button className="btn m-0.5 btn-primary" onClick={() => handleTracking(delivery.Delivery_id)} >Track Orders</button>
+                  <button className="btn m-0.5 btn-primary" onClick={() => handleTracking(delivery.Delivery_id)} >Track</button>
                 </td>
                 <td><button className='btn btn-danger' onClick={() => handleDel(delivery.Delivery_id)}>Delete</button></td>
               </tr>

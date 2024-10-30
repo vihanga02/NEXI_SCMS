@@ -104,15 +104,8 @@ const Login = () => {
             {message}
           </p>
         )}
-
-        
-        <div className="forgot-password">
-          <a href="">Forgot password</a>
-        </div>
       </div>
       <div className="login-right"></div>
-
-      {/* Add ToastContainer for toast notifications */}
       <ToastContainer />
     </div>
   );
