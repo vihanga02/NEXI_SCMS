@@ -105,9 +105,7 @@ const Login = () => {
           </p>
         )}
 
-        <span>
-          Don't have an account? <Link to="/signup">Register</Link>
-        </span>
+        
         <div className="forgot-password">
           <a href="">Forgot password</a>
         </div>
