@@ -261,6 +261,8 @@ static async getQuarterlySales(req, storeID) {
   }
 
   static async addTruckDelivery(storeID, delivery_id) {
+    console.log("storeID", storeID);
+    console.log("delivery_id", delivery_id);
     const query = "call CreateTruckDelivery(?,?)";
     try {
       const result = await pool.query(query, [storeID, delivery_id]);
@@ -271,8 +273,9 @@ static async getQuarterlySales(req, storeID) {
   }
 
   static async addTrainDelivery(delivery_id, train_id) {
-    const query =
-      "INSERT INTO train_delivery(Train_Del_ID, Train_ID) VALUES(?,?);";
+    const query = `CALL createTrainSchedule(?, ?);`;
+    console.log("delivery_id", delivery_id);
+    console.log("train_id", train_id);
     try {
       const result = await pool.query(query, [delivery_id, train_id]);
       return result;

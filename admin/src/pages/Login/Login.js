@@ -103,13 +103,6 @@ const Login = () => {
             {message}
           </p>
         )}
-<<<<<<< Updated upstream
-=======
-        
-        <div className="forgot-password">
-          <a href="">Forgot password</a>
-        </div>
->>>>>>> Stashed changes
       </div>
       <div className="login-right"></div>
       <ToastContainer />

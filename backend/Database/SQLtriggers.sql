@@ -166,4 +166,17 @@ END$$
 DELIMITER ;
 
 
+DELIMITER $$
+CREATE TRIGGER check_available_space_before_update
+BEFORE UPDATE ON Train
+FOR EACH ROW
+BEGIN
+    IF NEW.Available_space < 0 THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'Available space must be greater than 0';
+    END IF;
+END$$
+DELIMITER ;
+
+
 -- SHOW TRIGGERS;

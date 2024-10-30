@@ -39,7 +39,7 @@ BEGIN
         Week_number,
         a.Assistant_ID, 
         Assistant_Name, 
-        Work_Hours
+        Hours_worked
     FROM assistant_work_hours awh
     JOIN driver_assistant a ON a.Assistant_ID = awh.Assistant_ID
     WHERE a.Store_ID = storeID;
@@ -780,7 +780,8 @@ DELIMITER ;
 
 
 
-DELIMITER $$
+DELIMITER //
+DROP PROCEDURE IF EXISTS CheckoutOrder//
 CREATE PROCEDURE CheckoutOrder(
     IN p_Customer_ID INT,
     IN p_Store_ID INT,
@@ -810,8 +811,19 @@ BEGIN
         COMMIT;
         SELECT 'Checkout successful.' AS message, 1 AS success;
     END IF;
-END $$
+END //
 
 DELIMITER ;
 
-
+DELIMITER //
+DROP PROCEDURE IF EXISTS createTrainSchedule//
+CREATE PROCEDURE `createTrainSchedule`(delID INT,trainID INT)
+BEGIN
+	INSERT INTO train_delivery(Train_Del_ID, Train_ID) VALUES(delID,trainID);
+    
+    UPDATE Delivery_Schedule
+    SET Vehicle_departure_time=CURTIME()
+    WHERE Delivery_ID=delID;
+    
+END//
+DELIMITER ;
