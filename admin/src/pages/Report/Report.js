@@ -26,9 +26,7 @@ function Report() {
 
     return (
         <div className='Rcontainer'>
-            <Sidebar />
             <div className='rcontainer'>
-                <Topbar />
                 <div className='button-container'>
                     <button className='report-button' onClick={() => navigate('/report/quarterlysales')}>
                         <i className="fas fa-chart-line"></i> Quarterly Sales

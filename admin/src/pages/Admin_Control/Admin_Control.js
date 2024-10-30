@@ -9,10 +9,6 @@ const ManagerControl = () => {
 
   const [managers, setManagers] = useState([]);
   const [stores, setStores] = useState([]);
-  const [selectedManager, setSelectedManager] = useState(null);
-  const [selectedStore, setSelectedStore] = useState(null);
-  const [newManagerName, setNewManagerName] = useState("");
-  const [newManagerEmail, setNewManagerEmail] = useState("");
 
   const [showRemoveAlert, setShowRemoveAlert] = useState(false);
   const [managerToRemove, setManagerToRemove] = useState(null);

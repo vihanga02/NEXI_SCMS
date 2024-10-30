@@ -148,7 +148,7 @@ static async getQuarterlySales(req, storeID) {
   // Model function to get sales by route
   static async getSalesByRoute(st) {
     
-    const query = `SELECT Route,Total_Sales FROM sales_by_route where Store_ID=?`; // Query the view directly
+    const query = `SELECT Route,Total_Sales FROM sales_by_route where Store_ID=?`; 
     
 
     try {

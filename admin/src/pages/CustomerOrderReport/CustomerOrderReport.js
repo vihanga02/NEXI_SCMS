@@ -55,9 +55,7 @@ function CustomerOrderReport() {
 
     return (
         <div className="customer-order-report-container">
-            <Sidebar />
             <div className="content">
-                <Topbar />
                 <div className="chart-container">
                     <h2>Customer Order Report</h2>
 

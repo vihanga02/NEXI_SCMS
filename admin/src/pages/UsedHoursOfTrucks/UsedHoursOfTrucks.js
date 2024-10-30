@@ -36,9 +36,7 @@ function UsedHoursOfTrucks() {
 
     return (
         <div className="used-hours-of-trucks-container">
-            <Sidebar />
             <div className="content">
-                <Topbar />
                 <div className="table-container">
                     <h2>Truck Usage Hours</h2>
 

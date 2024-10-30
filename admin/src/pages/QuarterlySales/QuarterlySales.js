@@ -77,11 +77,8 @@ function QuarterlySales() {
 
     return (
         <div className="Rcontainer">
-            <Sidebar />
-
             <div className="rcontainer">
-                <Topbar />
-
+                <h1>Quarterly Sales</h1>
                 <div className="date-picker">
                     <label htmlFor="startDate">Select Start Date:</label>
                     <input

@@ -37,7 +37,7 @@ BEGIN
     Week_number,
     a.Assistant_ID, 
     Assistant_Name, 
-    Work_Hours,
+    Work_Hours
     FROM assistant_work_hours awh
     JOIN driver_assistant a ON a.Assistant_ID = awh.Assistant_ID
     WHERE a.Store_ID = storeID;
@@ -294,6 +294,7 @@ DELIMITER ;
 
 
 DELIMITER $$
+DROP EVENT IF EXISTS daily_add_work_hours $$
 CREATE EVENT daily_add_work_hours
 ON SCHEDULE EVERY 1 DAY
 STARTS '2024-10-26'
@@ -301,6 +302,7 @@ DO
     CALL UpdateDailyWorkHours();
 $$
 DELIMITER ;
+
 
 
 

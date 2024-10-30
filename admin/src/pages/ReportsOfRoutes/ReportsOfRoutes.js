@@ -53,9 +53,7 @@ function ReportsOfRoutes() {
 
     return (
         <div className="reports-routes-container">
-            <Sidebar />
             <div className="content">
-                <Topbar />
                 <div className="chart-container">
                     <h2>Sales by Route</h2>
 

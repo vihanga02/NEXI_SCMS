@@ -55,12 +55,9 @@ function ReportsOfMainCities() {
 
     return (
         <div className="reports-main-cities-container">
-            <Sidebar />
             <div className="content">
-                <Topbar />
                 <div className="chart-container">
                     <h2>Sales by City</h2>
-
                     {loading ? (
                         <p>Loading data...</p>
                     ) : error ? (
