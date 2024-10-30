@@ -100,7 +100,7 @@ static async getQuarterlySales(req, storeID) {
   const query = `CALL Quarterly_sales_from(?, ?)`; // Updated procedure call with two parameters
   try {
     const [rows] = await pool.query(query, [startDate, storeID]); // Pass both startDate and storeID
-    console.log(rows);
+   
     return rows[0]; // Return only the first element of rows
   } catch (error) {
     console.error("Error in getQuarterlySales:", error);
