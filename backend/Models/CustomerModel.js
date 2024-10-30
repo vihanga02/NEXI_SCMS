@@ -260,9 +260,12 @@ class Customer {
 
   static async getPreviousOrder(customerId) {
     const query = `CALL GetPreviousOrder(?);`;
+    
     try {
       const [results] = await pool.query(query, [customerId]);
+      
       return results[0]; // results[0] returns the first result set from CALL
+
     } catch (error) {
       throw error;
     }
