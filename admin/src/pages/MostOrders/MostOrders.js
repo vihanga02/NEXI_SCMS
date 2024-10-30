@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 import './MostOrders.css';
 
 function MostOrders() {
@@ -35,11 +37,31 @@ function MostOrders() {
         fetchProductOrders();
     }, [navigate]); // Include navigate as a dependency for useEffect
 
+    // Function to download table as PDF
+    const downloadPDF = () => {
+        const doc = new jsPDF();
+        doc.text("Products with Most Orders", 20, 10);
+
+        doc.autoTable({
+            startY: 20,
+            head: [['Product ID', 'Product Name', 'Total Sales']],
+            body: products.map(product => [
+                product.Product_ID,
+                product.Product_Name,
+                product.Total_sales
+            ]),
+        });
+
+        doc.save("most-orders.pdf");
+    };
+
     return (
         <div className="most-orders-container">
             <div className="content">
                 <div className="table-container">
                     <h2>Products with Most Orders</h2>
+                    
+                    <button onClick={downloadPDF} className="download-btn">Download PDF</button>
 
                     {loading ? (
                         <p>Loading data...</p>

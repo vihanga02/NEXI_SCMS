@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Bar } from 'react-chartjs-2';
 import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import axios from 'axios';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import './QuarterlySales.css';
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -24,6 +26,8 @@ function QuarterlySales() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+    const chartRef = useRef(null); // Ref for the chart container
+    const downloadBtnRef = useRef(); // Ref for the download button
 
     const fetchQuarterlySales = async () => {
         setLoading(true);
@@ -73,6 +77,27 @@ function QuarterlySales() {
         fetchQuarterlySales();
     }, [startDate]);
 
+    const downloadPDF = async () => {
+        const downloadBtn = downloadBtnRef.current;
+
+        // Temporarily hide the download button
+        downloadBtn.style.display = 'none';
+
+        // Capture the chart area as a canvas
+        const canvas = await html2canvas(chartRef.current);
+        const imgData = canvas.toDataURL('image/png');
+
+        // Restore the download button visibility
+        downloadBtn.style.display = 'block';
+
+        // Create and save the PDF
+        const pdf = new jsPDF('landscape');
+        pdf.setFontSize(18);
+        pdf.text("Quarterly Sales", 15, 20);
+        pdf.addImage(imgData, 'PNG', 10, 30, 280, 150);
+        pdf.save('Quarterly_Sales_Report.pdf');
+    };
+    
     return (
         <div className="Rcontainer">
             <div className="rcontainer">
@@ -87,7 +112,7 @@ function QuarterlySales() {
                     />
                 </div>
 
-                <div className="chart-area">
+                <div className="chart-area" ref={chartRef}>
                     {loading ? (
                         <p>Loading chart...</p>
                     ) : error ? (
@@ -95,6 +120,11 @@ function QuarterlySales() {
                     ) : (
                         <Bar data={chartData} options={{ responsive: true }} />
                     )}
+
+                    {/* Download PDF Button */}
+                    <button onClick={downloadPDF} ref={downloadBtnRef} className="download-btn">
+                        Download PDF
+                    </button>
                 </div>
             </div>
         </div>

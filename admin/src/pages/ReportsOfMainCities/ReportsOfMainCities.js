@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
 import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import './ReportsOfMainCities.css';
 
-// Register necessary Chart.js components
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 function ReportsOfMainCities() {
@@ -13,6 +14,7 @@ function ReportsOfMainCities() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+    const chartRef = useRef();
 
     useEffect(() => {
         const fetchSalesByCity = async () => {
@@ -21,12 +23,12 @@ function ReportsOfMainCities() {
                     withCredentials: true 
                 });
 
-                setSalesByCity(response.data); // Set the fetched sales by city data
+                setSalesByCity(response.data);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching sales by city:', error);
                 if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-                    navigate('/'); // Redirect to login if unauthorized
+                    navigate('/');
                 } else {
                     setError('Error fetching data. Please try again later.');
                 }
@@ -37,13 +39,12 @@ function ReportsOfMainCities() {
         fetchSalesByCity();
     }, [navigate]);
 
-    // Prepare the data for the bar chart
     const chartData = {
-        labels: salesByCity.map(entry => entry.City), // X-axis labels
+        labels: salesByCity.map(entry => entry.City),
         datasets: [
             {
                 label: 'Total Sales',
-                data: salesByCity.map(entry => entry['SUM(Total_Price)']), // Y-axis data
+                data: salesByCity.map(entry => entry['SUM(Total_Price)']),
                 backgroundColor: 'rgba(75, 192, 192, 0.6)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1,
@@ -51,10 +52,24 @@ function ReportsOfMainCities() {
         ],
     };
 
+    const downloadPDF = async () => {
+        const doc = new jsPDF();
+        const chartElement = chartRef.current;
+
+        const canvas = await html2canvas(chartElement);
+        const imgData = canvas.toDataURL('image/png');
+
+        doc.setFontSize(18);
+        doc.text("Sales by City", 14, 20);
+        doc.addImage(imgData, 'PNG', 10, 30, 180, 100);
+        doc.save("Sales_by_City_Report.pdf");
+    };
+
     return (
         <div className="reports-main-cities-container">
             <div className="content">
-                <div className="chart-container">
+                <div className="chart-container" ref={chartRef}>
+
                     <h2>Sales by City</h2>
                     {loading ? (
                         <p>Loading data...</p>
@@ -63,6 +78,9 @@ function ReportsOfMainCities() {
                     ) : (
                         <Bar data={chartData} options={{ responsive: true }} />
                     )}
+                    <button onClick={downloadPDF} className="download-btn">
+                        Download PDF
+                    </button>
                 </div>
             </div>
         </div>

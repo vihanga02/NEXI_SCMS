@@ -153,7 +153,6 @@ static async getQuarterlySales(req, storeID) {
 
     try {
       const [rows] = await pool.query(query,st); // Execute the query and return rows
-      console.log(rows);
       return rows; // Return only rows
     } catch (error) {
       console.error("Error in getSalesByRoute:", error);

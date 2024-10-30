@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 import './DriverWorkedHours.css';
 
 function DriverWorkedHours() {
@@ -33,11 +35,32 @@ function DriverWorkedHours() {
         fetchDriverWorkHours();
     }, [navigate]);
 
+    // Function to download table as PDF
+    const downloadPDF = () => {
+        const doc = new jsPDF();
+        doc.text("Driver Work Hours", 20, 10);
+
+        doc.autoTable({
+            startY: 20,
+            head: [['Week Number', 'Driver ID', 'Driver Name', 'Hours Worked']],
+            body: driverWorkHours.map(entry => [
+                entry.Week_number,
+                entry.Driver_id,
+                entry.Driver_name,
+                entry.Hours_worked
+            ]),
+        });
+
+        doc.save("Driver_Work_Hours_Report.pdf");
+    };
+
     return (
         <div className="driver-work-hours-container">
             <div className="content">
                 <div className="table-container">
                     <h2>Driver Work Hours</h2>
+                    
+                    <button onClick={downloadPDF} className="download-btn">Download PDF</button>
 
                     {loading ? (
                         <p>Loading data...</p>
