@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import Topbar from '../../components/Topbar/Topbar';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 import './UsedHoursOfTrucks.css';
 
 function UsedHoursOfTrucks() {
@@ -34,6 +36,25 @@ function UsedHoursOfTrucks() {
         fetchTruckHours();
     }, [navigate]);
 
+    // Function to download table as PDF
+    const downloadPDF = () => {
+        const doc = new jsPDF();
+        doc.text("Truck Usage Hours", 20, 10);
+
+        doc.autoTable({
+            startY: 20,
+            head: [['Week Number', 'Truck ID', 'Registration Number', 'Hours Worked']],
+            body: truckHours.map(entry => [
+                entry.Week_number,
+                entry.Truck_id,
+                entry.Reg_Number,
+                entry.Hours_worked
+            ]),
+        });
+
+        doc.save("Truck_Usage_Hours_Report.pdf");
+    };
+
     return (
         <div className="used-hours-of-trucks-container">
             <Sidebar />
@@ -41,6 +62,8 @@ function UsedHoursOfTrucks() {
                 <Topbar />
                 <div className="table-container">
                     <h2>Truck Usage Hours</h2>
+                    
+                    <button onClick={downloadPDF} className="download-btn">Download PDF</button>
 
                     {loading ? (
                         <p>Loading data...</p>

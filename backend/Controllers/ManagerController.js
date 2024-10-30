@@ -47,7 +47,6 @@ async function getDriverWorkedHours(req, res) {
 //controller to get most orders
 async function getMostOrders(req, res) {
   const storeID = req.user.store;
-  console.log('in controller');
   try {
     const result = await Manager.getMostOrders(req,storeID);
     res.status(200).json(result);

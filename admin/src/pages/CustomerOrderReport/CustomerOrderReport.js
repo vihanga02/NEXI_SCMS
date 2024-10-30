@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Bar } from 'react-chartjs-2';
 import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import axios from 'axios';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import Topbar from '../../components/Topbar/Topbar';
 import './CustomerOrderReport.css'; // CSS for styling
@@ -15,6 +17,8 @@ function CustomerOrderReport() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+    const chartRef = useRef(); // Ref to capture the chart element
+    const downloadBtnRef = useRef(); // Ref to control the download button visibility
 
     useEffect(() => {
         const fetchOrderCountByCustomer = async () => {
@@ -53,13 +57,38 @@ function CustomerOrderReport() {
         ],
     };
 
+    // Function to download the chart as PDF
+    const downloadPDF = async () => {
+        const doc = new jsPDF();
+        const chartElement = chartRef.current;
+        const downloadBtn = downloadBtnRef.current;
+
+        // Temporarily hide the download button
+        downloadBtn.style.display = 'none';
+
+        // Capture the chart as an image
+        const canvas = await html2canvas(chartElement);
+        const imgData = canvas.toDataURL('image/png');
+
+        // Show the download button again
+        downloadBtn.style.display = 'block';
+
+        // Add the image to the PDF and save it
+        doc.setFontSize(18);
+        doc.text("Customer Order Report", 14, 20);
+        doc.addImage(imgData, 'PNG', 10, 30, 180, 100); // Adjust width and height as needed
+        doc.save("Customer_Order_Report.pdf");
+    };
+
     return (
         <div className="customer-order-report-container">
             <Sidebar />
             <div className="content">
                 <Topbar />
-                <div className="chart-container">
+                <div className="chart-container" ref={chartRef}>
                     <h2>Customer Order Report</h2>
+                    
+                    <button onClick={downloadPDF} ref={downloadBtnRef} className="download-btn">Download PDF</button>
 
                     {loading ? (
                         <p>Loading data...</p>
