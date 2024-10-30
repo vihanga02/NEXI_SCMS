@@ -1,6 +1,4 @@
 import Admin from "../Models/AdminModel.js";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
 
 async function getManager(req, res) {
   try {

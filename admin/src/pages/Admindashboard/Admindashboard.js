@@ -39,8 +39,9 @@ function Admindashboard() {
       try { 
         await axios.get('/manager/admindetails', { withCredentials: true })
           .then((res) => {
-            setStoreID(res.data.Store_ID);
-            setStoreCity(res.data.City);
+            setStoreID(res.data.result.Store_ID);
+            console.log(storeID);
+            setStoreCity(res.data.result.City);
             fetchData1();
             fetchData2();
           });
